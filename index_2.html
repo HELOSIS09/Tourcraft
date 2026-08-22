@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TourCraft smart travel planning and itinerary builder" />
+  <title>TourCraft</title>
+  <link rel="icon" type="image/x-icon" href="logo.jpeg" />
+
+  <style>
+    /* =========================
+       Design tokens
+    ========================== */
+    :root {
+      --color-primary: #103d2e;
+      --color-primary-dark: #174c3a;
+      --color-accent: #dff08c;
+      --color-background: #f5f4ee;
+      --color-text: #63192b;
+      --color-muted: #69756f;
+      --color-white: #ffffff;
+      --color-border: #dddddd;
+      --shadow-soft: 0 10px 40px rgb(0 0 0 / 8%);
+      --radius-large: 28px;
+      --radius-medium: 22px;
+      --radius-small: 12px;
+    }
+
+    /* =========================
+       Base styles
+    ========================== */
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--color-background);
+      color: var(--color-text);
+      font-family: Arial, sans-serif;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    /* =========================
+       Navigation
+    ========================== */
+    .navbar {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: min(1180px, 95%);
+      padding: 14px 22px;
+      transform: translateX(-50%);
+      border: 1px solid rgb(255 255 255 / 80%);
+      border-radius: var(--radius-medium);
+      background: rgb(255 255 255 / 75%);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(20px);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--color-primary);
+      font-family: Georgia, serif;
+      font-size: 26px;
+      font-weight: 700;
+    }
+
+    .logo img {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-small);
+      object-fit: cover;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+    }
+
+    .nav-links a {
+      position: relative;
+      color: #30443c;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+
+    .nav-links a::after {
+      position: absolute;
+      right: 0;
+      bottom: -6px;
+      left: 0;
+      height: 2px;
+      background: var(--color-accent);
+      content: "";
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--color-primary);
+    }
+
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+    }
+
+    /* =========================
+       Reusable components
+    ========================== */
+    .button,
+    .cta {
+      display: inline-block;
+      border-radius: var(--radius-small);
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.25s ease, background 0.25s ease;
+    }
+
+    .button {
+      padding: 13px 18px;
+      background: var(--color-primary-dark);
+      color: var(--color-white);
+    }
+
+    .button:hover,
+    .cta:hover {
+      transform: translateY(-2px);
+    }
+
+    .button--accent {
+      background: var(--color-accent);
+      color: #17352b;
+    }
+
+    .cta {
+      padding: 12px 18px;
+      background: var(--color-primary);
+      color: var(--color-white);
+    }
+
+    .section {
+      max-width: 1100px;
+      margin: 70px auto;
+      padding: 0 20px;
+    }
+
+    /* =========================
+       Hero section
+    ========================== */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 150px 20px 85px;
+    }
+
+    .hero h1 {
+      margin: 15px 0;
+      font-size: 64px;
+      line-height: 0.95;
+    }
+
+    .hero p {
+      color: var(--color-muted);
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .hero__photo {
+      height: 470px;
+      border-radius: 30px;
+      background: url("https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1000&q=80") center / cover;
+    }
+
+    /* =========================
+       Destination cards
+    ========================== */
+    .destination-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .destination-card {
+      position: relative;
+      height: 290px;
+      overflow: hidden;
+      border-radius: var(--radius-medium);
+      background-position: center;
+      background-size: cover;
+      cursor: pointer;
+    }
+
+    .destination-card::after {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(transparent, rgb(0 0 0 / 70%));
+      content: "";
+    }
+
+    .destination-card__content {
+      position: absolute;
+      bottom: 18px;
+      left: 18px;
+      z-index: 1;
+      color: var(--color-white);
+    }
+
+    .destination-card h3 {
+      margin: 0;
+      font-size: 25px;
+    }
+
+    /* =========================
+       Planner and results
+    ========================== */
+    .planner {
+      padding: 35px;
+      border-radius: var(--radius-large);
+      background: var(--color-primary-dark);
+      color: var(--color-white);
+    }
+
+    .planner__form {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 13px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 6px;
+      color: #c8d8d1;
+      font-size: 12px;
+    }
+
+    .field input,
+    .field select,
+    .enquiry-form input,
+    .enquiry-form textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid rgb(255 255 255 / 20%);
+      border-radius: 10px;
+    }
+
+    .field input,
+    .field select {
+      background: rgb(255 255 255 / 7%);
+      color: var(--color-white);
+    }
+
+    .field option {
+      color: #17352b;
+    }
+
+    .field--wide {
+      grid-column: span 2;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 25px;
+      border-radius: 20px;
+      background: var(--color-white);
+      color: #17352b;
+    }
+
+    .day {
+      margin: 10px 0;
+      padding: 15px;
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+    }
+
+    .danger {
+      padding: 15px;
+      border-radius: 14px;
+      background: #fff0ed;
+      color: #8d3e36;
+    }
+
+    /* =========================
+       Modals and enquiry form
+    ========================== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgb(0 0 0 / 60%);
+    }
+
+    .modal.is-visible {
+      display: flex;
+    }
+
+    .modal__box {
+      width: 100%;
+      max-width: 750px;
+      max-height: 90vh;
+      overflow: auto;
+      padding: 28px;
+      border-radius: 24px;
+      background: var(--color-white);
+    }
+
+    .modal__close {
+      float: right;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: #eeeeee;
+      font-size: 20px;
+    }
+
+    .enquiry-form input,
+    .enquiry-form textarea {
+      display: block;
+      margin: 6px 0;
+      border: 1px solid var(--color-border);
+    }
+
+    .enquiry-form textarea {
+      height: 100px;
+      resize: vertical;
+    }
+
+    .help-text {
+      color: #777777;
+      font-size: 12px;
+    }
+
+    /* =========================
+       Responsive layout
+    ========================== */
+    @media (max-width: 800px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 48px;
+      }
+
+      .destination-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .planner__form {
+        grid-template-columns: 1fr;
+      }
+
+      .field--wide {
+        grid-column: auto;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .destination-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero__photo {
+        height: 300px;
+      }
+
+      .navbar {
+        padding: 10px 14px;
+      }
+
+      .logo {
+        font-size: 21px;
+      }
+
+      .logo img {
+        width: 34px;
+        height: 34px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="navbar">
+    <a class="logo" href="index.html" aria-label="TourCraft home">
+      <img src="logo.jpeg" alt="TourCraft logo" />
+      <span>TourCraft</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="explore.html">Explore</a>
+      <a href="planner.html">AI Planner</a>
+      <a href="guides.html">Inspirations</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <a class="cta" href="#planner">Build My Trip</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <small>SMART TRAVEL PLANNING</small>
+        <h1>Your trip.<br />Crafted around you.</h1>
+        <p>
+          Discover iconic destinations and create a beautiful itinerary that
+          respects your real budget.
+        </p>
+        <button class="button" id="create-itinerary-button" type="button">
+          Create itinerary
+        </button>
+      </div>
+      <div class="hero__photo" role="img" aria-label="Travel destination"></div>
+    </section>
+
+    <section class="section" aria-labelledby="destinations-title">
+      <h2 id="destinations-title">Explore iconic destinations</h2>
+      <p>Click a destination to discover it.</p>
+      <div class="destination-grid" id="destinations"></div>
+    </section>
+
+    <section class="section" id="planner" aria-labelledby="planner-title">
+      <div class="planner">
+        <h2 id="planner-title">AI Itinerary Builder</h2>
+        <p>Tell TourCraft what you need.</p>
+
+        <form class="planner__form" id="planner-form">
+          <div class="field">
+            <label for="destination">DESTINATION</label>
+            <select id="destination" name="destination"></select>
+          </div>
+
+          <div class="field">
+            <label for="people">TRAVELLERS</label>
+            <input id="people" name="people" type="number" value="2" min="1" />
+          </div>
+
+          <div class="field">
+            <label for="days">DAYS</label>
+            <input id="days" name="days" type="number" value="5" min="1" />
+          </div>
+
+          <div class="field">
+            <label for="budget">BUDGET ₹</label>
+            <input id="budget" name="budget" type="number" value="35000" min="1" />
+          </div>
+
+          <div class="field">
+            <label for="style">STYLE</label>
+            <select id="style" name="style">
+              <option>Smart Budget</option>
+              <option>Comfort</option>
+              <option>Backpacker</option>
+              <option>Premium</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="transport">TRANSPORT</label>
+            <select id="transport" name="transport">
+              <option>Comfortable</option>
+              <option>Budget</option>
+              <option>Private Cab</option>
+            </select>
+          </div>
+
+          <div class="field field--wide">
+            <label for="interests">INTERESTS</label>
+            <input
+              id="interests"
+              name="interests"
+              placeholder="food, mountains, culture, adventure..."
+            />
+          </div>
+        </form>
+
+        <br />
+        <button class="button button--accent" id="generate-button" type="button">
+          Generate my itinerary
+        </button>
+        <div id="result"></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="destination-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal__box">
+      <button class="modal__close" type="button" data-close-modal="destination-modal" aria-label="Close destination details">×</button>
+      <h1 id="modal-title"></h1>
+      <p id="modal-description"></p>
+      <div id="modal-highlights"></div>
+      <br />
+      <button class="button" id="use-destination-button" type="button">
+        Plan this destination
+      </button>
+    </div>
+  </div>
+
+  <div class="modal" id="mail-modal" role="dialog" aria-modal="true" aria-labelledby="mail-title">
+    <div class="modal__box">
+      <button class="modal__close" type="button" data-close-modal="mail-modal" aria-label="Close enquiry form">×</button>
+      <h2 id="mail-title">Send enquiry</h2>
+      <p>Your itinerary will be inserted into an email.</p>
+
+      <form class="enquiry-form" id="enquiry-form">
+        <input id="name" name="name" placeholder="Name *" required />
+        <input id="email" name="email" type="email" placeholder="Email *" required />
+        <input id="phone" name="phone" placeholder="Phone / WhatsApp" />
+        <textarea id="message" name="message" placeholder="Anything else?"></textarea>
+        <button class="button" type="submit">Open enquiry email</button>
+      </form>
+
+      <p class="help-text">Change the recipient in CONFIG below.</p>
+    </div>
+  </div>
+
+  <script>
+    // Update these values before deploying the website.
+    const CONFIG = {
+      email: "apurvaaniket8@gmail.com",
+      scriptURL:
+        "https://script.google.com/macros/s/AKfycbwt_ZOJlV102sLefJ2atd8gepcgojykxpuRb0SnF-Eo1ZUf0WUczsUP8RZFVqrvqYQd/exec",
+    };
+
+    const DESTINATIONS = {
+      Kashmir: {
+        from: 22000,
+        image:
+          "https://images.unsplash.com/photo-1609947017136-9daf32a5eb16?auto=format&fit=crop&w=800&q=80",
+        description:
+          "Snowy mountains, Dal Lake, valleys and Kashmiri hospitality.",
+        spots: ["Dal Lake", "Gulmarg", "Pahalgam", "Sonamarg"],
+      },
+      Kerala: {
+        from: 18000,
+        image:
+          "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80",
+        description: "Backwaters, beaches, hills, food and slow travel.",
+        spots: ["Alleppey", "Munnar", "Varkala", "Fort Kochi"],
+      },
+      Goa: {
+        from: 14000,
+        image:
+          "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80",
+        description: "Beaches, heritage, cafes and coastal experiences.",
+        spots: ["Baga", "Anjuna", "Old Goa", "South Goa"],
+      },
+      Rajasthan: {
+        from: 20000,
+        image:
+          "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80",
+        description: "Forts, palaces, desert landscapes and royal culture.",
+        spots: ["Jaipur", "Jodhpur", "Udaipur", "Jaisalmer"],
+      },
+      Manali: {
+        from: 15000,
+        image:
+          "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80",
+        description: "Mountain views, cafes, valleys and adventure.",
+        spots: ["Solang Valley", "Old Manali", "Atal Tunnel", "Kasol"],
+      },
+      Varanasi: {
+        from: 9000,
+        image:
+          "https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=800&q=80",
+        description: "Ghats, spirituality, food and living culture.",
+        spots: ["Ganga Aarti", "Sarnath", "Old City", "Sunrise Boat Ride"],
+      },
+      Meghalaya: {
+        from: 21000,
+        image:
+          "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80",
+        description: "Waterfalls, root bridges, misty hills and nature.",
+        spots: ["Shillong", "Cherrapunji", "Dawki", "Mawlynnong"],
+      },
+      Andaman: {
+        from: 26000,
+        image:
+          "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80",
+        description: "Island beaches, clear water and marine experiences.",
+        spots: ["Swaraj Dweep", "Radhanagar Beach", "Cellular Jail", "Neil Island"],
+      },
+    };
+
+    const elements = {
+      destinations: document.getElementById("destinations"),
+      destination: document.getElementById("destination"),
+      planner: document.getElementById("planner"),
+      result: document.getElementById("result"),
+      destinationModal: document.getElementById("destination-modal"),
+      mailModal: document.getElementById("mail-modal"),
+      modalTitle: document.getElementById("modal-title"),
+      modalDescription: document.getElementById("modal-description"),
+      modalHighlights: document.getElementById("modal-highlights"),
+      enquiryForm: document.getElementById("enquiry-form"),
+    };
+
+    let selectedDestination = "Kashmir";
+    let itineraryText = "";
+
+    const formatMoney = (amount) =>
+      `₹${Math.round(amount).toLocaleString("en-IN")}`;
+
+    const openModal = (modal) => modal.classList.add("is-visible");
+    const closeModal = (modal) => modal.classList.remove("is-visible");
+
+    function renderDestinations() {
+      Object.entries(DESTINATIONS).forEach(([name, details]) => {
+        const card = document.createElement("article");
+        card.className = "destination-card";
+        card.style.backgroundImage = `url("${details.image}")`;
+        card.innerHTML = `
+          <div class="destination-card__content">
+            <h3>${name}</h3>
+            <span>From ${formatMoney(details.from)}/person</span>
+          </div>
+        `;
+        card.addEventListener("click", () => showDestination(name));
+        elements.destinations.appendChild(card);
+
+        const option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        elements.destination.appendChild(option);
+      });
+    }
+
+    function showDestination(name) {
+      selectedDestination = name;
+      const details = DESTINATIONS[name];
+
+      elements.modalTitle.textContent = name;
+      elements.modalDescription.textContent = details.description;
+      elements.modalHighlights.innerHTML = `<strong>Highlights:</strong> ${details.spots.join(" · ")}`;
+      openModal(elements.destinationModal);
+    }
+
+    function buildItinerary() {
+      const destination = elements.destination.value;
+      const travellers = Number(document.getElementById("people").value);
+      const days = Number(document.getElementById("days").value);
+      const budget = Number(document.getElementById("budget").value);
+      const style = document.getElementById("style").value;
+      const transport = document.getElementById("transport").value;
+      const interests =
+        document.getElementById("interests").value.trim() ||
+        "local food, culture and scenic experiences";
+      const details = DESTINATIONS[destination];
+
+      let costPerPerson = details.from;
+      if (style === "Backpacker") costPerPerson *= 0.72;
+      if (style === "Comfort") costPerPerson *= 1.15;
+      if (style === "Premium") costPerPerson *= 1.65;
+      if (transport === "Budget") costPerPerson *= 0.88;
+      if (transport === "Private Cab") costPerPerson *= 1.18;
+
+      const estimatedCost = Math.round(
+        costPerPerson * travellers * Math.max(0.65, days / 5)
+      );
+      const minimumCost = Math.round(
+        details.from * 0.62 * travellers * Math.max(0.55, days / 5)
+      );
+
+      if (budget < minimumCost) {
+        itineraryText = "";
+        elements.result.innerHTML = `
+          <div class="result">
+            <div class="danger">
+              <strong>This trip is not realistically possible within ${formatMoney(budget)}.</strong><br />
+              For ${travellers} traveller(s) and ${days} days, TourCraft estimates a realistic minimum of about
+              <strong>${formatMoney(minimumCost)}</strong>.
+            </div>
+            <p><strong>Try:</strong> increase your budget, reduce the duration, choose Backpacker style, or use Budget transport.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const totalCost = Math.min(estimatedCost, Math.round(budget * 0.96));
+      const dailyCost = totalCost / days;
+      const dayPlans = Array.from({ length: days }, (_, index) => {
+        const firstSpot = details.spots[index % details.spots.length];
+        const secondSpot = details.spots[(index + 1) % details.spots.length];
+        const dayNumber = index + 1;
+        const heading =
+          dayNumber === 1
+            ? "Arrival & first impressions"
+            : dayNumber === days
+              ? "Relax & departure"
+              : firstSpot;
+
+        return {
+          heading,
+          text: `Explore ${firstSpot} and ${secondSpot}. Include ${interests}. Enjoy local food and free time.`,
+          cost: formatMoney(dailyCost),
+        };
+      });
+
+      itineraryText = [
+        `Destination: ${destination}`,
+        `Travellers: ${travellers}`,
+        `Duration: ${days} days`,
+        `Budget: ${formatMoney(budget)}`,
+        `Style: ${style}`,
+        `Transport: ${transport}`,
+        `Interests: ${interests}`,
+        `Estimated cost: ${formatMoney(totalCost)}`,
+        "",
+        ...dayPlans.map(
+          (day, index) =>
+            `Day ${index + 1} — ${day.heading}\n${day.text}\nEstimated: ${day.cost}`
+        ),
+      ].join("\n");
+
+      elements.result.innerHTML = `
+        <div class="result">
+          <h2>${destination} — ${days} days</h2>
+          <p>
+            <strong>Estimated trip cost: ${formatMoney(totalCost)}</strong>
+            · ${formatMoney(Math.max(0, budget - totalCost))} remaining
+          </p>
+          ${dayPlans
+            .map(
+              (day, index) => `
+                <div class="day">
+                  <strong>Day ${index + 1} — ${day.heading}</strong>
+                  <p>${day.text}</p>
+                  <span>Estimated: ${day.cost}</span>
+                </div>
+              `
+            )
+            .join("")}
+          <button class="button" id="open-enquiry-button" type="button">
+            I like this trip — send an enquiry
+          </button>
+        </div>
+      `;
+
+      document
+        .getElementById("open-enquiry-button")
+        .addEventListener("click", () => openModal(elements.mailModal));
+      elements.result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    function sendEnquiry(event) {
+      event.preventDefault();
+
+      const formData = new FormData(elements.enquiryForm);
+      const name = formData.get("name").trim();
+      const email = formData.get("email").trim();
+      const phone = formData.get("phone").trim();
+      const message = formData.get("message").trim();
+
+      const subject = `TourCraft Enquiry — ${elements.destination.value}`;
+      const body = [
+        "Hello TourCraft Team,",
+        "",
+        "I am interested in this itinerary.",
+        "",
+        `Name: ${name}`,
+        `Email: ${email}`,
+        `Phone: ${phone}`,
+        "",
+        itineraryText,
+        "",
+        `Additional message: ${message}`,
+      ].join("\n");
+
+      window.location.href =
+        `mailto:${CONFIG.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+
+    document
+      .getElementById("create-itinerary-button")
+      .addEventListener("click", () => {
+        elements.planner.scrollIntoView({ behavior: "smooth" });
+      });
+
+    document
+      .getElementById("generate-button")
+      .addEventListener("click", buildItinerary);
+
+    document
+      .getElementById("use-destination-button")
+      .addEventListener("click", () => {
+        elements.destination.value = selectedDestination;
+        closeModal(elements.destinationModal);
+        elements.planner.scrollIntoView({ behavior: "smooth" });
+      });
+
+    document.querySelectorAll("[data-close-modal]").forEach((button) => {
+      button.addEventListener("click", () => {
+        closeModal(document.getElementById(button.dataset.closeModal));
+      });
+    });
+
+    document.querySelectorAll(".modal").forEach((modal) => {
+      modal.addEventListener("click", (event) => {
+        if (event.target === modal) closeModal(modal);
+      });
+    });
+
+    elements.enquiryForm.addEventListener("submit", sendEnquiry);
+    renderDestinations();
+  </script>
+</body>
+</html>

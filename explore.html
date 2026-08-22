@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        /* ==========================================
+   TOURCRAFT - SHARED NAVBAR
+   ========================================== */
+
+.navbar {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: min(1180px, 95%);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 14px 22px;
+
+    border-radius: 22px;
+
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(20px);
+
+    border: 1px solid rgba(255, 255, 255, 0.8);
+
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+
+    z-index: 999;
+}
+
+
+/* ==========================================
+   LOGO
+   ========================================== */
+
+.navbar .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 26px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+
+    color: #103D2E;
+}
+
+.navbar .logo img {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+}
+
+
+/* ==========================================
+   NAVIGATION LINKS
+   ========================================== */
+
+.nav-links {
+    display: flex;
+    gap: 28px;
+}
+
+.nav-links a {
+    position: relative;
+
+    text-decoration: none;
+
+    color: #30443c;
+
+    font-weight: 600;
+
+    transition: 0.25s;
+}
+
+.nav-links a:hover {
+    color: #103D2E;
+}
+
+
+/* Animated underline */
+
+.nav-links a::after {
+    content: '';
+
+    position: absolute;
+
+    bottom: -6px;
+    left: 0;
+
+    width: 0%;
+    height: 2px;
+
+    background: #D8F27C;
+
+    transition: 0.3s;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+
+/* ==========================================
+   CALL-TO-ACTION BUTTON
+   ========================================== */
+
+.navbar .cta {
+    background: #103D2E;
+    color: white;
+
+    padding: 12px 18px;
+
+    border-radius: 14px;
+
+    text-decoration: none;
+
+    font-weight: 700;
+
+    transition: 0.25s;
+}
+
+.navbar .cta:hover {
+    background: #1b5a46;
+
+    transform: translateY(-2px);
+}
+
+
+/* ==========================================
+   RESPONSIVE NAVBAR
+   ========================================== */
+
+@media (max-width: 800px) {
+
+    .navbar {
+        width: 90%;
+        padding: 12px 16px;
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+
+    .nav-links a {
+        font-size: 14px;
+    }
+
+    .navbar .logo {
+        font-size: 22px;
+    }
+
+    .navbar .logo img {
+        width: 36px;
+        height: 36px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .nav-links {
+        display: none;
+    }
+
+    .navbar {
+        width: 88%;
+    }
+
+}
+    </style>
+
+    <!-- ==========================================
+     TOURCRAFT NAVBAR
+     ========================================== -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <img
+            src="logo.jpeg"
+            alt="TourCraft Logo"
+        >
+
+        <span>TourCraft</span>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="explore.html">
+            Explore
+        </a>
+
+        <a href="planner.html">
+            AI Planner
+        </a>
+
+        <a href="guides.html">
+            Inspirations
+        </a>
+
+        <a href="contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+    <a
+        href="planner.html"
+        class="cta"
+    >
+        Build My Trip ✨
+    </a>
+
+</nav>
+</body>
+</html>
