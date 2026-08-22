@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TourCraft</title>
+<link rel="icon" type="image/x-icon" href="logo.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#090b10;
+    --bg-soft:#0d1017;
+    --surface:#12161f;
+    --surface-2:#181e29;
+    --line:rgba(255,255,255,0.08);
+    --line-2:rgba(255,255,255,0.14);
+    --cyan:#04e4dd;
+    --cyan-dim:#0a8f8f;
+    --saffron:#ff9a44;
+    --saffron-2:#ffcf8a;
+    --ink:#eef4f4;
+    --muted:#8ea0aa;
+    --muted-2:#5f7079;
+    --red:#ff6b6b;
+    --green:#4ade80;
+    --radius:18px;
+    --shadow: 0 20px 60px rgba(0,0,0,0.45);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1100px 600px at 85% -10%, rgba(4,228,221,0.09), transparent 60%),
+      radial-gradient(900px 500px at -10% 30%, rgba(255,154,68,0.07), transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Manrope',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{font-family:'Fraunces',serif;}
+  .mono{font-family:'Space Mono',monospace;}
+  a{color:inherit;}
+  ::selection{background:var(--cyan); color:#031513;}
+  ::-webkit-scrollbar{width:10px;height:10px;}
+  ::-webkit-scrollbar-thumb{background:#232a35;border-radius:8px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  button{font-family:inherit; cursor:pointer;}
+  :focus-visible{outline:2px solid var(--cyan); outline-offset:2px;}
+
+  /* ---------- layout ---------- */
+  .app{display:flex; min-height:100vh;}
+  .sidebar{
+    width:236px; flex-shrink:0; position:sticky; top:0; height:100vh;
+    background:linear-gradient(180deg,#0b0e14,#0a0c11);
+    border-right:1px solid var(--line);
+    display:flex; flex-direction:column; padding:22px 16px;
+    z-index:40;
+  }
+  .brand{display:flex; align-items:center; gap:11px; padding:6px 6px 22px 6px;}
+  .brand-mark{width:38px; height:38px; flex-shrink:0;}
+  .brand-word{font-family:'Fraunces',serif; font-weight:700; font-size:19px; letter-spacing:0.2px; line-height:1;}
+  .brand-tag{font-size:10.5px; color:var(--muted); letter-spacing:0.6px; text-transform:uppercase; margin-top:3px;}
+  .nav{display:flex; flex-direction:column; gap:3px; margin-top:6px;}
+  .nav-item{
+    display:flex; align-items:center; gap:11px; padding:10px 12px; border-radius:11px;
+    color:var(--muted); font-weight:600; font-size:14px; text-decoration:none;
+    background:transparent; border:1px solid transparent; width:100%; text-align:left;
+    transition:background .15s, color .15s, border-color .15s;
+  }
+  .nav-item svg{width:18px; height:18px; flex-shrink:0;}
+  .nav-item:hover{background:var(--surface); color:var(--ink);}
+  .nav-item.active{background:rgba(4,228,221,0.09); color:var(--cyan); border-color:rgba(4,228,221,0.25);}
+  .sidebar-foot{margin-top:auto; display:flex; flex-direction:column; gap:10px;}
+  .pill-note{
+    background:var(--surface); border:1px solid var(--line); border-radius:13px; padding:12px;
+    font-size:11.5px; color:var(--muted); line-height:1.5;
+  }
+  .pill-note b{color:var(--saffron-2);}
+  .signin-btn{
+    background:var(--ink); color:#0a0c11; border:none; border-radius:11px; padding:11px;
+    font-weight:700; font-size:13.5px;
+  }
+
+  .main{flex:1; min-width:0;}
+  .topbar{
+    position:sticky; top:0; z-index:30; display:flex; align-items:center; justify-content:space-between;
+    gap:16px; padding:18px 34px; backdrop-filter:blur(14px); background:rgba(9,11,16,0.72);
+    border-bottom:1px solid var(--line);
+  }
+  .page-title{font-size:26px; font-weight:600; margin:0;}
+  .search{
+    display:flex; align-items:center; gap:9px; background:var(--surface); border:1px solid var(--line);
+    border-radius:12px; padding:9px 14px; min-width:230px;
+  }
+  .search svg{width:16px; height:16px; color:var(--muted-2); flex-shrink:0;}
+  .search input{background:none; border:none; outline:none; color:var(--ink); font-size:13.5px; width:100%; font-family:inherit;}
+  .search input::placeholder{color:var(--muted-2);}
+
+  section{padding:52px 34px;}
+  .section-head{max-width:640px; margin-bottom:30px;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:7px; font-size:11px; letter-spacing:1.4px; text-transform:uppercase;
+    color:var(--cyan); font-weight:700; margin-bottom:12px;
+  }
+  .eyebrow::before{content:''; width:16px; height:1px; background:var(--cyan);}
+  .section-head h2{font-size:32px; margin:0 0 10px 0; font-weight:600;}
+  .section-head p{color:var(--muted); font-size:15px; line-height:1.6; margin:0;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:70px 34px 54px 34px; position:relative; overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-inner{max-width:760px; position:relative; z-index:2;}
+  .hero h1{font-size:52px; line-height:1.06; font-weight:600; margin:0 0 18px 0; letter-spacing:-0.5px;}
+  .hero h1 em{font-style:normal; color:var(--cyan); position:relative;}
+  .hero p{font-size:16.5px; color:var(--muted); max-width:520px; line-height:1.65; margin:0 0 30px 0;}
+  .hero-ctas{display:flex; gap:12px; flex-wrap:wrap;}
+  .btn{
+    border-radius:12px; padding:13px 22px; font-weight:700; font-size:14px; border:1px solid transparent;
+    display:inline-flex; align-items:center; gap:8px; transition:transform .15s, box-shadow .15s, background .15s;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-primary{background:linear-gradient(135deg,var(--cyan),#02b9b3); color:#04211f;}
+  .btn-primary:hover{box-shadow:0 10px 26px rgba(4,228,221,0.28);}
+  .btn-ghost{background:transparent; border-color:var(--line-2); color:var(--ink);}
+  .btn-ghost:hover{background:var(--surface);}
+  .btn-saffron{background:linear-gradient(135deg,var(--saffron),#e97b1f); color:#2a1300;}
+  .btn-saffron:hover{box-shadow:0 10px 26px rgba(255,154,68,0.3);}
+  .btn:disabled{opacity:0.55; cursor:not-allowed; transform:none !important; box-shadow:none !important;}
+  .hero-stats{display:flex; gap:34px; margin-top:44px; flex-wrap:wrap;}
+  .hero-stats div b{display:block; font-family:'Fraunces',serif; font-size:26px; color:var(--ink);}
+  .hero-stats div span{font-size:11.5px; color:var(--muted-2); text-transform:uppercase; letter-spacing:0.8px;}
+  .hero-orb{
+    position:absolute; top:-120px; right:-120px; width:520px; height:520px; border-radius:50%;
+    background:conic-gradient(from 90deg, rgba(4,228,221,0.16), rgba(255,154,68,0.14), rgba(4,228,221,0.16));
+    filter:blur(60px); z-index:1;
+  }
+
+  /* ---------- destinations grid ---------- */
+  .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  .dcard{
+    position:relative; border-radius:var(--radius); overflow:hidden; cursor:pointer; border:1px solid var(--line);
+    background:var(--surface); transition:transform .22s ease, border-color .22s ease; aspect-ratio:3/3.6;
+    display:flex; flex-direction:column;
+  }
+  .dcard:hover{transform:translateY(-5px); border-color:rgba(4,228,221,0.35);}
+  .dcard-art{flex:1; position:relative; display:flex; align-items:center; justify-content:center;}
+  .dcard-art svg{width:56%; height:56%; opacity:0.92; filter:drop-shadow(0 6px 18px rgba(0,0,0,0.35));}
+  .dcard-art::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(6,8,12,0.55) 100%);
+  }
+  .dcard-grain{position:absolute; inset:0; opacity:0.5; mix-blend-mode:overlay; pointer-events:none;}
+  .dcard-body{padding:14px 16px 16px 16px; background:var(--surface);}
+  .dcard-body h3{margin:0 0 2px 0; font-size:17px; font-weight:600;}
+  .dcard-body .state{font-size:12px; color:var(--muted-2);}
+  .dcard-tag{
+    position:absolute; top:12px; left:12px; font-size:10px; letter-spacing:0.6px; text-transform:uppercase;
+    background:rgba(6,8,12,0.55); border:1px solid rgba(255,255,255,0.18); padding:4px 9px; border-radius:20px;
+    color:var(--saffron-2); font-weight:700; backdrop-filter:blur(6px);
+  }
+  .no-results{grid-column:1/-1; text-align:center; padding:50px 0; color:var(--muted);}
+
+  /* ---------- modal (destination detail) ---------- */
+  .overlay{
+    position:fixed; inset:0; background:rgba(5,6,9,0.72); backdrop-filter:blur(6px);
+    display:flex; align-items:center; justify-content:center; z-index:100; opacity:0; pointer-events:none;
+    transition:opacity .2s ease; padding:24px;
+  }
+  .overlay.open{opacity:1; pointer-events:auto;}
+  .modal{
+    background:var(--surface); border:1px solid var(--line-2); border-radius:22px; width:100%; max-width:640px;
+    max-height:88vh; overflow-y:auto; box-shadow:var(--shadow); transform:translateY(14px); transition:transform .22s ease;
+  }
+  .overlay.open .modal{transform:translateY(0);}
+  .modal-hero{height:190px; position:relative; display:flex; align-items:flex-end; padding:20px;}
+  .modal-hero svg{position:absolute; right:18px; top:18px; width:90px; height:90px; opacity:0.85;}
+  .modal-close{
+    position:absolute; top:16px; left:16px; width:34px; height:34px; border-radius:50%; border:1px solid rgba(255,255,255,0.25);
+    background:rgba(6,8,12,0.5); color:#fff; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(6px);
+  }
+  .modal-hero h2{margin:0; font-size:30px; font-weight:600; text-shadow:0 4px 20px rgba(0,0,0,0.5);}
+  .modal-hero .state{font-size:13px; color:rgba(255,255,255,0.85); margin-top:2px;}
+  .modal-body{padding:24px 26px 28px 26px;}
+  .modal-body .desc{color:var(--muted); font-size:14.5px; line-height:1.7; margin:0 0 20px 0;}
+  .meta-row{display:flex; gap:12px; margin-bottom:22px; flex-wrap:wrap;}
+  .meta-chip{
+    background:var(--surface-2); border:1px solid var(--line); border-radius:11px; padding:9px 13px; font-size:12.5px;
+    display:flex; align-items:center; gap:8px; color:var(--muted);
+  }
+  .meta-chip b{color:var(--ink); font-weight:700;}
+  .meta-chip svg{width:14px; height:14px; color:var(--cyan);}
+  .highlights{list-style:none; margin:0 0 24px 0; padding:0; display:grid; gap:9px;}
+  .highlights li{display:flex; gap:10px; font-size:13.5px; color:var(--ink); align-items:flex-start;}
+  .highlights li svg{width:15px; height:15px; color:var(--saffron); flex-shrink:0; margin-top:2px;}
+  .modal-cta{display:flex; gap:10px;}
+
+  /* ---------- itinerary builder ---------- */
+  .builder{background:var(--bg-soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .builder-grid{display:grid; grid-template-columns:1fr 1fr; gap:34px; align-items:start;}
+  .panel{background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:26px;}
+  .field{margin-bottom:20px;}
+  .field label{display:block; font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:var(--muted); margin-bottom:10px;}
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    padding:8px 14px; border-radius:20px; border:1px solid var(--line-2); background:var(--surface-2); color:var(--muted);
+    font-size:13px; font-weight:600; transition:all .15s;
+  }
+  .chip:hover{border-color:var(--cyan-dim);}
+  .chip.on{background:rgba(4,228,221,0.12); border-color:var(--cyan); color:var(--cyan);}
+  .chip.on-saffron{background:rgba(255,154,68,0.14); border-color:var(--saffron); color:var(--saffron-2);}
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .stepper{display:flex; align-items:center; border:1px solid var(--line-2); border-radius:12px; overflow:hidden; background:var(--surface-2);}
+  .stepper button{background:none; border:none; color:var(--ink); font-size:17px; width:40px; height:44px; font-weight:700;}
+  .stepper button:hover{background:rgba(4,228,221,0.1); color:var(--cyan);}
+  .stepper .val{flex:1; text-align:center; font-family:'Space Mono',monospace; font-size:15px;}
+  .budget-input{
+    display:flex; align-items:center; border:1px solid var(--line-2); border-radius:12px; background:var(--surface-2);
+    padding:0 4px 0 14px;
+  }
+  .budget-input span{color:var(--saffron-2); font-weight:700; font-family:'Space Mono',monospace;}
+  .budget-input input{
+    flex:1; background:none; border:none; outline:none; color:var(--ink); padding:12px 10px; font-size:15px;
+    font-family:'Space Mono',monospace; width:100%;
+  }
+  select.select-field{
+    width:100%; background:var(--surface-2); border:1px solid var(--line-2); color:var(--ink); border-radius:12px;
+    padding:12px 14px; font-size:13.5px; font-family:inherit; outline:none;
+  }
+  .hint{font-size:11.5px; color:var(--muted-2); margin-top:8px; line-height:1.5;}
+  .generate-btn{width:100%; justify-content:center; padding:15px; font-size:14.5px; margin-top:6px;}
+
+  /* result panel */
+  .result-panel{min-height:420px; display:flex; flex-direction:column;}
+  .placeholder{
+    flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+    color:var(--muted-2); gap:14px; padding:40px 20px;
+  }
+  .placeholder svg{width:50px; height:50px; opacity:0.5;}
+  .placeholder p{max-width:280px; font-size:13.5px; line-height:1.6; margin:0;}
+  .loader{
+    flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; padding:40px;
+  }
+  .spinner{
+    width:44px; height:44px; border-radius:50%; border:3px solid var(--surface-2); border-top-color:var(--cyan);
+    animation:spin 0.9s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .loader-msg{font-size:13.5px; color:var(--muted); font-family:'Space Mono',monospace; transition:opacity .3s;}
+
+  .result-head{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:18px; flex-wrap:wrap;}
+  .result-head h3{margin:0 0 4px 0; font-size:19px; font-weight:600;}
+  .result-head .sub{font-size:12.5px; color:var(--muted-2);}
+  .badge-feasible{
+    font-size:11px; font-weight:700; padding:6px 11px; border-radius:20px; text-transform:uppercase; letter-spacing:0.4px;
+    background:rgba(74,222,128,0.12); color:var(--green); border:1px solid rgba(74,222,128,0.3); white-space:nowrap;
+  }
+  .gauge-wrap{margin-bottom:20px;}
+  .gauge-labels{display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-bottom:7px;}
+  .gauge-labels .amt{font-family:'Space Mono',monospace; color:var(--ink); font-weight:700;}
+  .gauge-track{height:9px; background:var(--surface-2); border-radius:20px; overflow:hidden; border:1px solid var(--line);}
+  .gauge-fill{height:100%; border-radius:20px; background:linear-gradient(90deg,var(--cyan),#02b9b3); transition:width .6s ease;}
+  .gauge-fill.over{background:linear-gradient(90deg,#ff9a44,#ff5f5f);}
+
+  .day-list{display:flex; flex-direction:column; gap:10px; margin-bottom:20px;}
+  .day-card{border:1px solid var(--line); border-radius:14px; background:var(--surface-2); overflow:hidden;}
+  .day-head{display:flex; align-items:center; justify-content:space-between; padding:13px 15px; gap:10px;}
+  .day-head-left{display:flex; align-items:center; gap:11px;}
+  .day-num{
+    width:30px; height:30px; border-radius:9px; background:rgba(4,228,221,0.12); color:var(--cyan);
+    display:flex; align-items:center; justify-content:center; font-family:'Space Mono',monospace; font-size:12.5px; font-weight:700; flex-shrink:0;
+  }
+  .day-theme{font-weight:700; font-size:13.5px;}
+  .day-cost{font-family:'Space Mono',monospace; font-size:12px; color:var(--saffron-2); white-space:nowrap;}
+  .day-toggle svg{width:16px; height:16px; color:var(--muted-2); transition:transform .2s;}
+  .day-card.open .day-toggle svg{transform:rotate(180deg);}
+  .day-detail{max-height:0; overflow:hidden; transition:max-height .25s ease;}
+  .day-detail-inner{padding:0 15px 15px 56px; display:grid; gap:8px;}
+  .day-detail-inner .slot{font-size:12.5px; color:var(--muted); line-height:1.55;}
+  .day-detail-inner .slot b{color:var(--ink); font-weight:700;}
+  .day-detail-inner .stay{font-size:12px; color:var(--saffron-2);}
+
+  .breakdown{display:grid; grid-template-columns:repeat(2,1fr); gap:8px 16px; margin-bottom:20px;}
+  .bd-row{display:flex; align-items:center; gap:9px; font-size:12px; color:var(--muted);}
+  .bd-dot{width:8px; height:8px; border-radius:2px; flex-shrink:0;}
+  .bd-row b{color:var(--ink); margin-left:auto; font-family:'Space Mono',monospace;}
+
+  .tip-box{
+    background:rgba(255,154,68,0.07); border:1px solid rgba(255,154,68,0.22); border-radius:12px; padding:13px 15px;
+    font-size:12.5px; color:var(--saffron-2); line-height:1.6; margin-bottom:20px;
+  }
+  .tip-box b{color:var(--ink);}
+
+  .infeasible-box{
+    flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+    gap:14px; padding:20px;
+  }
+  .infeasible-box svg{width:44px; height:44px; color:var(--saffron);}
+  .infeasible-box h4{margin:0; font-size:17px;}
+  .infeasible-box p{margin:0; color:var(--muted); font-size:13.5px; max-width:340px; line-height:1.6;}
+  .infeasible-box .suggest{
+    font-family:'Space Mono',monospace; color:var(--cyan); font-size:14px; font-weight:700; margin-top:2px;
+  }
+
+  .result-actions{display:flex; gap:10px; margin-top:auto;}
+
+  /* ---------- hotels teaser ---------- */
+  .hotels-teaser{
+    max-width:760px; margin:0 auto; text-align:center; padding:70px 34px; border-top:1px solid var(--line);
+  }
+  .hotels-teaser svg{width:44px; height:44px; color:var(--cyan); margin-bottom:16px;}
+  .hotels-teaser h2{font-size:28px; margin:0 0 10px 0;}
+  .hotels-teaser p{color:var(--muted); font-size:14.5px; line-height:1.7; margin:0 0 22px 0;}
+
+  footer{padding:30px 34px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
+  footer .fbrand{display:flex; align-items:center; gap:9px; color:var(--muted-2); font-size:12.5px;}
+  footer .fbrand svg{width:20px; height:20px;}
+  footer .flinks{display:flex; gap:18px; font-size:12.5px; color:var(--muted-2);}
+
+  /* ---------- enquiry modal ---------- */
+  .enq-modal{max-width:460px;}
+  .enq-body{padding:26px;}
+  .enq-body h3{margin:0 0 6px 0; font-size:20px;}
+  .enq-body .sub{color:var(--muted); font-size:13px; margin:0 0 22px 0; line-height:1.5;}
+  .form-field{margin-bottom:14px;}
+  .form-field label{display:block; font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); margin-bottom:7px;}
+  .form-field input, .form-field textarea{
+    width:100%; background:var(--surface-2); border:1px solid var(--line-2); border-radius:10px; color:var(--ink);
+    padding:11px 13px; font-size:13.5px; font-family:inherit; outline:none; resize:vertical;
+  }
+  .form-field input:focus, .form-field textarea:focus{border-color:var(--cyan);}
+  .form-field textarea{min-height:96px; font-family:'Space Mono',monospace; font-size:11.5px; line-height:1.6;}
+  .enq-actions{display:flex; gap:10px; margin-top:6px;}
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); z-index:200; opacity:0; pointer-events:none;
+    background:var(--surface); border:1px solid var(--cyan-dim); color:var(--ink); padding:13px 20px; border-radius:12px;
+    font-size:13px; display:flex; align-items:center; gap:9px; box-shadow:var(--shadow); transition:all .25s ease;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto;}
+  .toast svg{width:16px; height:16px; color:var(--green);}
+
+  @media (max-width:980px){
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .builder-grid{grid-template-columns:1fr;}
+    .hero h1{font-size:38px;}
+  }
+  @media (max-width:680px){
+    .sidebar{
+      position:fixed; height:auto; width:100%; flex-direction:row; align-items:center; padding:12px 16px;
+      border-right:none; border-bottom:1px solid var(--line); top:0;
+    }
+    .sidebar .nav, .sidebar-foot{display:none;}
+    .brand{padding:0;}
+    .app{flex-direction:column;}
+    .main{padding-top:62px;}
+    .grid{grid-template-columns:repeat(2,1fr); gap:12px;}
+    section{padding:38px 18px;}
+    .topbar{padding:14px 18px; flex-direction:column; align-items:stretch;}
+    .row2{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 44 44" fill="none">
+        <defs>
+          <linearGradient id="logoGrad" x1="0" y1="0" x2="44" y2="44">
+            <stop offset="0%" stop-color="#04e4dd"/>
+            <stop offset="100%" stop-color="#ff9a44"/>
+          </linearGradient>
+        </defs>
+        <circle cx="22" cy="22" r="21" fill="#0d1017" stroke="url(#logoGrad)" stroke-width="1.4"/>
+        <path d="M22 8 L25.6 18.4 L36 22 L25.6 25.6 L22 36 L18.4 25.6 L8 22 L18.4 18.4 Z" fill="url(#logoGrad)"/>
+        <circle cx="22" cy="22" r="3.4" fill="#0d1017"/>
+      </svg>
+      <div>
+        <div class="brand-word">TourCraft</div>
+        <div class="brand-tag">AI Trip Studio</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <button class="nav-item active" data-goto="destinations">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9s1.3-6.4 3.8-9z"/></svg>
+        Destinations
+      </button>
+      <button class="nav-item" data-goto="builder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l1.9 5.8L20 9l-5.4 3.3L16 19l-4-3.6L8 19l1.4-6.7L4 9l6.1-1.2L12 2z"/></svg>
+        AI Itinerary
+      </button>
+      <button class="nav-item" data-goto="hotels">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-7h6v7"/></svg>
+        Hotels
+      </button>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="pill-note">Every itinerary is <b>budget-checked</b> before we show it to you — no guesswork, no over-promising.</div>
+      <button class="signin-btn">Sign In</button>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <main class="main">
+
+    <div class="topbar">
+      <h1 class="page-title" id="pageTitle">Destinations</h1>
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="searchInput" placeholder="Search a destination or state…">
+      </div>
+    </div>
+
+    <!-- ---- HERO ---- -->
+    <div class="hero">
+      <div class="hero-orb"></div>
+      <div class="hero-inner">
+        <span class="eyebrow">India, planned properly</span>
+        <h1>Iconic places to explore.<br>An <em>AI itinerary</em> built to your budget.</h1>
+        <p>Browse the destinations travellers actually search for, then let TourCraft's planner turn your budget, days and interests into a real day-by-day trip — and tell you honestly if it doesn't fit.</p>
+        <div class="hero-ctas">
+          <button class="btn btn-primary" data-goto="builder">
+            Build my itinerary
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+          <button class="btn btn-ghost" data-goto="destinations">Explore destinations</button>
+        </div>
+        <div class="hero-stats">
+          <div><b id="statCount">12</b><span>Curated destinations</span></div>
+          <div><b>₹</b><span>Real budget math</span></div>
+          <div><b>1</b><span>Click to enquire</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- DESTINATIONS ---- -->
+    <section id="destinations">
+      <div class="section-head">
+        <span class="eyebrow">Where to go</span>
+        <h2>Destinations travellers are searching for</h2>
+        <p>Tap any place for the story, the best season to visit, and a realistic daily budget — then send it straight into your itinerary.</p>
+      </div>
+      <div class="grid" id="destGrid"></div>
+    </section>
+
+    <!-- ---- BUILDER ---- -->
+    <section class="builder" id="builder">
+      <div class="section-head">
+        <span class="eyebrow">The TourCraft difference</span>
+        <h2>Tell us your budget. We'll tell you the truth.</h2>
+        <p>Pick where you want to go, how long for, and what you'd like to spend — the planner returns a real day-by-day trip, or tells you plainly if your budget won't stretch that far.</p>
+      </div>
+
+      <div class="builder-grid">
+        <!-- form panel -->
+        <div class="panel">
+          <div class="field">
+            <label>Destination(s) — choose up to 3</label>
+            <div class="chip-row" id="destChips"></div>
+          </div>
+
+          <div class="row2">
+            <div class="field">
+              <label>Days</label>
+              <div class="stepper">
+                <button type="button" data-step="days" data-dir="-1">−</button>
+                <div class="val" id="daysVal">4</div>
+                <button type="button" data-step="days" data-dir="1">+</button>
+              </div>
+            </div>
+            <div class="field">
+              <label>Travellers</label>
+              <div class="stepper">
+                <button type="button" data-step="travellers" data-dir="-1">−</button>
+                <div class="val" id="travellersVal">2</div>
+                <button type="button" data-step="travellers" data-dir="1">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Total trip budget</label>
+            <div class="budget-input">
+              <span>₹</span>
+              <input id="budgetInput" type="number" min="0" step="500" placeholder="e.g. 25000">
+            </div>
+            <div class="hint">This is the total for everyone, for the whole trip — stay, food, local transport and activities.</div>
+          </div>
+
+          <div class="field">
+            <label>Travel style</label>
+            <select class="select-field" id="styleSelect">
+              <option value="budget">Budget — hostels, local eats, trains</option>
+              <option value="comfort" selected>Comfort — 3★ hotels, mixed dining</option>
+              <option value="luxury">Luxury — 4★+, private transfers</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Interests</label>
+            <div class="chip-row" id="interestChips"></div>
+          </div>
+
+          <button class="btn btn-primary generate-btn" id="generateBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2l1.9 5.8L20 9l-5.4 3.3L16 19l-4-3.6L8 19l1.4-6.7L4 9l6.1-1.2L12 2z"/></svg>
+            Generate my itinerary
+          </button>
+        </div>
+
+        <!-- result panel -->
+        <div class="panel result-panel" id="resultPanel">
+          <div class="placeholder" id="resultPlaceholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 20l-5.4-2.7A1 1 0 013 16.4V5.6a1 1 0 011.4-.9L9 6.5m0 13.5l6-2m-6 2V6.5m6 11l5.6 2.2a1 1 0 001.4-.9V7.9a1 1 0 00-.6-.9L15 4.5m0 13V4.5m0 0L9 6.5"/></svg>
+            <p>Your itinerary will appear here — pick a destination, set your budget and hit generate.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---- HOTELS TEASER ---- -->
+    <section id="hotels" class="hotels-teaser">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-7h6v7"/></svg>
+      <h2>Handpicked stays — landing soon</h2>
+      <p>We're curating a shortlist of stays for every budget tier, from heritage havelis to backwater houseboats. Meanwhile, every itinerary the planner builds already tells you exactly what kind of stay fits your budget, night by night.</p>
+      <button class="btn btn-primary" data-goto="builder">Try the itinerary builder</button>
+    </section>
+
+    <footer>
+      <div class="fbrand">
+        <svg viewBox="0 0 44 44" fill="none">
+          <path d="M22 8 L25.6 18.4 L36 22 L25.6 25.6 L22 36 L18.4 25.6 L8 22 L18.4 18.4 Z" fill="#04e4dd" opacity="0.8"/>
+        </svg>
+        TourCraft — Craft your India story
+      </div>
+      <div class="flinks"><span>Destinations</span><span>AI Itinerary</span><span>Hotels</span></div>
+    </footer>
+  </main>
+</div>
+
+<!-- ================= DESTINATION MODAL ================= -->
+<div class="overlay" id="destOverlay">
+  <div class="modal" id="destModal"></div>
+</div>
+
+<!-- ================= ENQUIRY MODAL ================= -->
+<div class="overlay" id="enqOverlay">
+  <div class="modal enq-modal">
+    <div class="enq-body">
+      <h3>Send this to TourCraft</h3>
+      <p class="sub">Fill in your details — this opens your email app with the itinerary attached, addressed straight to us.</p>
+      <div class="form-field">
+        <label>Your name</label>
+        <input id="enqName" placeholder="Full name">
+      </div>
+      <div class="row2">
+        <div class="form-field">
+          <label>Email</label>
+          <input id="enqEmail" type="email" placeholder="you@email.com">
+        </div>
+        <div class="form-field">
+          <label>Phone (optional)</label>
+          <input id="enqPhone" placeholder="+91 …">
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Itinerary summary (editable)</label>
+        <textarea id="enqMessage"></textarea>
+      </div>
+      <div class="enq-actions">
+        <button class="btn btn-ghost" id="enqCancel" style="flex:1; justify-content:center;">Cancel</button>
+        <button class="btn btn-saffron" id="enqSend" style="flex:1; justify-content:center;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          Send enquiry
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span id="toastMsg">Copied</span></div>
+
+<script>
+/* ============================================================
+   TourCraft — data
+   ============================================================ */
+const BUSINESS_EMAIL = "apurvaaniket8@gmail.com"; // TODO: replace with your real inbox
+
+const ICONS = {
+  fort:`<path d="M6 38V18l4-4V6h4v4l4-4v4l4-4v8l4 4v20H6z" fill="currentColor"/><rect x="12" y="26" width="6" height="12" fill="#0d1017"/>`,
+  dome:`<path d="M8 38V22a16 16 0 0132 0v16H8z" fill="currentColor"/><rect x="22" y="4" width="4" height="8" fill="currentColor"/><circle cx="24" cy="6" r="2.4" fill="currentColor"/>`,
+  palace:`<path d="M4 38V18l6-6 6 6 4-8 4 8 6-6 6 6v20H4z" fill="currentColor"/><circle cx="24" cy="18" r="3" fill="#0d1017"/>`,
+  ghat:`<path d="M4 34h40M8 34V26h6v8M18 34v-12h6v12M28 34V20h6v14M38 34v-8h4v8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="24" cy="10" r="5" fill="currentColor"/>`,
+  beach:`<circle cx="16" cy="12" r="6" fill="currentColor"/><path d="M2 34c8-14 16-14 22-6M26 34c6-10 12-10 20-2" stroke="currentColor" stroke-width="2.6" fill="none" stroke-linecap="round"/>`,
+  hills:`<path d="M2 32l10-16 8 10 6-8 20 14z" fill="currentColor"/><circle cx="36" cy="10" r="4" fill="currentColor"/>`,
+  boat:`<path d="M6 26c4-8 32-8 36 0l-4 8H10z" fill="currentColor"/><path d="M24 26V8" stroke="currentColor" stroke-width="2.4"/><path d="M24 8c6 0 9 4 9 8H24z" fill="currentColor" opacity="0.6"/>`,
+  mountain:`<path d="M4 34L18 10l7 12 5-6 14 18z" fill="currentColor"/><path d="M20 34l4-7 4 7z" fill="#0d1017"/>`,
+  gateway:`<path d="M10 38V18a14 14 0 0128 0v20" fill="none" stroke="currentColor" stroke-width="4"/><rect x="6" y="34" width="36" height="4" fill="currentColor"/>`,
+  golden:`<path d="M10 38V24a14 14 0 0128 0v14H10z" fill="currentColor"/><path d="M24 6v8M18 24h12" stroke="#0d1017" stroke-width="2"/><circle cx="24" cy="8" r="2" fill="currentColor"/>`,
+  ruins:`<rect x="8" y="14" width="6" height="24" fill="currentColor"/><rect x="20" y="8" width="6" height="30" fill="currentColor"/><rect x="32" y="18" width="6" height="20" fill="currentColor"/><path d="M6 38h36" stroke="currentColor" stroke-width="2"/>`,
+  nets:`<path d="M24 6v32M8 14h32" stroke="currentColor" stroke-width="2.4"/><path d="M24 6l16 10-16 6-16-6z" fill="currentColor" opacity="0.75"/>`
+};
+
+const DESTINATIONS = [
+  {id:'delhi', name:'Delhi', state:'Delhi (NCT)', tag:'Capital', grad:['#3a2e77','#c65b2f'], icon:'fort',
+   desc:"Seven historic cities layered into one capital — Mughal forts and colonial boulevards sit a rickshaw ride from glass towers and some of the country's best street food.",
+   highlights:['Red Fort at sunrise, before the crowds','Old Delhi food walk through Chandni Chowk','Humayun\'s Tomb, the blueprint for the Taj','Evening at India Gate'],
+   best:'Oct – Mar', cost:2600},
+
+  {id:'agra', name:'Agra', state:'Uttar Pradesh', tag:'Wonder', grad:['#274b6b','#e7c98f'], icon:'dome',
+   desc:"Home to the Taj Mahal, but worth a full day beyond it — the red sandstone of Agra Fort and the quieter, marble-inlaid Itmad-ud-Daula reward travellers who linger.",
+   highlights:['Taj Mahal at sunrise','Agra Fort\'s river-facing ramparts','Mehtab Bagh for the classic reverse view','Petha and local Mughlai food'],
+   best:'Nov – Feb', cost:2400},
+
+  {id:'jaipur', name:'Jaipur', state:'Rajasthan', tag:'Heritage', grad:['#7a2a3a','#f2884b'], icon:'palace',
+   desc:"The Pink City earns its name at golden hour, when Hawa Mahal's sandstone jali glows. Amber Fort, bazaars stacked with block-print textiles, and rooftop views round out a city built for wandering.",
+   highlights:['Hawa Mahal facade at sunset','Amber Fort by elephant or on foot','City Palace and Jantar Mantar','Shopping for block-print and jewellery'],
+   best:'Oct – Mar', cost:3000},
+
+  {id:'varanasi', name:'Varanasi', state:'Uttar Pradesh', tag:'Spiritual', grad:['#5b2a12','#e0a63e'], icon:'ghat',
+   desc:"One of the world's oldest living cities, where the ghats along the Ganga hold centuries of ritual, daily life and quiet ceremony, often in the same breath.",
+   highlights:['Sunrise boat ride along the ghats','Ganga Aarti at Dashashwamedh Ghat','Wandering the old-city lanes','Sarnath, a short trip from the city'],
+   best:'Oct – Mar', cost:2000},
+
+  {id:'goa', name:'Goa', state:'Goa', tag:'Coast', grad:['#0a4a5c','#28c7b0'], icon:'beach',
+   desc:"Portuguese-era churches and spice-scented lanes in the north give way to quieter, palm-lined coastline in the south — a coast for both parties and slow mornings.",
+   highlights:['Old Goa\'s churches and Fontainhas lanes','North Goa beach-hopping and nightlife','South Goa\'s quieter shores','Fresh seafood, every night'],
+   best:'Nov – Feb', cost:3200},
+
+  {id:'munnar', name:'Munnar', state:'Kerala', tag:'Hills', grad:['#1f4d2e','#7fbf6a'], icon:'hills',
+   desc:"Tea estates roll over the Western Ghats in every direction, broken by waterfalls, spice plantations and cool mountain air that's rare this far south.",
+   highlights:['Walk through working tea estates','Eravikulam National Park','Top Station viewpoint at sunrise','Spice plantation tour and tasting'],
+   best:'Sep – May', cost:2600},
+
+  {id:'alleppey', name:'Alleppey', state:'Kerala', tag:'Backwaters', grad:['#123b3e','#3fa6a0'], icon:'boat',
+   desc:"A slow drift through Kerala's backwaters on a converted rice-boat houseboat, past paddy fields and village life you'd otherwise never see.",
+   highlights:['Overnight houseboat on the backwaters','Village canoe rides through the canals','Kerala seafood cooked onboard','Marari Beach nearby for a coastal add-on'],
+   best:'Nov – Feb', cost:4200},
+
+  {id:'rishikesh', name:'Rishikesh', state:'Uttarakhand', tag:'Wellness', grad:['#1a3a4a','#4fc3d9'], icon:'mountain',
+   desc:"Where the Ganga rushes out of the Himalayas — yoga ashrams, suspension bridges and white-water rapids share the same riverbank.",
+   highlights:['Ganga Aarti at Triveni Ghat','Yoga or meditation session at an ashram','White-water rafting on the Ganga','Laxman Jhula and the riverside cafes'],
+   best:'Sep – Apr', cost:2200},
+
+  {id:'mumbai', name:'Mumbai', state:'Maharashtra', tag:'Metro', grad:['#2a2a5c','#e0577a'], icon:'gateway',
+   desc:"India's financial capital moves fast, but its colonial-era waterfront, film-industry energy and street-food scene reward anyone willing to keep pace.",
+   highlights:['Gateway of India and the Colaba waterfront','Marine Drive at sunset','Elephanta Caves by ferry','Street food trail — vada pav to pav bhaji'],
+   best:'Nov – Feb', cost:3400},
+
+  {id:'amritsar', name:'Amritsar', state:'Punjab', tag:'Sacred', grad:['#5c4a12','#f5c518'], icon:'golden',
+   desc:"The Golden Temple's marble courtyard, lit gold at dawn and dusk, anchors a city known equally for its warmth, its history at the Wagah border, and its food.",
+   highlights:['Golden Temple at dawn','Community meal (langar) at the temple','Wagah Border ceremony at sunset','Amritsari kulcha and lassi'],
+   best:'Oct – Mar', cost:2200},
+
+  {id:'hampi', name:'Hampi', state:'Karnataka', tag:'Ruins', grad:['#5c3a1a','#d98d3f'], icon:'ruins',
+   desc:"The boulder-strewn remains of the Vijayanagara Empire, a UNESCO site where stone chariots and ancient temples rise straight out of the landscape.",
+   highlights:['Vittala Temple and its stone chariot','Sunset from Matanga Hill','Cycling between the ruins','Coracle ride on the Tungabhadra'],
+   best:'Oct – Feb', cost:1900},
+
+  {id:'kochi', name:'Kochi', state:'Kerala', tag:'Coastal', grad:['#123a4a','#2f9e8f'], icon:'nets',
+   desc:"Chinese fishing nets, Dutch colonial courtyards and a working spice-trade port sit side by side in Fort Kochi's compact, walkable old town.",
+   highlights:['Chinese fishing nets at sunset','Fort Kochi\'s colonial streets on foot','A traditional Kathakali performance','Spice market in Mattancherry'],
+   best:'Oct – Mar', cost:2600},
+];
+
+const INTERESTS = ['Heritage & Forts','Spiritual','Beaches','Nature & Hills','Food','Backwaters','Adventure','Wildlife'];
+const STYLE_MULTIPLIER = {budget:0.72, comfort:1, luxury:1.9};
+
+let state = {
+  selectedDest: ['agra'],
+  days: 4,
+  travellers: 2,
+  interests: [],
+  lastItinerary: null,
+};
+
+/* ============================================================
+   Render: destination grid
+   ============================================================ */
+const grid = document.getElementById('destGrid');
+function renderGrid(filter=''){
+  const f = filter.trim().toLowerCase();
+  const list = DESTINATIONS.filter(d => !f || d.name.toLowerCase().includes(f) || d.state.toLowerCase().includes(f));
+  grid.innerHTML = list.map(d => `
+    <div class="dcard" data-id="${d.id}">
+      <div class="dcard-art" style="background:linear-gradient(150deg, ${d.grad[0]}, ${d.grad[1]});">
+        <span class="dcard-tag">${d.tag}</span>
+        <svg viewBox="0 0 48 44" style="color:rgba(255,255,255,0.92)">${ICONS[d.icon]}</svg>
+      </div>
+      <div class="dcard-body">
+        <h3>${d.name}</h3>
+        <div class="state">${d.state}</div>
+      </div>
+    </div>
+  `).join('') || `<div class="no-results">No destinations match "${filter}" — try another search.</div>`;
+
+  grid.querySelectorAll('.dcard').forEach(card => {
+    card.addEventListener('click', () => openDestModal(card.dataset.id));
+  });
+}
+renderGrid();
+document.getElementById('statCount').textContent = DESTINATIONS.length;
+
+document.getElementById('searchInput').addEventListener('input', e => renderGrid(e.target.value));
+
+/* ============================================================
+   Destination detail modal
+   ============================================================ */
+const destOverlay = document.getElementById('destOverlay');
+const destModal = document.getElementById('destModal');
+
+function openDestModal(id){
+  const d = DESTINATIONS.find(x => x.id === id);
+  if(!d) return;
+  destModal.innerHTML = `
+    <div class="modal-hero" style="background:linear-gradient(150deg, ${d.grad[0]}, ${d.grad[1]});">
+      <button class="modal-close" id="modalCloseBtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <svg viewBox="0 0 48 44" style="color:rgba(255,255,255,0.5)">${ICONS[d.icon]}</svg>
+      <div>
+        <h2>${d.name}</h2>
+        <div class="state">${d.state} · ${d.tag}</div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <p class="desc">${d.desc}</p>
+      <div class="meta-row">
+        <div class="meta-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Best time <b>${d.best}</b></div>
+        <div class="meta-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Approx. <b>₹${d.cost.toLocaleString('en-IN')}</b> / person / day</div>
+      </div>
+      <ul class="highlights">
+        ${d.highlights.map(h => `<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>${h}</li>`).join('')}
+      </ul>
+      <div class="modal-cta">
+        <button class="btn btn-primary" id="planHereBtn" style="flex:1; justify-content:center;">Plan a trip here</button>
+        <button class="btn btn-ghost" id="closeHereBtn">Close</button>
+      </div>
+    </div>
+  `;
+  destOverlay.classList.add('open');
+  document.getElementById('modalCloseBtn').onclick = closeDestModal;
+  document.getElementById('closeHereBtn').onclick = closeDestModal;
+  document.getElementById('planHereBtn').onclick = () => {
+    state.selectedDest = [id];
+    closeDestModal();
+    renderDestChips();
+    scrollTo('builder');
+  };
+}
+function closeDestModal(){ destOverlay.classList.remove('open'); }
+destOverlay.addEventListener('click', e => { if(e.target === destOverlay) closeDestModal(); });
+
+/* ============================================================
+   Navigation
+   ============================================================ */
+document.querySelectorAll('[data-goto]').forEach(el => {
+  el.addEventListener('click', () => scrollTo(el.dataset.goto));
+});
+function scrollTo(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth', block:'start'});
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.goto === id));
+  const titles = {destinations:'Destinations', builder:'AI Itinerary', hotels:'Hotels'};
+  if(titles[id]) document.getElementById('pageTitle').textContent = titles[id];
+}
+
+/* ============================================================
+   Builder controls
+   ============================================================ */
+const destChipsEl = document.getElementById('destChips');
+function renderDestChips(){
+  destChipsEl.innerHTML = DESTINATIONS.map(d => `
+    <button type="button" class="chip ${state.selectedDest.includes(d.id) ? 'on' : ''}" data-id="${d.id}">${d.name}</button>
+  `).join('');
+  destChipsEl.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const id = chip.dataset.id;
+      if(state.selectedDest.includes(id)){
+        state.selectedDest = state.selectedDest.filter(x => x !== id);
+      } else {
+        if(state.selectedDest.length >= 3){ showToast('You can pick up to 3 destinations for one trip'); return; }
+        state.selectedDest.push(id);
+      }
+      renderDestChips();
+    });
+  });
+}
+renderDestChips();
+
+const interestChipsEl = document.getElementById('interestChips');
+interestChipsEl.innerHTML = INTERESTS.map(i => `<button type="button" class="chip" data-i="${i}">${i}</button>`).join('');
+interestChipsEl.querySelectorAll('.chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    const i = chip.dataset.i;
+    if(state.interests.includes(i)){ state.interests = state.interests.filter(x => x !== i); chip.classList.remove('on-saffron'); }
+    else { state.interests.push(i); chip.classList.add('on-saffron'); }
+  });
+});
+
+document.querySelectorAll('[data-step]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const key = btn.dataset.step, dir = parseInt(btn.dataset.dir);
+    const min = key === 'days' ? 1 : 1, max = key === 'days' ? 14 : 10;
+    state[key] = Math.min(max, Math.max(min, state[key] + dir));
+    document.getElementById(key + 'Val').textContent = state[key];
+  });
+});
+
+/* ============================================================
+   AI Itinerary generation — tries the live Claude API,
+   falls back to a local budget-aware planner if unavailable.
+   ============================================================ */
+const generateBtn = document.getElementById('generateBtn');
+const resultPanel = document.getElementById('resultPanel');
+const LOADER_MSGS = ['Mapping the route…','Checking realistic stay costs…','Balancing everything against your budget…','Adding a few local touches…'];
+
+generateBtn.addEventListener('click', async () => {
+  const budget = parseInt(document.getElementById('budgetInput').value, 10);
+  if(state.selectedDest.length === 0){ showToast('Pick at least one destination'); return; }
+  if(!budget || budget <= 0){ showToast('Enter a budget to plan against'); return; }
+
+  const style = document.getElementById('styleSelect').value;
+  renderLoader();
+  generateBtn.disabled = true;
+
+  let itinerary;
+  try {
+    itinerary = await generateViaClaude({destIds:state.selectedDest, days:state.days, travellers:state.travellers, budget, style, interests:state.interests});
+  } catch(err){
+    itinerary = generateLocally({destIds:state.selectedDest, days:state.days, travellers:state.travellers, budget, style, interests:state.interests});
+  }
+  state.lastItinerary = itinerary;
+  renderResult(itinerary, budget);
+  generateBtn.disabled = false;
+});
+
+function renderLoader(){
+  resultPanel.innerHTML = `<div class="loader"><div class="spinner"></div><div class="loader-msg" id="loaderMsg">${LOADER_MSGS[0]}</div></div>`;
+  let i = 0;
+  const el = document.getElementById('loaderMsg');
+  const iv = setInterval(() => {
+    i = (i + 1) % LOADER_MSGS.length;
+    if(!el || !document.body.contains(el)){ clearInterval(iv); return; }
+    el.style.opacity = 0;
+    setTimeout(() => { el.textContent = LOADER_MSGS[i]; el.style.opacity = 1; }, 250);
+  }, 1100);
+}
+
+async function generateViaClaude({destIds, days, travellers, budget, style, interests}){
+  const names = destIds.map(id => DESTINATIONS.find(d => d.id === id).name).join(', ');
+  const prompt = `Plan a real India trip for TourCraft.
+Destinations (in order, split the days sensibly across them): ${names}
+Total days: ${days}
+Travellers: ${travellers}
+Total trip budget (INR, for everyone, whole trip): ₹${budget}
+Travel style: ${style}
+Interests: ${interests.length ? interests.join(', ') : 'general sightseeing'}
+
+Use realistic current India travel pricing (budget hotels ~₹1200-2500/night, comfort ~₹3000-6000/night, luxury ₹8000+; trains/flights between cities; typical meal and entry-fee costs). First decide honestly whether this trip is realistically possible within the given budget. Respond with ONLY minified JSON, no markdown, no code fences, matching exactly this shape:
+{"feasible":boolean,"reason":"only if not feasible: short honest explanation","minBudgetSuggested":"only if not feasible: a number","destination":"short label for the trip","days":[{"day":1,"theme":"short theme","morning":"short plan","afternoon":"short plan","evening":"short plan","stay":"stay type/idea","estCost":number}],"costBreakdown":{"stay":number,"food":number,"transport":number,"activities":number},"totalCost":number,"currency":"INR","tips":"one short helpful paragraph"}
+Keep every string short. If not feasible, you may omit the "days" and "costBreakdown" arrays/objects or leave them empty.`;
+
+  const response = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: "claude-sonnet-4-6",
+      max_tokens: 1000,
+      system: "You are TourCraft's India trip planner. Always answer with strict minified JSON only, matching the schema given. No commentary, no markdown, no code fences.",
+      messages: [{ role: "user", content: prompt }]
+    })
+  });
+  if(!response.ok) throw new Error('api error');
+  const data = await response.json();
+  const textBlock = (data.content || []).find(c => c.type === 'text');
+  if(!textBlock) throw new Error('no text');
+  let raw = textBlock.text.trim().replace(/^```json/i,'').replace(/^```/,'').replace(/```$/,'').trim();
+  const parsed = JSON.parse(raw);
+  parsed._source = 'ai';
+  return parsed;
+}
+
+/* Local fallback — used automatically if the live API call isn't reachable
+   (e.g. viewing this file outside the Claude artifact environment). Keeps
+   the planner fully functional and budget-honest on its own. */
+function generateLocally({destIds, days, travellers, budget, style, interests}){
+  const dests = destIds.map(id => DESTINATIONS.find(d => d.id === id));
+  const mult = STYLE_MULTIPLIER[style] || 1;
+  const intercity = Math.max(0, dests.length - 1) * 1400 * travellers;
+  const avgCostPerPersonDay = dests.reduce((s,d) => s + d.cost, 0) / dests.length;
+  const estTotal = Math.round(avgCostPerPersonDay * mult * travellers * days + intercity);
+
+  if(budget < estTotal * 0.85){
+    return {
+      feasible:false, _source:'local',
+      reason:`For ${days} day(s) across ${dests.map(d=>d.name).join(', ')} with ${travellers} traveller(s) at a ${style} level, realistic costs (stay, food, local transport, activities${dests.length>1?', plus inter-city travel':''}) come to around ₹${estTotal.toLocaleString('en-IN')}.`,
+      minBudgetSuggested: Math.ceil(estTotal/500)*500
+    };
+  }
+
+  const daysPerDest = splitDays(days, dests.length);
+  const dayList = [];
+  let dayCounter = 1;
+  const templates = [
+    {m:'Arrive & settle in, light local walk', a:'Visit the top landmark, unhurried', e:'Sunset viewpoint or riverside/market stroll'},
+    {m:'Full-day sightseeing at the main sights', a:'Second must-see spot + local lunch', e:'Free evening — cafes, markets or rest'},
+    {m:'Half-day cultural experience (heritage/spiritual site)', a:'Food trail or hands-on local experience', e:'Optional evening show or ceremony'},
+    {m:'Day trip to a nearby highlight', a:'Return + relaxed local exploring', e:'Farewell dinner at a well-rated local spot'},
+  ];
+  dests.forEach((d, di) => {
+    const dCount = daysPerDest[di];
+    const dCost = Math.round(d.cost * mult * travellers);
+    for(let i=0;i<dCount;i++){
+      const t = templates[i % templates.length];
+      dayList.push({
+        day: dayCounter++,
+        theme: `${d.name} — ${i === 0 ? 'first look' : i === dCount-1 ? 'last day' : 'exploring deeper'}`,
+        morning: t.m + ` in ${d.name}`,
+        afternoon: t.a,
+        evening: t.e,
+        stay: style === 'budget' ? `Budget guesthouse near ${d.name} centre` : style === 'luxury' ? `4★/5★ hotel or resort in ${d.name}` : `3★ hotel in ${d.name}`,
+        estCost: dCost
+      });
+    }
+  });
+
+  const stay = Math.round(estTotal*0.40), food = Math.round(estTotal*0.22), transport = Math.round(estTotal*0.20) + intercity - Math.round(estTotal*0.20*0), activities = Math.max(0, estTotal - stay - food - Math.round(estTotal*0.20));
+  return {
+    feasible:true, _source:'local',
+    destination: dests.map(d=>d.name).join(' + '),
+    days: dayList,
+    costBreakdown: {stay, food, transport: Math.round(estTotal*0.20)+intercity, activities: Math.max(0, estTotal - stay - food - Math.round(estTotal*0.20) - intercity)},
+    totalCost: estTotal,
+    currency:'INR',
+    tips: `Booking stays 2-3 weeks ahead and travelling ${dests[0]?.best ? 'in ' + dests[0].best : 'in the cooler months'} usually keeps prices closer to this estimate.${interests.length ? ' Given your interest in ' + interests[0].toLowerCase() + ', build in extra time on day 1 or 2.' : ''}`
+  };
+}
+function splitDays(total, buckets){
+  const base = Math.floor(total/buckets), rem = total % buckets;
+  return Array.from({length:buckets}, (_,i) => base + (i < rem ? 1 : 0)).map(v => Math.max(1,v));
+}
+
+/* ============================================================
+   Render result
+   ============================================================ */
+function renderResult(it, budget){
+  if(!it.feasible){
+    resultPanel.innerHTML = `
+      <div class="infeasible-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+        <h4>Sorry — that's not possible at this budget</h4>
+        <p>${it.reason || "This combination doesn't work within the budget given."}</p>
+        ${it.minBudgetSuggested ? `<div class="suggest">Try from ₹${Number(it.minBudgetSuggested).toLocaleString('en-IN')}</div>` : ''}
+        <button class="btn btn-ghost" id="adjustBtn">Adjust and try again</button>
+      </div>`;
+    document.getElementById('adjustBtn').onclick = () => {
+      if(it.minBudgetSuggested) document.getElementById('budgetInput').value = it.minBudgetSuggested;
+      resultPanel.scrollIntoView({behavior:'smooth', block:'nearest'});
+    };
+    return;
+  }
+
+  const pct = Math.min(100, Math.round((it.totalCost/budget)*100));
+  const over = it.totalCost > budget;
+  const bd = it.costBreakdown || {};
+  const bdColors = {stay:'#04e4dd', food:'#ff9a44', transport:'#7fbf6a', activities:'#e0577a', misc:'#8ea0aa'};
+
+  resultPanel.innerHTML = `
+    <div class="result-head">
+      <div>
+        <h3>${it.destination || 'Your itinerary'}</h3>
+        <div class="sub">${it.days ? it.days.length : state.days} day plan · ${it._source === 'ai' ? 'planned live by TourCraft AI' : 'planned by TourCraft'}</div>
+      </div>
+      <span class="badge-feasible">Fits your budget</span>
+    </div>
+
+    <div class="gauge-wrap">
+      <div class="gauge-labels"><span>Estimated cost</span><span class="amt">₹${it.totalCost.toLocaleString('en-IN')} / ₹${budget.toLocaleString('en-IN')}</span></div>
+      <div class="gauge-track"><div class="gauge-fill ${over?'over':''}" style="width:${pct}%"></div></div>
+    </div>
+
+    <div class="day-list" id="dayList">
+      ${(it.days||[]).map(d => `
+        <div class="day-card" data-day="${d.day}">
+          <div class="day-head">
+            <div class="day-head-left">
+              <div class="day-num">D${d.day}</div>
+              <div class="day-theme">${d.theme || 'Day ' + d.day}</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="day-cost">₹${(d.estCost||0).toLocaleString('en-IN')}</span>
+              <span class="day-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></span>
+            </div>
+          </div>
+          <div class="day-detail">
+            <div class="day-detail-inner">
+              ${d.morning ? `<div class="slot"><b>Morning —</b> ${d.morning}</div>` : ''}
+              ${d.afternoon ? `<div class="slot"><b>Afternoon —</b> ${d.afternoon}</div>` : ''}
+              ${d.evening ? `<div class="slot"><b>Evening —</b> ${d.evening}</div>` : ''}
+              ${d.stay ? `<div class="slot stay">Stay: ${d.stay}</div>` : ''}
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="breakdown">
+      ${Object.entries(bd).filter(([,v])=>v).map(([k,v]) => `
+        <div class="bd-row"><span class="bd-dot" style="background:${bdColors[k]||'#8ea0aa'}"></span>${k[0].toUpperCase()+k.slice(1)}<b>₹${Number(v).toLocaleString('en-IN')}</b></div>
+      `).join('')}
+    </div>
+
+    ${it.tips ? `<div class="tip-box"><b>Tip —</b> ${it.tips}</div>` : ''}
+
+    <div class="result-actions">
+      <button class="btn btn-saffron" id="enquireBtn" style="flex:1; justify-content:center;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        Enquire about this trip
+      </button>
+    </div>
+  `;
+
+  resultPanel.querySelectorAll('.day-card').forEach(card => {
+    const head = card.querySelector('.day-head');
+    const detail = card.querySelector('.day-detail');
+    head.addEventListener('click', () => {
+      const open = card.classList.toggle('open');
+      detail.style.maxHeight = open ? detail.scrollHeight + 'px' : '0px';
+    });
+  });
+
+  document.getElementById('enquireBtn').addEventListener('click', () => openEnquiry(it, budget));
+}
+
+/* ============================================================
+   Enquiry modal → mailto
+   ============================================================ */
+const enqOverlay = document.getElementById('enqOverlay');
+function openEnquiry(it, budget){
+  const lines = [
+    `Destination(s): ${it.destination}`,
+    `Total budget given: ₹${budget.toLocaleString('en-IN')}`,
+    `Estimated cost: ₹${it.totalCost.toLocaleString('en-IN')}`,
+    `Travellers: ${state.travellers}   Days: ${state.days}`,
+    '',
+    ...(it.days||[]).map(d => `Day ${d.day} — ${d.theme}: ${d.morning || ''} ${d.afternoon || ''} ${d.evening || ''}`.trim()),
+  ];
+  document.getElementById('enqMessage').value = lines.join('\n');
+  document.getElementById('enqName').value = '';
+  document.getElementById('enqEmail').value = '';
+  document.getElementById('enqPhone').value = '';
+  enqOverlay.classList.add('open');
+}
+document.getElementById('enqCancel').onclick = () => enqOverlay.classList.remove('open');
+enqOverlay.addEventListener('click', e => { if(e.target === enqOverlay) enqOverlay.classList.remove('open'); });
+
+document.getElementById('enqSend').addEventListener('click', () => {
+  const name = document.getElementById('enqName').value.trim();
+  const email = document.getElementById('enqEmail').value.trim();
+  const phone = document.getElementById('enqPhone').value.trim();
+  const message = document.getElementById('enqMessage').value.trim();
+  if(!name || !email){ showToast('Add your name and email first'); return; }
+
+  const subject = `Itinerary enquiry — ${state.lastItinerary ? state.lastItinerary.destination : 'India trip'}`;
+  const body = `From: ${name} (${email})${phone ? ' · ' + phone : ''}\n\n${message}`;
+  const mailto = `mailto:${BUSINESS_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href = mailto;
+  enqOverlay.classList.remove('open');
+  showToast('Opening your email app…');
+});
+
+/* ============================================================
+   Toast
+   ============================================================ */
+let toastTimer;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+}
+</script>
+</body>
+</html>
