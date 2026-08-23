@@ -1,0 +1,376 @@
+<html>
+    <head>
+        <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TourCraft</title>
+ <link rel="icon" type="image/x-icon" href="logo.jpeg">
+    <style>
+    body
+    {margin:10;font-family:Arial,sans-serif;background:#f5f4ee;color:#63192b}nav{position:sticky;top:12px;margin:12px auto;width:90%;padding:14px 20px;background:#61a383;border-radius:18px;display:flex;justify-content:space-between;box-shadow:0 8px 30px #0001;z-index:5}.logo{font-weight:800;font-size:22px}.btn{background:#174c3a;color:#fff;border:0;padding:13px 18px;border-radius:12px;font-weight:700;cursor:pointer}
+    /* ===== PREMIUM HERO ===== */
+
+.hero{
+    max-width:1100px;
+    margin:40px auto;
+    padding:80px 20px 20px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:center;
+}
+
+.hero-text small{
+    color:#7b2940;
+    font-size:15px;
+    letter-spacing:1px;
+}
+
+.hero-text h1{
+    font-size:72px;
+    line-height:0.92;
+    margin:18px 0;
+    color:#6A1530;
+    font-family:'Playfair Display',serif;
+}
+
+.hero-text p{
+    font-size:20px;
+    line-height:1.7;
+    color:#5d6b66;
+    margin-bottom:28px;
+}
+
+.hero-text{
+    max-width:620px;      /* Controls overall width */
+}
+
+.hero-text small{
+    font-size:15px;
+    color:#7B2940;
+    letter-spacing:1px;
+}
+
+.hero-text h1{
+    font-size:68px;       /* Change this: 60–72px */
+    line-height:0.92;
+    margin:18px 0;
+    color:#6A1530;
+    font-family:'Playfair Display',serif;
+}
+
+.hero-text p{
+    font-size:20px;       /* Change this: 18–22px */
+    line-height:1.7;
+    color:#5D6B66;
+    margin-bottom:28px;
+}
+/* Image frame stays SAME SIZE */
+
+.hero-frame{
+    position:relative;
+    width:100%;
+    height:470px;
+    border-radius:30px;
+    overflow:hidden;
+    box-shadow:0 20px 45px rgba(0,0,0,.15);
+}
+
+.hero-slide{
+    position:absolute;
+    inset:0;
+    background-size:cover;
+    background-position:center;
+    opacity:0;
+    transition:opacity 1.1s ease-in-out;
+}
+
+.hero-slide.active{
+    opacity:1;
+}
+
+.hero-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        rgba(0,0,0,.05),
+        rgba(0,0,0,.15)
+    );
+}
+
+@media(max-width:800px){
+
+.hero{
+grid-template-columns:1fr;
+}
+
+.hero-text h1{
+font-size:50px;
+}
+
+.hero-frame{
+height:320px;
+}
+
+}.section{max-width:1100px;margin:70px auto;padding:0 20px;scroll-margin-top:110px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:15px}.card{height:290px;border-radius:22px;background-size:cover;background-position:center;position:relative;cursor:pointer;overflow:hidden}.card:after{content:'';position:absolute;inset:0;background:linear-gradient(transparent, #000b)}.card div{position:absolute;bottom:18px;left:18px;color:white;z-index:1}.card h3{font-size:25px;margin:0}.planner{background:#174c3a;color:white;border-radius:28px;padding:35px}.form{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.field label{display:block;font-size:12px;margin-bottom:6px;color:#c8d8d1}.field input,.field select{width:100%;padding:13px;border-radius:10px;border:1px solid #ffffff33;background:#ffffff12;color:white;box-sizing:border-box}.field option{color:#17352b}.wide{grid-column:span 2}.result{margin-top:20px;background:white;color:#17352b;padding:25px;border-radius:20px}.day{padding:15px;border:1px solid #ddd;border-radius:14px;margin:10px 0}.danger{background:#fff0ed;color:#8d3e36;padding:15px;border-radius:14px}.modal{display:none;position:fixed;inset:0;background:#0009;z-index:2000;align-items:center;justify-content:center;padding:20px}.box{background:white;border-radius:24px;padding:28px;max-width:750px;width:100%;max-height:90vh;overflow:auto}.close{float:right;border:0;background:#eee;border-radius:50%;width:35px;height:35px}.enq input,.enq textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:10px;box-sizing:border-box}.enq textarea{height:100px}@media(max-width:800px){.hero{grid-template-columns:1fr}.hero h1{font-size:48px}.form{grid-template-columns:1fr}.wide{grid-column:auto}}@media(max-width:500px){.photo{height:300px}}
+
+
+.navbar{
+ position:fixed;
+ top:16px;
+ left:50%;
+ transform:translateX(-50%);
+ width:min(1180px,95%);
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ padding:14px 22px;
+ border-radius:22px;
+margin:1 auto;
+ background:rgb(147 144 144 / 75%);
+ backdrop-filter:blur(20px);
+
+ border:1px solid rgba(255,255,255,.8);
+
+ box-shadow:0 10px 40px rgba(0,0,0,.08);
+ z-index:100;
+}
+
+.logo{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ font-size:26px;
+ font-family:'Playfair Display',serif;
+ font-weight:700;
+ color:#212b27;
+}
+
+.logo img{
+ width:42px;
+ height:42px;
+ border-radius:12px;
+}
+
+.nav-links{
+ display:flex;
+ gap:28px;
+}
+
+.nav-links a{
+ text-decoration:none;
+ color:#000b06;
+ font-weight:600;
+ transition:.25s;
+ position:relative;
+}
+
+.nav-links a:hover{
+ color:#103D2E;
+}
+
+.nav-links a::after{
+ content:'';
+ position:absolute;
+ bottom:-6px;
+ left:0;
+ width:0%;
+ height:2px;
+ background:#D8F27C;
+ transition:.3s;
+}
+
+.nav-links a:hover::after{
+ width:100%;
+}
+
+.cta{
+ background:#103D2E;
+ color:white;
+ padding:12px 18px;
+ border-radius:14px;
+ text-decoration:none;
+ font-weight:700;
+ transition:.25s;
+}
+
+.cta:hover{
+ background:#1b5a46;
+ transform:translateY(-2px);
+}
+
+/* ===== Destination detail modal — richer, image-led ===== */
+.dest-box{padding:0;overflow:hidden}
+.dest-hero{position:relative;height:260px;background-size:cover;background-position:center;display:flex;align-items:flex-end}
+.dest-hero-overlay{position:absolute;inset:0;background:linear-gradient(transparent 40%,#000c)}
+.dest-hero h1{position:relative;z-index:1;color:#fff;font-family:'Playfair Display',serif;font-size:36px;margin:0;padding:24px 28px}
+.close-float{position:absolute;top:16px;right:16px;z-index:2;border:0;background:rgba(255,255,255,.88);border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:16px}
+.dest-content{padding:26px 28px 30px}
+.dest-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.meta-chip{background:#f0ece4;color:#63192b;font-size:12.5px;font-weight:700;padding:6px 12px;border-radius:999px}
+.dest-content p.desc{color:#5d6b66;font-size:14.5px;line-height:1.65;margin:0 0 6px}
+.dest-block{margin:18px 0}
+.dest-block b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#8a7a72;margin-bottom:9px}
+.dest-tags{display:flex;flex-wrap:wrap;gap:8px}
+.dest-tags span{background:#eef2ee;color:#174c3a;padding:6px 13px;border-radius:999px;font-size:12.5px;font-weight:600}
+.dest-tags.good span{background:#fdeee7;color:#7b2940}
+@media(max-width:600px){.dest-hero{height:200px}.dest-hero h1{font-size:28px}}
+    </style></head><body>
+        <link rel="stylesheet" href="css/navbar.css">
+
+<nav class="navbar">
+
+<div class="logo">
+    <img src="logo.jpeg" alt="TourCraft Logo">
+    <span>TourCraft</span>
+</div>
+
+<div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="#destinations">Explore</a>
+    <a href="planner.html">AI Planner</a>
+    <a href="guides.html">Inspirations</a>
+    <a href="contact.html">Contact</a>
+</div>
+
+<a href="planner.html" class="cta">
+    Build My Trip ✨
+</a>
+
+</nav>
+<!-- <nav><div class="logo">✦ TourCraft</div><button class="btn" onclick="document.getElementById('planner').scrollIntoView({behavior:'smooth'})">Build my trip ✨</button></nav> -->
+<section class="hero">
+
+<div class="hero-text">
+
+<small>SMART TRAVEL PLANNING</small>
+
+<h1>Your trip.<br>Crafted around you.</h1>
+
+<p>
+Discover iconic destinations and create a beautiful itinerary that respects your real budget.
+</p>
+
+<button class="btn"
+onclick="document.getElementById('destinations').scrollIntoView({behavior:'smooth'})">
+Create Itinerary ✨
+</button>
+
+</div>
+
+<div class="hero-frame">
+
+<div class="hero-slide active"
+style="background-image:url('https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1200&q=80')"></div>
+
+<div class="hero-slide"
+style="background-image:url('https://wallpapercave.com/wp/wp6612929.jpg')"></div>
+
+<div class="hero-slide"
+style="background-image:url('https://c4.wallpaperflare.com/wallpaper/681/591/749/goa-4k-india-palms-wallpaper-preview.jpg')"></div>
+
+<div class="hero-slide"
+style="background-image:url('https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1200&q=80')"></div>
+
+<div class="hero-slide"
+style="background-image:url('https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1200&q=80')"></div>
+
+<div class="hero-overlay"></div>
+
+</div>
+
+</section>
+<section class="section" id="destinations"><h2>Explore iconic destinations</h2><p>Click a destination to discover it.</p><div class="grid" id="destinations-grid"></div></section>
+<!-- <section class="section" id="planner"><div class="planner"><h2>AI Itinerary Builder</h2><p>Tell TourCraft what you need.</p><div class="form"><div class="field"><label>DESTINATION</label><select id="destination"><option>Kashmir</option><option>Kerala</option><option>Goa</option><option>Rajasthan</option><option>Manali</option><option>Varanasi</option><option>Meghalaya</option><option>Andaman</option></select></div><div class="field"><label>TRAVELLERS</label><input id="people" type="number" value="2" min="1"></div><div class="field"><label>DAYS</label><input id="days" type="number" value="5" min="1"></div><div class="field"><label>BUDGET ₹</label><input id="budget" type="number" value="35000" min="1"></div><div class="field"><label>STYLE</label><select id="style"><option>Smart Budget</option><option>Comfort</option><option>Backpacker</option><option>Premium</option></select></div><div class="field"><label>TRANSPORT</label><select id="transport"><option>Comfortable</option><option>Budget</option><option>Private Cab</option></select></div><div class="field wide"><label>INTERESTS</label><input id="interests" placeholder="food, mountains, culture, adventure..."></div></div><br><button class="btn" style="background:#dff08c;color:#17352b" onclick="build()">Generate my itinerary ✨</button><div id="result"></div></div></section> -->
+<div class="modal" id="destModal">
+  <div class="box dest-box">
+    <div class="dest-hero" id="destHero">
+      <button class="close-float" onclick="hide('destModal')">×</button>
+      <div class="dest-hero-overlay"></div>
+      <h1 id="mt"></h1>
+    </div>
+    <div class="dest-content">
+      <div class="dest-meta">
+        <span class="meta-chip" id="mPrice"></span>
+        <span class="meta-chip" id="mBest"></span>
+        <span class="meta-chip" id="mDays"></span>
+      </div>
+      <p class="desc" id="md"></p>
+      <div class="dest-block">
+        <b>Perfect for</b>
+        <div class="dest-tags good" id="mGood"></div>
+      </div>
+      <div class="dest-block">
+        <b>Signature experiences</b>
+        <div class="dest-tags" id="mf"></div>
+      </div>
+      <button class="btn" style="width:100%;margin-top:8px" onclick="useDestination()">Plan this destination →</button>
+    </div>
+  </div>
+</div>
+<script>
+
+const D={
+Kashmir:{img:'https://images.unsplash.com/photo-1609947017136-9daf32a5eb16?auto=format&fit=crop&w=800&q=80',desc:'Snowy mountains, Dal Lake houseboats, valleys and Kashmiri hospitality.',bestTime:'Mar–Jun & Sep–Nov',idealDays:'6–8 days',goodFor:['Honeymoon','Nature'],spots:['Dal Lake','Gulmarg','Pahalgam','Sonamarg','Betaab Valley','Shankaracharya Temple'],tiers:{backpacker:1800,smartBudget:2800,comfort:4800,premium:9500}},
+Kerala:{img:'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80',desc:'Backwaters, beaches, hill stations, food and unhurried travel.',bestTime:'Sep–Mar',idealDays:'6–8 days',goodFor:['Relaxation','Nature'],spots:['Alleppey Backwaters','Munnar Tea Hills','Varkala Cliff','Fort Kochi','Thekkady','Kumarakom'],tiers:{backpacker:1600,smartBudget:2400,comfort:4200,premium:8500}},
+Goa:{img:'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80',desc:'Beaches, Portuguese heritage, cafes and coastal nightlife.',bestTime:'Nov–Feb',idealDays:'4–6 days',goodFor:['Nightlife','Beaches'],spots:['Baga Beach','Anjuna Flea Market','Old Goa Churches','South Goa Beaches','Fort Aguada','Chapora Fort'],tiers:{backpacker:1400,smartBudget:2100,comfort:3800,premium:8000}},
+Rajasthan:{img:'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80',desc:'Forts, palaces, desert landscapes and royal Rajasthani culture.',bestTime:'Oct–Mar',idealDays:'7–9 days',goodFor:['Culture','Heritage'],spots:['Amber Fort Jaipur','Mehrangarh Jodhpur','City Palace Udaipur','Jaisalmer Desert Camp','Hawa Mahal','Local Bazaars'],tiers:{backpacker:1700,smartBudget:2600,comfort:4500,premium:9200}},
+Manali:{img:'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80',desc:'Mountain views, cafes, valleys and easy adventure activities.',bestTime:'Mar–Jun & Oct–Feb',idealDays:'5–7 days',goodFor:['Adventure','Nature'],spots:['Solang Valley','Old Manali Cafes','Atal Tunnel','Kasol','Hidimba Temple','Rohtang Pass'],tiers:{backpacker:1500,smartBudget:2300,comfort:3900,premium:7800}},
+Varanasi:{img:'https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=800&q=80',desc:'Ghats, spirituality, street food and living heritage.',bestTime:'Oct–Mar',idealDays:'2–3 days',goodFor:['Culture','Spirituality'],spots:['Ganga Aarti','Sarnath','Old City Lanes','Sunrise Boat Ride','Kashi Vishwanath Temple','Local Food Trail'],tiers:{backpacker:1000,smartBudget:1600,comfort:2800,premium:6000}},
+Meghalaya:{img:'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80',desc:'Living root bridges, waterfalls, misty hills and nature.',bestTime:'Oct–May',idealDays:'5–7 days',goodFor:['Nature','Adventure'],spots:['Shillong','Cherrapunji Waterfalls','Dawki River','Mawlynnong Village','Living Root Bridges','Elephant Falls'],tiers:{backpacker:1650,smartBudget:2500,comfort:4300,premium:8200}},
+Andaman:{img:'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80',desc:'Island beaches, clear water and marine experiences.',bestTime:'Oct–May',idealDays:'5–6 days',goodFor:['Beaches','Honeymoon'],spots:['Radhanagar Beach','Cellular Jail','Neil Island','Havelock Scuba Diving','Ross Island','North Bay Snorkelling'],tiers:{backpacker:2200,smartBudget:3400,comfort:5800,premium:12000}},
+Ladakh:{img:'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80',desc:'High-altitude desert, Buddhist monasteries and cobalt lakes.',bestTime:'May–Sep',idealDays:'7–9 days',goodFor:['Adventure','Photography'],spots:['Pangong Lake','Nubra Valley','Magnetic Hill','Leh Palace','Khardung La Pass','Diskit Monastery'],tiers:{backpacker:2200,smartBudget:3400,comfort:5600,premium:11000}},
+Hampi:{img:'https://images.unsplash.com/photo-1600100568205-8e0a8b2a2a8e?auto=format&fit=crop&w=800&q=80',desc:'Boulder-strewn ruins of a 14th-century empire, frozen mid-story.',bestTime:'Oct–Feb',idealDays:'2–3 days',goodFor:['History','Backpacking'],spots:['Virupaksha Temple','Vittala Temple Complex','Matanga Hill Sunrise','Hampi Bazaar','Lotus Mahal','Tungabhadra Coracle Ride'],tiers:{backpacker:1200,smartBudget:1900,comfort:3400,premium:7000}},
+Rishikesh:{img:'https://images.unsplash.com/photo-1591017403286-fd8493524e1e?auto=format&fit=crop&w=800&q=80',desc:'Whitewater rapids, riverside yoga and evening aarti on the Ganges.',bestTime:'Sep–Nov & Feb–Apr',idealDays:'3–4 days',goodFor:['Adventure','Wellness'],spots:['Laxman Jhula','Ram Jhula','White Water Rafting','Beatles Ashram','Triveni Ghat Aarti','Neer Garh Waterfall'],tiers:{backpacker:1300,smartBudget:2000,comfort:3600,premium:7200}}
+};
+
+let chosen='Kashmir';
+
+/* ===== HERO SLIDESHOW ===== */
+
+const heroSlides=document.querySelectorAll(".hero-slide");
+
+let currentHero=0;
+
+setInterval(()=>{
+
+heroSlides[currentHero].classList.remove("active");
+
+currentHero=(currentHero+1)%heroSlides.length;
+
+heroSlides[currentHero].classList.add("active");
+
+},4000);
+
+function money(x){return '₹'+Math.round(x).toLocaleString('en-IN')}
+
+function init(){
+  const grid=document.getElementById('destinations-grid');
+  for(const n in D){
+    const t=D[n].tiers;
+    grid.innerHTML+=`<div class='card' style="background-image:url('${D[n].img}')" onclick="openDest('${n}')"><div><h3>${n}</h3><span>From ${money(t.backpacker)}/day</span></div></div>`;
+  }
+}
+
+function openDest(n){
+  chosen=n;
+  const dest=D[n];
+  document.getElementById('destHero').style.backgroundImage=`url('${dest.img}')`;
+  document.getElementById('mt').textContent=n;
+  document.getElementById('mPrice').textContent=`${money(dest.tiers.backpacker)} – ${money(dest.tiers.premium)} / day`;
+  document.getElementById('mBest').textContent=`Best time: ${dest.bestTime}`;
+  document.getElementById('mDays').textContent=`Ideal: ${dest.idealDays}`;
+  document.getElementById('md').textContent=dest.desc;
+  document.getElementById('mGood').innerHTML=dest.goodFor.map(g=>`<span>${g}</span>`).join('');
+  document.getElementById('mf').innerHTML=dest.spots.map(s=>`<span>${s}</span>`).join('');
+  destModal.style.display='flex';
+}
+
+function hide(id){document.getElementById(id).style.display='none'}
+
+function useDestination(){
+  hide('destModal');
+  location.href='planner.html?dest='+encodeURIComponent(chosen);
+}
+
+init();
+
+</script>
+</body></html>

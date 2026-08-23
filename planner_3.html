@@ -10,98 +10,94 @@ body{margin:0;font-family:'Inter',Arial,sans-serif;background:#f5f4ee;color:#631
 .btn:hover{background:#1e6350}
 .btn[disabled]{opacity:.55;cursor:not-allowed}
 
-/* =====================================================================
-   NAVBAR — copied verbatim from index.html. Do not edit this block.
-   ===================================================================== */
-.navbar{
- position:fixed;
- top:16px;
- left:50%;
- transform:translateX(-50%);
- width:min(1180px,95%);
- display:flex;
- justify-content:space-between;
- align-items:center;
- padding:14px 22px;
- border-radius:22px;
- /* keep margin 12 constant for all other pages so navbar doesn't jump around when switching pages  */
- margin:1 auto;
-font-family: Arial, sans-serif;
 
- background:rgb(147 144 144 / 75%);
- backdrop-filter:blur(20px);
 
- border:1px solid rgba(255,255,255,.8);
-
- box-shadow:0 10px 40px rgba(0,0,0,.08);
- z-index:100;
+.navbar {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1180px, 95%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 22px;
+    border-radius: 22px;
+    margin: 1px auto;
+    background: rgb(147 144 144 / 75%);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,.8);
+    box-shadow: 0 10px 40px rgba(0,0,0,.08);
+    z-index: 100;
 }
-
-
-.logo {
+.navbar .logo {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 23px;
+}
+
+.navbar .logo img {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+}
+
+.navbar .logo span {
     font-family: 'Playfair Display', serif;
+    font-size: 23px;
     font-weight: 900;
+    line-height: 1;
     color: #212b27;
+    white-space: nowrap;
 }
 
-
-.logo img{
- width:42px;
- height:42px;
- border-radius:12px;
+.nav-links {
+    display: flex;
+    gap: 28px;
 }
 
-.nav-links{
- display:flex;
- gap:28px;
+.nav-links a {
+    text-decoration: none;
+    color: #000b06;
+    font-weight: 600;
+    transition: .25s;
+    position: relative;
 }
 
-.nav-links a{
- text-decoration:none;
- color:#000b06;
- font-weight:600;
- transition:.25s;
- position:relative;
+.nav-links a:hover {
+    color: #103D2E;
 }
 
-.nav-links a:hover{
- color:#103D2E;
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: #D8F27C;
+    transition: .3s;
 }
 
-.nav-links a::after{
- content:'';
- position:absolute;
- bottom:-6px;
- left:0;
- width:0%;
- height:2px;
- background:#D8F27C;
- transition:.3s;
+.nav-links a:hover::after {
+    width: 100%;
 }
 
-.nav-links a:hover::after{
- width:100%;
+.cta {
+    background: #103D2E;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: .25s;
 }
 
-.cta{
- background:#103D2E;
- color:white;
- padding:12px 18px;
- border-radius:14px;
- text-decoration:none;
- font-weight:700;
- transition:.25s;
+.cta:hover {
+    background: #1b5a46;
+    transform: translateY(-2px);
 }
-
-.cta:hover{
- background:#1b5a46;
- transform:translateY(-2px);
-}
-/* ===================================================================== */
+    /* ===================================================================== */
 
 /* ---------- page layout (builder only) ---------- */
 .page{max-width:1180px;margin:0 auto;padding:40px 20px 60px}
@@ -202,25 +198,24 @@ font-family: Arial, sans-serif;
 <body>
 
 <link rel="stylesheet" href="css/navbar.css">
-
 <nav class="navbar">
 
-<div class="logo">
-    <img src="logo.jpeg" alt="TourCraft Logo">
-    <span>TourCraft</span>
-</div>
+    <div class="logo">
+        <img src="logo.jpeg" alt="TourCraft Logo">
+        <span>TourCraft</span>
+    </div>
 
-<div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="explore.html">Explore</a>
-    <a href="planner.html">AI Planner</a>
-    <a href="guides.html">Inspirations</a>
-    <a href="contact.html">Contact</a>
-</div>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="explore.html">Explore</a>
+        <a href="planner.html">AI Planner</a>
+        <a href="guides.html">Inspirations</a>
+        <a href="contact.html">Contact</a>
+    </div>
 
-<a href="planner.html" class="cta">
-    Build My Trip ✨
-</a>
+    <a href="planner.html" class="cta">
+        Build My Trip ✨
+    </a>
 
 </nav>
 
