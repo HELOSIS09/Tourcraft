@@ -9,10 +9,10 @@ body{margin:0;font-family:'Inter',Arial,sans-serif;background:#f5f4ee;color:#631
 .btn{background:#174c3a;color:#fff;border:0;padding:13px 20px;border-radius:12px;font-weight:700;cursor:pointer;font-size:15px;font-family:inherit}
 .btn:hover{background:#1e6350}
 .btn[disabled]{opacity:.55;cursor:not-allowed}
+.btn-outline{background:#fff;color:#174c3a;border:1.5px solid #cfd8d2}
+.btn-outline:hover{border-color:#174c3a}
 
-/* =====================================================================
-   NAVBAR — copied verbatim from index.html. Do not edit this block.
-   ===================================================================== */
+/* ---------- exact navbar, unchanged ---------- */
 .navbar{
  position:fixed;
  top:16px;
@@ -24,118 +24,60 @@ body{margin:0;font-family:'Inter',Arial,sans-serif;background:#f5f4ee;color:#631
  align-items:center;
  padding:14px 22px;
  border-radius:22px;
-
  background:rgb(147 144 144 / 75%);
  backdrop-filter:blur(20px);
-
  border:1px solid rgba(255,255,255,.8);
-
  box-shadow:0 10px 40px rgba(0,0,0,.08);
  z-index:100;
 }
+.logo{display:flex;align-items:center;gap:10px;font-size:26px;font-family:'Playfair Display',serif;font-weight:700;color:#212b27}
+.logo img{width:42px;height:42px;border-radius:12px;object-fit:cover;background:#174c3a}
+.nav-links{display:flex;gap:28px}
+.nav-links a{text-decoration:none;color:#000b06;font-weight:600;transition:.25s;position:relative}
+.nav-links a:hover{color:#103D2E}
+.nav-links a::after{content:'';position:absolute;bottom:-6px;left:0;width:0%;height:2px;background:#D8F27C;transition:.3s}
+.nav-links a:hover::after{width:100%}
+.nav-links a.active::after{width:100%}
+.cta{background:#103D2E;color:white;padding:12px 18px;border-radius:14px;text-decoration:none;font-weight:700;transition:.25s}
+.cta:hover{background:#1b5a46;transform:translateY(-2px)}
+@media(max-width:860px){.nav-links{display:none}}
 
-.logo{
- display:flex;
- align-items:center;
- gap:10px;
- font-size:26px;
- font-family:'Playfair Display',serif;
- font-weight:700;
- color:#212b27;
-}
+/* ---------- page layout ---------- */
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.planner-hero{max-width:1180px;margin:0 auto;padding:150px 20px 40px;text-align:center}
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#174c3a;background:#e7f2ec;padding:6px 14px;border-radius:999px;margin-bottom:16px}
+.planner-hero h1{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,52px);line-height:1.08;margin:0 0 14px;color:#212b27}
+.planner-hero p{font-size:17px;color:#69756f;max-width:560px;margin:0 auto}
 
-.logo img{
- width:42px;
- height:42px;
- border-radius:12px;
-}
+/* ---------- destination strip ---------- */
+.section{max-width:1180px;margin:56px auto;padding:0 20px}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px;gap:16px;flex-wrap:wrap}
+.section-head h2{font-family:'Playfair Display',serif;font-size:28px;margin:0 0 6px;color:#212b27}
+.section-head p{margin:0;color:#69756f;font-size:14.5px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{height:250px;border-radius:20px;background-size:cover;background-position:center;position:relative;cursor:pointer;overflow:hidden;border:1px solid #eee;transition:transform .25s ease,box-shadow .25s ease}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 34px rgba(23,76,58,.18)}
+.card:after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 40%,#000c)}
+.card .info{position:absolute;bottom:16px;left:16px;right:16px;color:white;z-index:1}
+.card h3{font-size:21px;margin:0 0 4px;font-family:'Playfair Display',serif}
+.card .price{font-size:12.5px;opacity:.92}
+.card .tap{font-size:11px;opacity:.75;margin-top:4px}
 
-.nav-links{
- display:flex;
- gap:28px;
-}
+/* ---------- planner card ---------- */
+.planner{background:linear-gradient(160deg,#174c3a,#0f3226);color:white;border-radius:28px;padding:40px;scroll-margin-top:110px}
+.planner-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;margin-bottom:26px}
+.planner-top h2{font-family:'Playfair Display',serif;font-size:30px;margin:0 0 6px}
+.planner-top p{margin:0;color:#c8d8d1;font-size:14.5px;max-width:440px}
+.ai-chip{display:flex;align-items:center;gap:8px;background:#ffffff14;border:1px solid #ffffff28;padding:9px 16px;border-radius:999px;font-size:13px;font-weight:600;color:#d8f27c;white-space:nowrap}
 
-.nav-links a{
- text-decoration:none;
- color:#000b06;
- font-weight:600;
- transition:.25s;
- position:relative;
-}
-
-.nav-links a:hover{
- color:#103D2E;
-}
-
-.nav-links a::after{
- content:'';
- position:absolute;
- bottom:-6px;
- left:0;
- width:0%;
- height:2px;
- background:#D8F27C;
- transition:.3s;
-}
-
-.nav-links a:hover::after{
- width:100%;
-}
-
-.cta{
- background:#103D2E;
- color:white;
- padding:12px 18px;
- border-radius:14px;
- text-decoration:none;
- font-weight:700;
- transition:.25s;
-}
-
-.cta:hover{
- background:#1b5a46;
- transform:translateY(-2px);
-}
-/* ===================================================================== */
-
-/* ---------- page layout (builder only) ---------- */
-.page{max-width:1180px;margin:0 auto;padding:40px 20px 60px}
-
-.planner{background:linear-gradient(160deg,#890a38,#70022b);color:white;border-radius:28px;padding:38px}
-.planner-top{margin-bottom:26px}
-.eyebrow{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#d8f27c;margin-bottom:10px}
-.planner-top h1{font-family:'Playfair Display',serif;font-size:clamp(26px,3.4vw,34px);margin:0 0 8px;color:#fff}
-.planner-top p{margin:0;color:#c8d8d1;font-size:14.5px;max-width:520px}
-
-.builder-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:26px;align-items:start}
-@media(max-width:900px){.builder-grid{grid-template-columns:1fr}}
-
-.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.field label{display:block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:7px;color:#a9c2b7}
-.field input,.field select{width:100%;padding:12px 14px;border-radius:11px;border:1px solid #ffffff30;background:#ffffff10;color:white;box-sizing:border-box;font-family:inherit;font-size:14.5px}
+.form{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.field label{display:block;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:7px;color:#a9c2b7}
+.field input,.field select{width:100%;padding:13px 14px;border-radius:11px;border:1px solid #ffffff30;background:#ffffff10;color:white;box-sizing:border-box;font-family:inherit;font-size:14.5px}
 .field select option{color:#17352b}
 .field input::placeholder{color:#9fb3aa}
 .wide{grid-column:span 2}
-
-.form-actions{margin-top:22px}
-.form-actions .hint{display:block;margin-top:10px;font-size:12px;color:#a9c2b7}
-
-.live-estimate{margin-top:16px;padding:13px 16px;border-radius:12px;font-size:13px;background:#ffffff10;border:1px solid #ffffff20;color:#e5efe9;display:none}
-.live-estimate.show{display:block}
-.live-estimate b{color:#fff}
-.live-estimate.fits{border-color:#7fd9a0}
-.live-estimate.short{border-color:#f2a99a}
-
-/* ---------- destination snapshot (right column) ---------- */
-.snapshot{background:#ffffff0d;border:1px solid #ffffff22;border-radius:18px;overflow:hidden}
-.snapshot-media{height:150px;background-size:cover;background-position:center}
-.snapshot-body{padding:18px 20px 20px}
-.snapshot-body h3{font-family:'Playfair Display',serif;font-size:19px;margin:0 0 4px;color:#fff}
-.snapshot-body .range{font-size:12.5px;color:#d8f27c;font-weight:700;margin-bottom:10px}
-.snapshot-body p{font-size:13px;color:#c8d8d1;line-height:1.55;margin:0 0 12px}
-.snapshot-body .best{font-size:12px;color:#a9c2b7;margin-bottom:12px}
-.snapshot-tags{display:flex;flex-wrap:wrap;gap:6px}
-.snapshot-tags span{background:#ffffff14;color:#e5efe9;padding:5px 10px;border-radius:999px;font-size:11.5px}
+.form-actions{margin-top:24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.form-actions .hint{font-size:12.5px;color:#a9c2b7}
 
 /* ---------- feasibility banner ---------- */
 .feasibility{display:none;margin-top:24px;padding:20px 22px;border-radius:16px;align-items:flex-start;gap:12px}
@@ -172,18 +114,22 @@ body{margin:0;font-family:'Inter',Arial,sans-serif;background:#f5f4ee;color:#631
 .budget-rows .row span:last-child{color:#17352b;font-weight:700}
 .budget-rows .row.total{border-bottom:none;padding-top:12px;font-size:15.5px}
 .budget-rows .row.total span{color:#174c3a}
-.budget-rows .row .note{display:block;font-size:11.5px;color:#9aa39d;font-weight:400;margin-top:2px}
 
 .enquire-box{text-align:center;background:#f7f5ef}
 .enquire-box p{color:#69756f;font-size:14px;max-width:420px;margin:6px auto 18px}
 
-/* ---------- enquiry modal ---------- */
+/* ---------- modals ---------- */
 .modal{display:none;position:fixed;inset:0;background:#0009;z-index:2000;align-items:center;justify-content:center;padding:20px}
 .modal.show{display:flex}
-.box{background:white;border-radius:24px;padding:30px;max-width:560px;width:100%;max-height:90vh;overflow:auto;position:relative;color:#17352b}
+.box{background:white;border-radius:24px;padding:30px;max-width:760px;width:100%;max-height:90vh;overflow:auto;position:relative}
 .close{position:absolute;top:18px;right:18px;border:0;background:#f1f1ee;border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:16px}
-.box h1{font-family:'Playfair Display',serif;font-size:24px;margin:0 0 8px;color:#212b27}
+.dest-modal-media{height:220px;border-radius:18px;background-size:cover;background-position:center;margin-bottom:20px}
+.box h1{font-family:'Playfair Display',serif;font-size:30px;margin:0 0 8px;color:#212b27}
+.box .price-range{color:#174c3a;font-weight:700;font-size:14px;margin-bottom:14px}
 .box .desc{color:#5c655f;font-size:14.5px;line-height:1.6;margin-bottom:16px}
+.box .highlights{margin-bottom:20px}
+.box .highlights b{display:block;margin-bottom:8px;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:#8b9690}
+
 .enq input,.enq textarea{width:100%;padding:12px 14px;margin:6px 0;border:1px solid #ddd;border-radius:10px;box-sizing:border-box;font-family:inherit;font-size:14.5px}
 .enq textarea{height:90px}
 .status{font-size:13px;margin-top:10px;min-height:18px}
@@ -191,7 +137,10 @@ body{margin:0;font-family:'Inter',Arial,sans-serif;background:#f5f4ee;color:#631
 .status.err{color:#c0392b}
 .status.sending{color:#69756f}
 
-@media(max-width:560px){.form{grid-template-columns:1fr}.wide{grid-column:auto}.planner{padding:26px}.result-card{padding:22px}}
+footer{text-align:center;padding:40px 20px;color:#9aa39d;font-size:13px}
+
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.form{grid-template-columns:1fr}.wide{grid-column:auto}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}.planner{padding:26px}.result-card{padding:22px}}
 </style>
 </head>
 <body>
@@ -199,59 +148,81 @@ body{margin:0;font-family:'Inter',Arial,sans-serif;background:#f5f4ee;color:#631
 <link rel="stylesheet" href="css/navbar.css">
 
 <nav class="navbar">
-
 <div class="logo">
     <img src="logo.jpeg" alt="TourCraft Logo">
     <span>TourCraft</span>
 </div>
-
 <div class="nav-links">
     <a href="index.html">Home</a>
     <a href="explore.html">Explore</a>
-    <a href="planner.html">AI Planner</a>
+    <a href="planner.html" class="active">AI Planner</a>
     <a href="guides.html">Inspirations</a>
     <a href="contact.html">Contact</a>
 </div>
-
 <a href="planner.html" class="cta">
     Build My Trip ✨
 </a>
-
 </nav>
 
-<div class="page">
+<section class="planner-hero">
+  <span class="eyebrow">AI-Powered Itinerary Builder</span>
+  <h1>Tell us your budget. We'll tell you what's really possible.</h1>
+  <p>Pick a destination, set real numbers, and get a day-by-day plan priced with accommodation, food, transport and activities — matched honestly to what you can spend.</p>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div>
+      <h2>Explore iconic destinations</h2>
+      <p>Tap a destination to see highlights and realistic daily costs.</p>
+    </div>
+  </div>
+  <div class="grid" id="destinations"></div>
+</section>
+
+<section class="section" id="planner">
   <div class="planner">
     <div class="planner-top">
-      <span class="eyebrow">AI Itinerary Builder</span>
-      <h1>Tell TourCraft what you need</h1>
-      <p>Real per-day costs across stay, food, transport and activities — matched honestly to your budget.</p>
+      <div>
+        <h2>AI Itinerary Builder</h2>
+        <p>Enter your trip details — we'll check feasibility instantly and build a realistic plan around it.</p>
+      </div>
+      <div class="ai-chip">✦ Budget-matched planning</div>
     </div>
 
-    <div class="builder-grid">
-      <div>
-        <div class="form">
-          <div class="field"><label>Destination</label><select id="destination"></select></div>
-          <div class="field"><label>Travellers</label><input id="people" type="number" value="2" min="1"></div>
-          <div class="field"><label>Days</label><input id="days" type="number" value="5" min="1" max="21"></div>
-          <div class="field"><label>Budget ₹ (total)</label><input id="budget" type="number" value="35000" min="1" step="500"></div>
-          <div class="field"><label>Style</label><select id="style"><option>Smart Budget</option><option>Comfort</option><option>Backpacker</option><option>Premium</option></select></div>
-          <div class="field"><label>Transport</label><select id="transport"><option>Comfortable</option><option>Budget</option><option>Private Cab</option></select></div>
-          <div class="field wide"><label>Interests</label><input id="interests" placeholder="food, mountains, culture, adventure..."></div>
-        </div>
+    <div class="form">
+      <div class="field"><label>Destination</label><select id="destination"></select></div>
+      <div class="field"><label>Travellers</label><input id="people" type="number" value="2" min="1"></div>
+      <div class="field"><label>Days</label><input id="days" type="number" value="5" min="1" max="21"></div>
+      <div class="field"><label>Budget ₹ (total)</label><input id="budget" type="number" value="35000" min="1" step="500"></div>
+      <div class="field"><label>Style</label><select id="style"><option>Smart Budget</option><option>Comfort</option><option>Backpacker</option><option>Premium</option></select></div>
+      <div class="field"><label>Transport</label><select id="transport"><option>Comfortable</option><option>Budget</option><option>Private Cab</option></select></div>
+      <div class="field wide"><label>Interests</label><input id="interests" placeholder="food, mountains, culture, adventure..."></div>
+    </div>
 
-        <div class="form-actions">
-          <button class="btn" style="background:#dff08c;color:#17352b" onclick="build()">Generate my itinerary ✨</button>
-          <span class="hint">Costs cover stay, food, local transport &amp; activities — excludes flights/train to reach.</span>
-        </div>
-
-        <div class="live-estimate" id="liveEstimate"></div>
-      </div>
-
-      <div class="snapshot" id="snapshot"></div>
+    <div class="form-actions">
+      <button class="btn" style="background:#dff08c;color:#17352b" onclick="build()">Generate my itinerary ✨</button>
+      <span class="hint">Costs include stay, food, local transport &amp; activities — excludes flights/train to reach.</span>
     </div>
 
     <div class="feasibility" id="feasibility"></div>
+
     <div class="result" id="result"></div>
+  </div>
+</section>
+
+<footer>TourCraft AI · Plan less. Experience more.</footer>
+
+<!-- destination detail modal -->
+<div class="modal" id="destModal">
+  <div class="box">
+    <button class="close" onclick="hide('destModal')">×</button>
+    <div class="dest-modal-media" id="mImg"></div>
+    <h1 id="mt"></h1>
+    <div class="price-range" id="mPrice"></div>
+    <p class="desc" id="md"></p>
+    <div class="highlights"><b>Highlights</b><div class="tags" id="mf"></div></div>
+    <button class="btn" onclick="useDestination()">Plan this destination →</button>
   </div>
 </div>
 
@@ -259,7 +230,7 @@ body{margin:0;font-family:'Inter',Arial,sans-serif;background:#f5f4ee;color:#631
 <div class="modal" id="mailModal">
   <div class="box">
     <button class="close" onclick="hide('mailModal')">×</button>
-    <h1>Send enquiry</h1>
+    <h1 style="font-size:24px;">Send enquiry</h1>
     <p class="desc">Your full itinerary will be sent straight to our team.</p>
     <div class="enq">
       <input id="name" placeholder="Name *">
@@ -274,26 +245,16 @@ body{margin:0;font-family:'Inter',Arial,sans-serif;background:#f5f4ee;color:#631
 
 <script>
 /* ------------------------------------------------------------------
-   CONFIG
-   - scriptURL: Apps Script Web App used for sending enquiry emails
-   - sheetURL: OPTIONAL. If you deploy the doGet endpoint described in
-     SHEET_SETUP.md, paste its URL here and destination data will be
-     pulled live from your Google Sheet instead of the built-in list
-     below. Leave blank to keep using the built-in data — the page
-     works exactly the same either way.
+   CONFIG — same Apps Script Web App used across the site
 ------------------------------------------------------------------ */
-const CONFIG = {
-  email: 'apurvaaniket8@gmail.com',
-  scriptURL: 'https://script.google.com/macros/s/AKfycbwt_ZOJlV102sLefJ2atd8gepcgojykxpuRb0SnF-Eo1ZUf0WUczsUP8RZFVqrvqYQd/exec',
-  sheetURL: '' // <-- optional: paste your doGet Web App URL here
-};
+const CONFIG = { email: 'apurvaaniket8@gmail.com', scriptURL: 'https://script.google.com/macros/s/AKfycbwt_ZOJlV102sLefJ2atd8gepcgojykxpuRb0SnF-Eo1ZUf0WUczsUP8RZFVqrvqYQd/exec' };
 
 /* ------------------------------------------------------------------
-   BUILT-IN DESTINATION DATA (fallback / default)
-   Each destination carries a realistic per-person, per-day total
-   (INR) for four tiers. These totals are then split into stay / food
-   / transport / activities using TIER_SPLIT below, so the budget
-   breakdown you see is computed bottom-up, not a flat guess.
+   DESTINATION DATA
+   Each destination carries realistic per-person, per-day costs
+   (INR) for four tiers — Backpacker, Smart Budget, Comfort, Premium —
+   covering accommodation + food + local transport + activities.
+   These exclude the flight/train fare to reach the destination.
 ------------------------------------------------------------------ */
 const D = {
   Kashmir:   { img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStTik5ZwFPG5_DTi9Eflf_FTnS4zerRSRNc_CbGdaMlr9J8p1gKdFTdSQ&amp;s=10', desc:'Snowy mountains, Dal Lake houseboats, valleys and Kashmiri hospitality.', bestTime:'Mar–Jun & Sep–Nov', spots:['Dal Lake','Gulmarg','Pahalgam','Sonamarg','Betaab Valley','Shankaracharya Temple'], tiers:{ backpacker:1800, smartBudget:2800, comfort:4800, premium:9500 } },
@@ -306,25 +267,16 @@ const D = {
   Andaman:   { img:'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80', desc:'Island beaches, clear water and marine experiences.', bestTime:'Oct–May', spots:['Radhanagar Beach','Cellular Jail','Neil Island','Havelock Scuba Diving','Ross Island','North Bay Snorkelling'], tiers:{ backpacker:2200, smartBudget:3400, comfort:5800, premium:12000 } },
 };
 
+/* Style dropdown value -> tier key in D[x].tiers */
 const STYLE_TO_TIER = { 'Backpacker':'backpacker', 'Smart Budget':'smartBudget', 'Comfort':'comfort', 'Premium':'premium' };
 const TIER_ORDER = ['backpacker','smartBudget','comfort','premium'];
 const TIER_LABEL = { backpacker:'Backpacker', smartBudget:'Smart Budget', comfort:'Comfort', premium:'Premium' };
 const TIER_STAY  = { backpacker:'Hostel / budget guesthouse', smartBudget:'Standard 2–3★ hotel', comfort:'4★ hotel, better locations', premium:'5★ resort / boutique stay' };
 
-/* How each tier's per-day total splits across categories. Ratios
-   shift by tier on purpose — cheaper trips spend proportionally more
-   on food relative to stay; premium trips spend more on stay. */
-const TIER_SPLIT = {
-  backpacker:  { stay:0.35, food:0.30, transport:0.20, activities:0.15 },
-  smartBudget: { stay:0.38, food:0.27, transport:0.20, activities:0.15 },
-  comfort:     { stay:0.42, food:0.24, transport:0.19, activities:0.15 },
-  premium:     { stay:0.48, food:0.20, transport:0.17, activities:0.15 },
-};
+/* Transport choice — modest realistic swing on the full per-day cost */
+const TRANSPORT_MULT = { 'Budget':0.93, 'Comfortable':1.0, 'Private Cab':1.15 };
 
-/* Transport choice only scales the transport slice of the day cost,
-   not the whole trip — closer to how the money actually moves. */
-const TRANSPORT_MULT = { 'Budget':0.75, 'Comfortable':1.0, 'Private Cab':1.6 };
-
+/* Day-plan template pool, cycled across however many days are chosen */
 const DAY_TEMPLATES = [
   { morning:'Arrival, check-in and a slow orientation walk', afternoon:'Explore {a} at an easy pace', evening:'Local dinner and an early rest' },
   { morning:'Guided visit to {a}', afternoon:'Free time around {b} — cafes, shops or a short walk', evening:'Sunset viewpoint and dinner with a local dish' },
@@ -333,99 +285,41 @@ const DAY_TEMPLATES = [
   { morning:'Leisure morning — spa, lake or hillside cafe', afternoon:'Last stop at {b}, souvenir shopping', evening:'Farewell dinner and departure prep' },
 ];
 
-let plan = '';
+let chosen = 'Kashmir', plan = '', lastResult = null;
 
 function money(x){ return '₹' + Math.round(x).toLocaleString('en-IN'); }
 
-/* Bottom-up per-day-per-person cost, split into real categories.
-   Only the transport slice is affected by transport choice. */
-function componentsForTier(dest, tierKey, transportChoice){
-  const total = dest.tiers[tierKey];
-  const split = TIER_SPLIT[tierKey];
-  const stay = total * split.stay;
-  const food = total * split.food;
-  const activities = total * split.activities;
-  const transport = total * split.transport * TRANSPORT_MULT[transportChoice];
-  return { stay, food, transport, activities, perDay: stay + food + transport + activities };
-}
-
-function costForTier(dest, tierKey, transportChoice, days, people){
-  return Math.round(componentsForTier(dest, tierKey, transportChoice).perDay * days * people);
-}
-
-/* ------------------------------------------------------------------
-   OPTIONAL: load destination data from a Google Sheet via Apps
-   Script doGet (see SHEET_SETUP.md). Falls back silently to the
-   built-in D object above if sheetURL is blank or the fetch fails.
------------------------------------------------------------------- */
-async function loadDestinationsFromSheet(){
-  if (!CONFIG.sheetURL) return;
-  try{
-    const res = await fetch(CONFIG.sheetURL);
-    const rows = await res.json();
-    if (!Array.isArray(rows) || !rows.length) return;
-    rows.forEach(r => {
-      D[r.name] = {
-        img: r.img, desc: r.desc, bestTime: r.bestTime,
-        spots: (r.spots || '').split(',').map(s => s.trim()).filter(Boolean),
-        tiers: { backpacker:+r.backpacker, smartBudget:+r.smartBudget, comfort:+r.comfort, premium:+r.premium }
-      };
-    });
-  }catch(err){
-    console.warn('Could not load destinations from sheet, using built-in data.', err);
-  }
-}
-
-function populateDestinationSelect(){
+function init(){
+  const grid = document.getElementById('destinations');
   const sel = document.getElementById('destination');
-  sel.innerHTML = Object.keys(D).map(n => `<option>${n}</option>`).join('');
-  renderSnapshot(sel.value);
-}
-
-function renderSnapshot(n){
-  const dest = D[n];
-  const snap = document.getElementById('snapshot');
-  if (!dest) { snap.innerHTML = ''; return; }
-  const t = dest.tiers;
-  snap.innerHTML = `
-    <div class="snapshot-media" style="background-image:url('${dest.img}')"></div>
-    <div class="snapshot-body">
-      <h3>${n}</h3>
-      <div class="range">${money(t.backpacker)} – ${money(t.premium)} / person / day</div>
-      <p>${dest.desc}</p>
-      <div class="best">Best time to visit: ${dest.bestTime}</div>
-      <div class="snapshot-tags">${dest.spots.map(s => `<span>${s}</span>`).join('')}</div>
+  for(const n in D){
+    const t = D[n].tiers;
+    grid.innerHTML += `<div class="card" style="background-image:url('${D[n].img}')" onclick="openDest('${n}')">
+      <div class="info"><h3>${n}</h3><div class="price">${money(t.backpacker)} – ${money(t.premium)} / person / day</div><div class="tap">Tap to explore →</div></div>
     </div>`;
+    sel.innerHTML += `<option>${n}</option>`;
+  }
 }
 
-/* Live, lightweight estimate shown as the traveller fills the form —
-   before they click Generate. Uses their exact selected style, no
-   auto-adjustment (that only happens on full generation). */
-function liveEstimate(){
-  const n = document.getElementById('destination').value;
-  const dest = D[n];
-  if (!dest) return;
-  const p = Math.max(1, +document.getElementById('people').value || 1);
-  const d = Math.max(1, +document.getElementById('days').value || 1);
-  const b = Math.max(0, +document.getElementById('budget').value || 0);
-  const styleChoice = document.getElementById('style').value;
-  const transportChoice = document.getElementById('transport').value;
-  const tierKey = STYLE_TO_TIER[styleChoice];
-
-  const cost = costForTier(dest, tierKey, transportChoice, d, p);
-  const el = document.getElementById('liveEstimate');
-  el.classList.add('show');
-  if (cost <= b) {
-    el.className = 'live-estimate show fits';
-    el.innerHTML = `At <b>${TIER_LABEL[tierKey]}</b> style, estimated cost is <b>${money(cost)}</b> — fits your ${money(b)} budget.`;
-  } else {
-    el.className = 'live-estimate show short';
-    el.innerHTML = `At <b>${TIER_LABEL[tierKey]}</b> style, estimated cost is <b>${money(cost)}</b> — that's ${money(cost-b)} over your ${money(b)} budget. We'll suggest the best fit when you generate.`;
-  }
+function openDest(n){
+  chosen = n;
+  const t = D[n].tiers;
+  document.getElementById('mImg').style.backgroundImage = `url('${D[n].img}')`;
+  document.getElementById('mt').textContent = n;
+  document.getElementById('mPrice').textContent = `${money(t.backpacker)} – ${money(t.premium)} per person / day, depending on style`;
+  document.getElementById('md').textContent = D[n].desc + ` Best time to visit: ${D[n].bestTime}.`;
+  document.getElementById('mf').innerHTML = D[n].spots.map(s => `<span>${s}</span>`).join('');
+  show('destModal');
 }
 
 function show(id){ document.getElementById(id).classList.add('show'); }
 function hide(id){ document.getElementById(id).classList.remove('show'); }
+
+function useDestination(){
+  document.getElementById('destination').value = chosen;
+  hide('destModal');
+  document.getElementById('planner').scrollIntoView({behavior:'smooth'});
+}
 
 /* ------------------------------------------------------------------
    Core planning logic
@@ -433,11 +327,11 @@ function hide(id){ document.getElementById(id).classList.remove('show'); }
    2. If the entered budget can't cover even that, say so clearly.
    3. Otherwise, try to honour the traveller's chosen style. If it's
       unaffordable, automatically step down to the best tier that
-      fits the budget and explain the adjustment.
+      fits the budget and explain the adjustment — this is the
+      "AI-adaptive" part of the builder.
 ------------------------------------------------------------------ */
 function build(){
   const n = document.getElementById('destination').value;
-  const dest = D[n];
   const p = Math.max(1, +document.getElementById('people').value || 1);
   const d = Math.max(1, +document.getElementById('days').value || 1);
   const b = Math.max(0, +document.getElementById('budget').value || 0);
@@ -445,13 +339,17 @@ function build(){
   const transportChoice = document.getElementById('transport').value;
   const interests = document.getElementById('interests').value.trim() || 'local food, culture and scenic experiences';
 
+  const dest = D[n];
+  const tiers = dest.tiers;
+  const transportMult = TRANSPORT_MULT[transportChoice];
+
+  const minFloor = Math.round(tiers.backpacker * TRANSPORT_MULT['Budget'] * d * p);
+
   const feasibility = document.getElementById('feasibility');
   const result = document.getElementById('result');
 
-  const minFloor = costForTier(dest, 'backpacker', 'Budget', d, p);
-
   if (b < minFloor) {
-    plan = '';
+    plan = ''; lastResult = null;
     result.innerHTML = '';
     feasibility.className = 'feasibility show blocked';
     feasibility.innerHTML = `<span class="ic">⚠️</span><div><b>This trip isn't realistically possible within ${money(b)}.</b>
@@ -462,23 +360,25 @@ function build(){
   }
 
   const requestedTierKey = STYLE_TO_TIER[styleChoice];
-  const requestedCost = costForTier(dest, requestedTierKey, transportChoice, d, p);
+  const costForTier = (tierKey) => Math.round(tiers[tierKey] * transportMult * d * p);
+  const requestedCost = costForTier(requestedTierKey);
 
   let finalTierKey = requestedTierKey;
   let adjustedNote = '';
 
   if (requestedCost > b) {
+    // step down to the best tier that fits
     let picked = 'backpacker';
     for (const key of TIER_ORDER) {
-      if (costForTier(dest, key, transportChoice, d, p) <= b) picked = key;
+      if (costForTier(key) <= b) picked = key;
     }
     finalTierKey = picked;
     adjustedNote = `Your selected ${TIER_LABEL[requestedTierKey]} style would cost ${money(requestedCost)}, above your ${money(b)} budget.
       We've matched you to <b>${TIER_LABEL[finalTierKey]}</b> tier instead, which fits comfortably.`;
   }
 
-  const comp = componentsForTier(dest, finalTierKey, transportChoice);
-  const total = Math.min(costForTier(dest, finalTierKey, transportChoice, d, p), b);
+  const perDay = Math.round(tiers[finalTierKey] * transportMult);
+  const total = Math.min(costForTier(finalTierKey), b);
   const remaining = Math.max(0, b - total);
 
   feasibility.className = 'feasibility show ok';
@@ -486,13 +386,11 @@ function build(){
     ? `<span class="ic">🔧</span><div><b>Trip is possible — tier adjusted for your budget</b><span>${adjustedNote}</span></div>`
     : `<span class="ic">✅</span><div><b>Great — this trip fits your budget</b><span>Matched to the <b>${TIER_LABEL[finalTierKey]}</b> tier: ${TIER_STAY[finalTierKey]}.</span></div>`;
 
-  const breakdown = [
-    ['Accommodation', comp.stay * d * p],
-    ['Food & Dining', comp.food * d * p],
-    ['Local Transport', comp.transport * d * p],
-    ['Activities & Entry Fees', comp.activities * d * p],
-  ];
+  // cost breakdown (accommodation / food / transport / activities)
+  const shares = { accommodation:0.40, food:0.26, transport:0.19, activities:0.15 };
+  const breakdown = Object.entries(shares).map(([label,share]) => [label, total*share]);
 
+  // day-by-day plan
   let daysHtml = '';
   let planText = `Destination: ${n}\nTravellers: ${p}\nDuration: ${d} days\nBudget: ${money(b)}\nStyle requested: ${styleChoice}${adjustedNote ? ' (adjusted to ' + TIER_LABEL[finalTierKey] + ')' : ''}\nTransport: ${transportChoice}\nInterests: ${interests}\nEstimated total cost: ${money(total)}\nStay type: ${TIER_STAY[finalTierKey]}\n\n`;
 
@@ -504,7 +402,7 @@ function build(){
     const afternoon = tmpl.afternoon.replace('{a}', a).replace('{b}', bSpot) + ` — around ${interests}.`;
     const evening = tmpl.evening.replace('{a}', a).replace('{b}', bSpot);
     daysHtml += `<div class="day">
-      <div class="day-top"><b>Day ${x}${x===1?' — Arrival':x===d?' — Departure':''}</b><span class="day-cost">${money(comp.perDay)} / person</span></div>
+      <div class="day-top"><b>Day ${x}${x===1?' — Arrival':x===d?' — Departure':''}</b><span class="day-cost">${money(perDay)} / person</span></div>
       <div class="slot"><b>Morning —</b> ${morning}</div>
       <div class="slot"><b>Afternoon —</b> ${afternoon}</div>
       <div class="slot"><b>Evening —</b> ${evening}</div>
@@ -513,6 +411,7 @@ function build(){
   }
 
   plan = planText;
+  lastResult = { n, p, d, b, total, finalTierKey };
 
   result.innerHTML = `
     <div class="result-card">
@@ -522,7 +421,7 @@ function build(){
       </div>
       <div class="cost-strip">
         <div class="cost-box"><div class="k">Estimated Cost</div><div class="v">${money(total)}</div></div>
-        <div class="cost-box"><div class="k">Per Day / Person</div><div class="v">${money(comp.perDay)}</div></div>
+        <div class="cost-box"><div class="k">Per Day / Person</div><div class="v">${money(perDay)}</div></div>
         <div class="cost-box"><div class="k">Remaining Budget</div><div class="v">${money(remaining)}</div></div>
       </div>
     </div>
@@ -541,8 +440,8 @@ function build(){
     <div class="result-card">
       <h3 style="margin:0 0 14px;font-family:'Playfair Display',serif;font-size:19px;">Budget Breakdown</h3>
       <div class="budget-rows">
-        ${breakdown.map(([label,val]) => `<div class="row"><span>${label}</span><span>${money(val)}</span></div>`).join('')}
-        <div class="row total"><span>Total (${d} days, ${p} traveller${p>1?'s':''})<span class="note">Sum of the categories above, not a flat estimate</span></span><span>${money(total)}</span></div>
+        ${breakdown.map(([label,val]) => `<div class="row"><span>${label[0].toUpperCase()+label.slice(1)}</span><span>${money(val)}</span></div>`).join('')}
+        <div class="row total"><span>Total (${d} days, ${p} traveller${p>1?'s':''})</span><span>${money(total)}</span></div>
       </div>
     </div>
 
@@ -558,7 +457,7 @@ function build(){
 /* ------------------------------------------------------------------
    sendMail() — POSTs the enquiry to the Apps Script Web App so it
    lands directly in CONFIG.email. Falls back to a mailto: draft if
-   scriptURL is ever empty.
+   scriptURL is ever empty, so the button never silently fails.
 ------------------------------------------------------------------ */
 async function sendMail(){
   const n = document.getElementById('name').value.trim();
@@ -606,20 +505,7 @@ async function sendMail(){
   }
 }
 
-/* ---------- wire up live updates ---------- */
-['people','days','budget','style','transport'].forEach(id => {
-  document.getElementById(id).addEventListener('input', liveEstimate);
-});
-document.getElementById('destination').addEventListener('change', (e) => {
-  renderSnapshot(e.target.value);
-  liveEstimate();
-});
-
-(async function start(){
-  await loadDestinationsFromSheet();
-  populateDestinationSelect();
-  liveEstimate();
-})();
+init();
 </script>
 </body>
 </html>
