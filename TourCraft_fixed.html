@@ -287,7 +287,7 @@ currentHero=(currentHero+1)%heroSlides.length;
 
 heroSlides[currentHero].classList.add("active");
 
-},4000);
+},100);
 function init(){}
 function openDest(n){chosen=n;mt.textContent=n;md.textContent=D[n].desc;mf.innerHTML='<b>Highlights:</b> '+D[n].spots.join(' · ');destModal.style.display='flex'}
 function hide(id){document.getElementById(id).style.display='none'}

@@ -109,7 +109,68 @@ font-size:50px;
 height:320px;
 }
 
-}.section{max-width:1100px;margin:70px auto;padding:0 20px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.card{height:290px;border-radius:22px;background-size:cover;background-position:center;position:relative;cursor:pointer;overflow:hidden}.card:after{content:'';position:absolute;inset:0;background:linear-gradient(transparent, #000b)}.card div{position:absolute;bottom:18px;left:18px;color:white;z-index:1}.card h3{font-size:25px;margin:0}.planner{background:#174c3a;color:white;border-radius:28px;padding:35px}.form{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.field label{display:block;font-size:12px;margin-bottom:6px;color:#c8d8d1}.field input,.field select{width:100%;padding:13px;border-radius:10px;border:1px solid #ffffff33;background:#ffffff12;color:white;box-sizing:border-box}.field option{color:#17352b}.wide{grid-column:span 2}.result{margin-top:20px;background:white;color:#17352b;padding:25px;border-radius:20px}.day{padding:15px;border:1px solid #ddd;border-radius:14px;margin:10px 0}.danger{background:#fff0ed;color:#8d3e36;padding:15px;border-radius:14px}.modal{display:none;position:fixed;inset:0;background:#0009;z-index:2000;align-items:center;justify-content:center;padding:20px}.box{background:white;border-radius:24px;padding:28px;max-width:750px;width:100%;max-height:90vh;overflow:auto}.close{float:right;border:0;background:#eee;border-radius:50%;width:35px;height:35px}.enq input,.enq textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:10px;box-sizing:border-box}.enq textarea{height:100px}@media(max-width:800px){.hero{grid-template-columns:1fr}.hero h1{font-size:48px}.grid{grid-template-columns:repeat(2,1fr)}.form{grid-template-columns:1fr}.wide{grid-column:auto}}@media(max-width:500px){.grid{grid-template-columns:1fr}.photo{height:300px}}
+}
+/* ===== DESTINATIONS SECTION ===== */
+#destinations-section{
+    scroll-margin-top:125px;
+    padding-top:8px;
+}
+
+.destination-heading{
+    max-width:760px;
+    margin-bottom:28px;
+}
+
+.destination-kicker{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    margin-bottom:10px;
+    color:#7B2940;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:2.4px;
+    text-transform:uppercase;
+}
+
+.destination-kicker::before{
+    content:'';
+    width:28px;
+    height:2px;
+    border-radius:2px;
+    background:#7B2940;
+}
+
+.destination-heading h2{
+    margin:0;
+    color:#63192b;
+    font-family:'Playfair Display',serif;
+    font-size:clamp(38px,4.2vw,56px);
+    line-height:1.02;
+    letter-spacing:-1.2px;
+    font-weight:700;
+}
+
+.destination-heading h2 span{
+    color:#174c3a;
+    font-style:italic;
+}
+
+.destination-heading p{
+    margin:14px 0 0;
+    color:#69756f;
+    font-size:17px;
+    line-height:1.65;
+    max-width:610px;
+}
+
+@media(max-width:800px){
+    #destinations-section{scroll-margin-top:100px}
+    .destination-heading h3{font-size:42px}
+}
+/* margin here to adjust on footer  */
+.section{max-width:1100px;margin:60px auto;padding:0 20px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.card{height:290px;border-radius:22px;background-size:cover;background-position:center;position:relative;cursor:pointer;overflow:hidden}.card:after{content:'';position:absolute;inset:0;background:linear-gradient(transparent, #000b)}.card div{position:absolute;bottom:18px;left:18px;color:white;z-index:1}.card h3{font-size:25px;margin:0}.planner{background:#174c3a;color:white;border-radius:28px;padding:35px}.form{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.field label{display:block;font-size:12px;margin-bottom:6px;color:#c8d8d1}.field input,.field select{width:100%;padding:13px;border-radius:10px;border:1px solid #ffffff33;background:#ffffff12;color:white;box-sizing:border-box}.field option{color:#17352b}.wide{grid-column:span 2}.result{margin-top:20px;background:white;color:#17352b;padding:25px;border-radius:20px}.day{padding:15px;border:1px solid #ddd;border-radius:14px;margin:10px 0}.danger{background:#fff0ed;color:#8d3e36;padding:15px;border-radius:14px}.modal{display:none;position:fixed;inset:0;background:#0009;z-index:2000;align-items:center;justify-content:center;padding:20px}.box{background:white;border-radius:24px;padding:28px;max-width:750px;width:100%;max-height:90vh;overflow:auto}.close{float:right;border:0;background:#eee;border-radius:50%;width:35px;height:35px}.enq input,.enq textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:10px;box-sizing:border-box}.enq textarea{height:100px}@media(max-width:800px){.hero{grid-template-columns:1fr}.hero h1{font-size:48px}.grid{grid-template-columns:repeat(2,1fr)}.form{grid-template-columns:1fr}.wide{grid-column:auto}}@media(max-width:500px){.grid{grid-template-columns:1fr}.photo{height:300px}}
 
 
 .navbar{
@@ -182,7 +243,7 @@ margin:1 auto;
 }
 
 .cta{
- background:#c40f59;
+ background:#c30d53;
  color:white;
  padding:12px 18px;
  border-radius:14px;
@@ -192,7 +253,7 @@ margin:1 auto;
 }
 
 .cta:hover{
- background:#6b061c;
+ background:#7e041e;
  transform:translateY(-2px);
 }
     </style></head><body>
@@ -207,7 +268,7 @@ margin:1 auto;
 
 <div class="nav-links">
     <a href="index.html">Home</a>
-    <a href="#destinations" onclick="document.getElementById('destinations').scrollIntoView({behavior:'smooth'})">Explore</a>
+    <a href="#destinations-section" onclick="document.getElementById('destinations-section').scrollIntoView({behavior:'smooth',block:'start'})">Explore</a>
     <a href="planner.html">AI Planner</a>
     <a href="guides.html">Inspirations</a>
     <a href="contact.html">Contact</a>
@@ -260,7 +321,13 @@ style="background-image:url('https://images.unsplash.com/photo-1477587458883-471
 </div>
 
 </section>
-<section class="section"><h2>Explore iconic destinations</h2><p>Click a destination to discover it.</p><div class="grid" id="destinations"><div class="card" style="background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStTik5ZwFPG5_DTi9Eflf_FTnS4zerRSRNc_CbGdaMlr9J8p1gKdFTdSQ&s=10')" onclick="openDest('Kashmir')"><div><h3>Kashmir</h3><span>From ₹22,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Kerala')"><div><h3>Kerala</h3><span>From ₹18,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Goa')"><div><h3>Goa</h3><span>From ₹14,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Rajasthan')"><div><h3>Rajasthan</h3><span>From ₹20,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Manali')"><div><h3>Manali</h3><span>From ₹15,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Varanasi')"><div><h3>Varanasi</h3><span>From ₹9,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Meghalaya')"><div><h3>Meghalaya</h3><span>From ₹21,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Andaman')"><div><h3>Andaman</h3><span>From ₹26,000/person</span></div></div></div></section>
+<section class="section" id="destinations-section">
+<div class="destination-heading">
+    <!-- <div class="destination-kicker">Curated escapes</div> -->
+    <h2>Explore <span>iconic destinations</span></h2>
+    <p>From snow-capped valleys to tropical shores, discover places worth travelling for — then let TourCraft craft the perfect trip around you.</p>
+</div>
+<div class="grid" id="destinations"><div class="card" style="background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStTik5ZwFPG5_DTi9Eflf_FTnS4zerRSRNc_CbGdaMlr9J8p1gKdFTdSQ&s=10')" onclick="openDest('Kashmir')"><div><h3>Kashmir</h3><span>From ₹22,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Kerala')"><div><h3>Kerala</h3><span>From ₹18,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Goa')"><div><h3>Goa</h3><span>From ₹14,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Rajasthan')"><div><h3>Rajasthan</h3><span>From ₹20,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Manali')"><div><h3>Manali</h3><span>From ₹15,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Varanasi')"><div><h3>Varanasi</h3><span>From ₹9,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Meghalaya')"><div><h3>Meghalaya</h3><span>From ₹21,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Andaman')"><div><h3>Andaman</h3><span>From ₹26,000/person</span></div></div></div></section>
 <!-- <section class="section" id="planner"><div class="planner"><h2>AI Itinerary Builder</h2><p>Tell TourCraft what you need.</p><div class="form"><div class="field"><label>DESTINATION</label><select id="destination"><option>Kashmir</option><option>Kerala</option><option>Goa</option><option>Rajasthan</option><option>Manali</option><option>Varanasi</option><option>Meghalaya</option><option>Andaman</option></select></div><div class="field"><label>TRAVELLERS</label><input id="people" type="number" value="2" min="1"></div><div class="field"><label>DAYS</label><input id="days" type="number" value="5" min="1"></div><div class="field"><label>BUDGET ₹</label><input id="budget" type="number" value="35000" min="1"></div><div class="field"><label>STYLE</label><select id="style"><option>Smart Budget</option><option>Comfort</option><option>Backpacker</option><option>Premium</option></select></div><div class="field"><label>TRANSPORT</label><select id="transport"><option>Comfortable</option><option>Budget</option><option>Private Cab</option></select></div><div class="field wide"><label>INTERESTS</label><input id="interests" placeholder="food, mountains, culture, adventure..."></div></div><br><button class="btn" style="background:#dff08c;color:#17352b" onclick="build()">Generate my itinerary ✨</button><div id="result"></div></div></section> -->
 <div class="modal" id="destModal"><div class="box"><button class="close" onclick="hide(&quot;destModal&quot;)">×</button><h1 id="mt"></h1><p id="md"></p><div id="mf"></div><br><button class="btn" onclick="useDestination()">Plan this destination</button></div></div>
 <div class="modal" id="mailModal"><div class="box"><button class="close" onclick="hide(&quot;mailModal&quot;)">×</button><h2>Send enquiry</h2><p>Your itinerary will be inserted into an email.</p><div class="enq"><input id="name" placeholder="Name *"><input id="email" placeholder="Email *"><input id="phone" placeholder="Phone / WhatsApp"><textarea id="message" placeholder="Anything else?"></textarea></div><button class="btn" onclick="sendMail()">Open enquiry email →</button><p style="font-size:12px;color:#777">Change the recipient in CONFIG below.</p></div></div>
@@ -287,7 +354,7 @@ currentHero=(currentHero+1)%heroSlides.length;
 
 heroSlides[currentHero].classList.add("active");
 
-},4000);
+},3000);
 function init(){}
 function openDest(n){chosen=n;mt.textContent=n;md.textContent=D[n].desc;mf.innerHTML='<b>Highlights:</b> '+D[n].spots.join(' · ');destModal.style.display='flex'}
 function hide(id){document.getElementById(id).style.display='none'}
