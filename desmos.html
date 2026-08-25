@@ -10,10 +10,10 @@
 .hero{
     max-width:1100px;
     margin:40px auto;
-    padding:80px 20px 20px;
+    padding:70px 20px 20px;
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:40px;
+    gap:0px;
     align-items:center;
 }
 
@@ -34,7 +34,7 @@
 .hero-text p{
     font-size:20px;
     line-height:1.7;
-    color:#5d6b66;
+    color:#111614;
     margin-bottom:28px;
 }
 
@@ -59,7 +59,7 @@
 .hero-text p{
     font-size:20px;       /* Change this: 18–22px */
     line-height:1.7;
-    color:#5D6B66;
+    color:#313535;
     margin-bottom:28px;
 }
 /* Image frame stays SAME SIZE */
@@ -109,7 +109,87 @@ font-size:50px;
 height:320px;
 }
 
-}.section{max-width:1100px;margin:70px auto;padding:0 20px;scroll-margin-top:110px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:15px}.card{height:290px;border-radius:22px;background-size:cover;background-position:center;position:relative;cursor:pointer;overflow:hidden}.card:after{content:'';position:absolute;inset:0;background:linear-gradient(transparent, #000b)}.card div{position:absolute;bottom:18px;left:18px;color:white;z-index:1}.card h3{font-size:25px;margin:0}.planner{background:#174c3a;color:white;border-radius:28px;padding:35px}.form{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.field label{display:block;font-size:12px;margin-bottom:6px;color:#c8d8d1}.field input,.field select{width:100%;padding:13px;border-radius:10px;border:1px solid #ffffff33;background:#ffffff12;color:white;box-sizing:border-box}.field option{color:#17352b}.wide{grid-column:span 2}.result{margin-top:20px;background:white;color:#17352b;padding:25px;border-radius:20px}.day{padding:15px;border:1px solid #ddd;border-radius:14px;margin:10px 0}.danger{background:#fff0ed;color:#8d3e36;padding:15px;border-radius:14px}.modal{display:none;position:fixed;inset:0;background:#0009;z-index:2000;align-items:center;justify-content:center;padding:20px}.box{background:white;border-radius:24px;padding:28px;max-width:750px;width:100%;max-height:90vh;overflow:auto}.close{float:right;border:0;background:#eee;border-radius:50%;width:35px;height:35px}.enq input,.enq textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:10px;box-sizing:border-box}.enq textarea{height:100px}@media(max-width:800px){.hero{grid-template-columns:1fr}.hero h1{font-size:48px}.form{grid-template-columns:1fr}.wide{grid-column:auto}}@media(max-width:500px){.photo{height:300px}}
+}
+/* ===== DESTINATIONS / EXPLORE SECTION ===== */
+#destinations-section{scroll-margin-top:90px;padding-top:12px}
+.destination-heading{max-width:850px;margin-bottom:30px}
+.destination-kicker{display:inline-flex;align-items:center;gap:9px;margin-bottom:10px;color:#7B2940;font-size:12px;font-weight:800;letter-spacing:2.4px;text-transform:uppercase}
+.destination-kicker::before{content:'';width:28px;height:2px;border-radius:2px;background:#7B2940}
+.destination-heading h2{margin:0;color:#63192b;font-family:'Playfair Display',serif;font-size:clamp(38px,4.2vw,56px);line-height:1.02;letter-spacing:-1.2px;font-weight:700}
+.destination-heading h2 span{color:#174c3a;font-style:italic}
+.destination-heading p{margin:14px 0 0;color:#69756f;font-size:17px;line-height:1.65;max-width:760px}
+.destination-tools{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.destination-chip{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;background:#fff;border:1px solid #e5e0d8;color:#4d5b55;font-size:12px;font-weight:700;box-shadow:0 5px 18px rgba(36,53,45,.05)}
+.destination-chip.buddhist{background:#f8f1e5;color:#79562b;border-color:#ead8b8}
+#destinations,#buddhist-destinations{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;align-items:stretch}
+.destination-card{height:370px;border-radius:24px;background:#17352b;position:relative;cursor:pointer;overflow:hidden;isolation:isolate;box-shadow:0 12px 30px rgba(30,42,36,.10);transition:transform .28s ease,box-shadow .28s ease}
+.destination-card img{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center 42%;transition:transform .55s ease;z-index:-2}
+.destination-card::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02) 20%,rgba(0,0,0,.12) 40%,rgba(0,0,0,.84) 100%);z-index:-1}
+.destination-card::after{content:'Explore →';position:absolute;right:14px;top:14px;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.9);color:#174c3a;font-size:11px;font-weight:800;opacity:0;transform:translateY(-5px);transition:.25s;z-index:3}
+.destination-card:hover{transform:translateY(-7px);box-shadow:0 22px 45px rgba(30,42,36,.19)}
+.destination-card:hover img{transform:scale(1.055)}
+.destination-card:hover::after{opacity:1;transform:translateY(0)}
+.destination-card-content{position:absolute;left:17px;right:17px;bottom:17px;color:#fff;z-index:2}
+.destination-card-content h3{font-family:'Playfair Display',serif;font-size:30px;line-height:1;margin:0 0 9px;letter-spacing:-.3px}
+.destination-card-sub{font-size:12px;color:rgba(255,255,255,.86);margin-bottom:12px;line-height:1.45}
+.destination-card-meta{display:flex;flex-wrap:wrap;gap:6px}
+.destination-card-meta span{padding:6px 8px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px);font-size:10px;font-weight:800;color:#fff}
+.destination-badge{display:inline-block;margin-bottom:9px;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(8px);font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
+.buddhist-divider{display:flex;align-items:center;gap:14px;margin:46px 0 20px;color:#79562b}
+.buddhist-divider::before,.buddhist-divider::after{content:'';height:1px;background:#dfd2bb;flex:1}
+.buddhist-divider strong{font-family:'Playfair Display',serif;font-size:22px;white-space:nowrap}
+.buddhist-intro{margin:-7px 0 18px;color:#7b746a;font-size:14px}
+
+/* ===== EXPLORE DESTINATION DETAILS ===== */
+.dest-modal{background:rgba(10,20,16,.80);backdrop-filter:blur(12px);padding:18px}
+.dest-modal .box{padding:0;max-width:880px;width:min(1080px,100%);max-height:92vh;overflow:auto;border:1px solid rgba(255,255,255,.72);box-shadow:0 35px 110px rgba(0,0,0,.34);border-radius:30px;background:#fbfaf6;position:relative}
+.dest-modal .dest-close{position:absolute;right:18px;top:18px;z-index:20;width:42px;height:42px;border:1px solid rgba(255,255,255,.78);border-radius:50%;background:rgba(255,255,255,.92);color:#17352b;font-size:24px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.16);transition:.2s}
+.dest-modal .dest-close:hover{transform:rotate(90deg) scale(1.05);background:#fff}
+.dest-detail-hero{height:360px;position:relative;overflow:hidden;background:#17352b}
+.dest-detail-hero img{width:100%;height:100%;object-fit:cover;object-position:center 42%;display:block}
+.dest-detail-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.03) 18%,rgba(0,0,0,.78) 100%)}
+.dest-detail-title{position:absolute;left:38px;right:85px;bottom:30px;color:#fff;z-index:2}
+.dest-detail-title small{display:inline-flex;align-items:center;gap:6px;margin-bottom:10px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.38);backdrop-filter:blur(8px);font-size:10px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase}
+.dest-detail-title h1{font-family:'Playfair Display',serif;font-size:58px;line-height:.98;margin:0 0 7px;letter-spacing:-1.5px}
+.dest-detail-title p{margin:0;color:rgba(255,255,255,.88);font-size:15px}
+.dest-detail-body{padding:30px 36px 28px}
+.dest-breadcrumb{font-size:11px;color:#8b8d88;font-weight:800;letter-spacing:.5px;margin-bottom:11px}
+.dest-intro{font-size:16px!important;line-height:1.75!important;color:#4f5e57!important;max-width:900px;margin-bottom:0!important}
+.dest-highlight-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}
+.dest-highlight{padding:14px 15px;border-radius:16px;background:#f2f0e9;border:1px solid #e6e1d7;color:#44514c;min-height:54px;font-size:12px;line-height:1.5}
+.dest-highlight b{display:block;color:#17352b;font-size:10px;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.dest-detail-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;margin-top:26px}
+.dest-detail-body h3{font-family:'Playfair Display',serif;color:#63192b;font-size:27px;margin:0 0 10px}
+.dest-detail-body p{color:#5f6c66;line-height:1.7;font-size:14px;margin:0}
+.dest-places{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+.dest-place{padding:13px 14px;border-radius:14px;background:#fff;border:1px solid #e5e0d8;color:#4b5953;font-size:13px;font-weight:700;box-shadow:0 7px 18px rgba(36,53,45,.05);transition:.2s}
+.dest-place:hover{transform:translateY(-2px);border-color:#cfc6b6}
+.dest-place::before{content:'✓';display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#e8f1eb;color:#174c3a;margin-right:7px;font-size:11px}
+.dest-activity-box{margin-top:22px;padding:18px;border-radius:18px;background:linear-gradient(135deg,#174c3a,#225c47);color:#fff}
+.dest-activity-box h4{margin:0 0 7px;font-size:12px;text-transform:uppercase;letter-spacing:1.2px}
+.dest-activity-box p{color:rgba(255,255,255,.86);font-size:13px}
+.dest-side-card{padding:18px;border-radius:18px;background:#fff;border:1px solid #e5e0d8;box-shadow:0 8px 22px rgba(36,53,45,.05)}
+.dest-side-card+.dest-side-card{margin-top:10px}
+.dest-side-card h4{margin:0 0 7px;color:#17352b;font-size:11px;text-transform:uppercase;letter-spacing:1.1px}
+.dest-side-card p{font-size:13px}
+.dest-gallery-title{margin-top:28px!important}
+.dest-gallery{display:grid;grid-template-columns:1.45fr .72fr .72fr;grid-template-rows:170px 170px;gap:10px;margin-top:14px}
+.dest-gallery img{width:100%;height:100%;min-width:0;min-height:0;object-fit:cover;border-radius:16px;display:block;background:#e9e7df;transition:transform .25s ease}
+.dest-gallery img:first-child{grid-row:span 2}
+.dest-gallery img:hover{transform:scale(1.015)}
+.dest-gallery .gallery-empty{display:none}
+.dest-actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:23px;padding-top:18px;border-top:1px solid #e4dfd6}
+.dest-action{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:0;border-radius:12px;padding:11px 15px;text-decoration:none;font-weight:800;font-size:12px;cursor:pointer;transition:.2s}
+.dest-action:hover{transform:translateY(-2px)}
+.dest-action.primary{background:#174c3a;color:#fff;box-shadow:0 8px 18px rgba(23,76,58,.18)}
+.dest-action.secondary{background:#ece9df;color:#394941}
+.dest-source{font-size:10px;color:#8b8d88;margin-top:11px;line-height:1.5}
+@media(max-width:900px){#destinations,#buddhist-destinations{grid-template-columns:repeat(2,minmax(0,1fr))}.dest-detail-grid{grid-template-columns:1fr}.dest-highlight-grid{grid-template-columns:repeat(2,1fr)}.dest-gallery{grid-template-columns:1fr 1fr;grid-template-rows:190px 135px 135px}.dest-gallery img:first-child{grid-column:span 2;grid-row:auto}}
+@media(max-width:800px){#destinations-section{scroll-margin-top:100px}.destination-heading h2{font-size:42px}.destination-card{height:350px}.dest-detail-hero{height:320px}.dest-detail-title h1{font-size:48px}.dest-detail-body{padding:26px 24px}}
+@media(max-width:500px){#destinations,#buddhist-destinations{grid-template-columns:1fr}.destination-card{height:330px}.dest-detail-hero{height:250px}.dest-detail-title{left:22px;bottom:22px}.dest-detail-title h1{font-size:38px}.dest-detail-body{padding:22px 18px}.dest-highlight-grid,.dest-places{grid-template-columns:1fr}.dest-gallery{grid-template-columns:1fr 1fr;grid-template-rows:150px 105px 105px}.dest-gallery img:first-child{grid-column:span 2}.dest-modal .box{border-radius:22px}}
+/* margin here to adjust on footer  */
+.section{max-width:1100px;margin:60px auto;padding:0 20px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.card{height:290px;border-radius:22px;background-size:cover;background-position:center;position:relative;cursor:pointer;overflow:hidden}.card:after{content:'';position:absolute;inset:0;background:linear-gradient(transparent, #000b)}.card div{position:absolute;bottom:18px;left:18px;color:white;z-index:1}.card h3{font-size:25px;margin:0}.planner{background:#174c3a;color:white;border-radius:28px;padding:35px}.form{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.field label{display:block;font-size:12px;margin-bottom:6px;color:#c8d8d1}.field input,.field select{width:100%;padding:13px;border-radius:10px;border:1px solid #ffffff33;background:#ffffff12;color:white;box-sizing:border-box}.field option{color:#17352b}.wide{grid-column:span 2}.result{margin-top:20px;background:white;color:#17352b;padding:25px;border-radius:20px}.day{padding:15px;border:1px solid #ddd;border-radius:14px;margin:10px 0}.danger{background:#fff0ed;color:#8d3e36;padding:15px;border-radius:14px}.modal{display:none;position:fixed;inset:0;background:#0009;z-index:2000;align-items:center;justify-content:center;padding:20px}.box{background:white;border-radius:24px;padding:28px;max-width:750px;width:100%;max-height:90vh;overflow:auto}.close{float:right;border:0;background:#eee;border-radius:50%;width:35px;height:35px}.enq input,.enq textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:10px;box-sizing:border-box}.enq textarea{height:100px}@media(max-width:800px){.hero{grid-template-columns:1fr}.hero h1{font-size:48px}.grid{grid-template-columns:repeat(2,1fr)}.form{grid-template-columns:1fr}.wide{grid-column:auto}}@media(max-width:500px){.grid{grid-template-columns:1fr}.photo{height:300px}}
 
 
 .navbar{
@@ -182,7 +262,7 @@ margin:1 auto;
 }
 
 .cta{
- background:#103D2E;
+ background:#c30d53;
  color:white;
  padding:12px 18px;
  border-radius:14px;
@@ -192,26 +272,9 @@ margin:1 auto;
 }
 
 .cta:hover{
- background:#1b5a46;
+ background:#7e041e;
  transform:translateY(-2px);
 }
-
-/* ===== Destination detail modal — richer, image-led ===== */
-.dest-box{padding:0;overflow:hidden}
-.dest-hero{position:relative;height:260px;background-size:cover;background-position:center;display:flex;align-items:flex-end}
-.dest-hero-overlay{position:absolute;inset:0;background:linear-gradient(transparent 40%,#000c)}
-.dest-hero h1{position:relative;z-index:1;color:#fff;font-family:'Playfair Display',serif;font-size:36px;margin:0;padding:24px 28px}
-.close-float{position:absolute;top:16px;right:16px;z-index:2;border:0;background:rgba(255,255,255,.88);border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:16px}
-.dest-content{padding:26px 28px 30px}
-.dest-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
-.meta-chip{background:#f0ece4;color:#63192b;font-size:12.5px;font-weight:700;padding:6px 12px;border-radius:999px}
-.dest-content p.desc{color:#5d6b66;font-size:14.5px;line-height:1.65;margin:0 0 6px}
-.dest-block{margin:18px 0}
-.dest-block b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#8a7a72;margin-bottom:9px}
-.dest-tags{display:flex;flex-wrap:wrap;gap:8px}
-.dest-tags span{background:#eef2ee;color:#174c3a;padding:6px 13px;border-radius:999px;font-size:12.5px;font-weight:600}
-.dest-tags.good span{background:#fdeee7;color:#7b2940}
-@media(max-width:600px){.dest-hero{height:200px}.dest-hero h1{font-size:28px}}
     </style></head><body>
         <link rel="stylesheet" href="css/navbar.css">
 
@@ -224,7 +287,7 @@ margin:1 auto;
 
 <div class="nav-links">
     <a href="index.html">Home</a>
-    <a href="#destinations">Explore</a>
+    <a href="#destinations-section" onclick="document.getElementById('destinations-section').scrollIntoView({behavior:'smooth',block:'start'})">Explore</a>
     <a href="planner.html">AI Planner</a>
     <a href="guides.html">Inspirations</a>
     <a href="contact.html">Contact</a>
@@ -242,14 +305,14 @@ margin:1 auto;
 
 <small>SMART TRAVEL PLANNING</small>
 
-<h1>Your trip.<br>Crafted around you.</h1>
+<h1>Your trip<br>Crafted around you.</h1>
 
 <p>
 Discover iconic destinations and create a beautiful itinerary that respects your real budget.
 </p>
 
 <button class="btn"
-onclick="document.getElementById('destinations').scrollIntoView({behavior:'smooth'})">
+onclick="document.getElementById('planner').scrollIntoView({behavior:'smooth'})">
 Create Itinerary ✨
 </button>
 
@@ -277,51 +340,78 @@ style="background-image:url('https://images.unsplash.com/photo-1477587458883-471
 </div>
 
 </section>
-<section class="section" id="destinations"><h2>Explore iconic destinations</h2><p>Click a destination to discover it.</p><div class="grid" id="destinations-grid"></div></section>
+<section class="section" id="destinations-section">
+ <div class="destination-heading">
+    <h2>Explore <span>iconic destinations</span></h2>
+    <p>Go beyond a postcard. Explore the places, experiences and stories that make each destination worth the journey — then let TourCraft shape the trip around you.</p>
+    <div class="destination-tools">
+        <span class="destination-chip">✦ Handpicked places</span>
+        <span class="destination-chip">⌁ Experiences worth doing</span>
+        <span class="destination-chip buddhist">☸ Buddhist heritage</span>
+    </div>
+ </div>
+ <div class="grid" id="destinations">
+   <div class="destination-card" data-destination="Kashmir" onclick="openDest('Kashmir')"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStTik5ZwFPG5_DTi9Eflf_FTnS4zerRSRNc_CbGdaMlr9J8p1gKdFTdSQ&s=10" alt="Kashmir" loading="lazy"><div class="destination-card-content"><h3>Kashmir</h3><div class="destination-card-sub">Himalayan valleys · lakes · mountain escapes</div><div class="destination-card-meta"><span>4–6 days</span><span>Apr–Jun</span><span>₹22k+</span></div></div></div>
+   <div class="destination-card" data-destination="Kerala" onclick="openDest('Kerala')"><img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80" alt="Kerala" loading="lazy"><div class="destination-card-content"><h3>Kerala</h3><div class="destination-card-sub">Backwaters · tea country · beaches</div><div class="destination-card-meta"><span>4–7 days</span><span>Oct–Mar</span><span>₹18k+</span></div></div></div>
+   <div class="destination-card" data-destination="Goa" onclick="openDest('Goa')"><img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80" alt="Goa" loading="lazy"><div class="destination-card-content"><h3>Goa</h3><div class="destination-card-sub">Beaches · heritage · cafés · nightlife</div><div class="destination-card-meta"><span>3–5 days</span><span>Nov–Feb</span><span>₹14k+</span></div></div></div>
+   <div class="destination-card" data-destination="Rajasthan" onclick="openDest('Rajasthan')"><img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80" alt="Rajasthan" loading="lazy"><div class="destination-card-content"><h3>Rajasthan</h3><div class="destination-card-sub">Forts · palaces · desert · royal culture</div><div class="destination-card-meta"><span>5–8 days</span><span>Oct–Mar</span><span>₹20k+</span></div></div></div>
+   <div class="destination-card" data-destination="Manali" onclick="openDest('Manali')"><img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80" alt="Manali" loading="lazy"><div class="destination-card-content"><h3>Manali</h3><div class="destination-card-sub">Himalayas · snow · cafés · adventure</div><div class="destination-card-meta"><span>3–5 days</span><span>Mar–Jun</span><span>₹15k+</span></div></div></div>
+   <div class="destination-card" data-destination="Varanasi" onclick="openDest('Varanasi')"><img src="https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=800&q=80" alt="Varanasi" loading="lazy"><div class="destination-card-content"><h3>Varanasi</h3><div class="destination-card-sub">Ghats · Ganga · food · living heritage</div><div class="destination-card-meta"><span>2–3 days</span><span>Oct–Mar</span><span>₹9k+</span></div></div></div>
+   <div class="destination-card" data-destination="Meghalaya" onclick="openDest('Meghalaya')"><img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80" alt="Meghalaya" loading="lazy"><div class="destination-card-content"><h3>Meghalaya</h3><div class="destination-card-sub">Waterfalls · caves · root bridges</div><div class="destination-card-meta"><span>4–6 days</span><span>Oct–Apr</span><span>₹21k+</span></div></div></div>
+   <div class="destination-card" data-destination="Andaman" onclick="openDest('Andaman')"><img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80" alt="Andaman" loading="lazy"><div class="destination-card-content"><h3>Andaman</h3><div class="destination-card-sub">Islands · beaches · diving · marine life</div><div class="destination-card-meta"><span>5–7 days</span><span>Oct–May</span><span>₹26k+</span></div></div></div>
+ </div>
+ <div class="buddhist-divider"><strong>☸ Buddhist Heritage Trail</strong></div>
+ <p class="buddhist-intro">Four landmark sites connected to the life, teachings and intellectual history of Buddhism in India.</p>
+ <div class="grid" id="buddhist-destinations">
+   <div class="destination-card" data-destination="Bodh Gaya" onclick="openDest('Bodh Gaya')"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mahabodhi%20Temple%2C%20Bodh%20Gaya%2C%20Bihar%2C%20India.jpg" alt="Bodh Gaya" loading="lazy"><div class="destination-card-content"><span class="destination-badge">Buddhist heritage</span><h3>Bodh Gaya</h3><div class="destination-card-sub">Mahabodhi Temple · enlightenment</div><div class="destination-card-meta"><span>1–2 days</span><span>Oct–Mar</span><span>Heritage</span></div></div></div>
+   <div class="destination-card" data-destination="Sarnath" onclick="openDest('Sarnath')"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Dhamek%20Stupa%2C%20Sarnath.jpg" alt="Sarnath" loading="lazy"><div class="destination-card-content"><span class="destination-badge">Buddhist heritage</span><h3>Sarnath</h3><div class="destination-card-sub">Dhamek Stupa · first teaching</div><div class="destination-card-meta"><span>1 day</span><span>Oct–Mar</span><span>Heritage</span></div></div></div>
+   <div class="destination-card" data-destination="Kushinagar" onclick="openDest('Kushinagar')"><img src="kushinagar.jpg" alt="Kushinagar" loading="lazy"><div class="destination-card-content"><span class="destination-badge">Buddhist heritage</span><h3>Kushinagar</h3><div class="destination-card-sub">Mahaparinirvana · sacred pilgrimage</div><div class="destination-card-meta"><span>1–2 days</span><span>Oct–Mar</span><span>Heritage</span></div></div></div>
+   <div class="destination-card" data-destination="Nalanda" onclick="openDest('Nalanda')"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Nalanda%20Ruins%20%289%29.jpg" alt="Nalanda" loading="lazy"><div class="destination-card-content"><span class="destination-badge">Buddhist heritage</span><h3>Nalanda</h3><div class="destination-card-sub">Ancient Mahavihara · learning</div><div class="destination-card-meta"><span>1 day</span><span>Oct–Mar</span><span>Heritage</span></div></div></div>
+ </div>
+</section>
 <!-- <section class="section" id="planner"><div class="planner"><h2>AI Itinerary Builder</h2><p>Tell TourCraft what you need.</p><div class="form"><div class="field"><label>DESTINATION</label><select id="destination"><option>Kashmir</option><option>Kerala</option><option>Goa</option><option>Rajasthan</option><option>Manali</option><option>Varanasi</option><option>Meghalaya</option><option>Andaman</option></select></div><div class="field"><label>TRAVELLERS</label><input id="people" type="number" value="2" min="1"></div><div class="field"><label>DAYS</label><input id="days" type="number" value="5" min="1"></div><div class="field"><label>BUDGET ₹</label><input id="budget" type="number" value="35000" min="1"></div><div class="field"><label>STYLE</label><select id="style"><option>Smart Budget</option><option>Comfort</option><option>Backpacker</option><option>Premium</option></select></div><div class="field"><label>TRANSPORT</label><select id="transport"><option>Comfortable</option><option>Budget</option><option>Private Cab</option></select></div><div class="field wide"><label>INTERESTS</label><input id="interests" placeholder="food, mountains, culture, adventure..."></div></div><br><button class="btn" style="background:#dff08c;color:#17352b" onclick="build()">Generate my itinerary ✨</button><div id="result"></div></div></section> -->
-<div class="modal" id="destModal">
-  <div class="box dest-box">
-    <div class="dest-hero" id="destHero">
-      <button class="close-float" onclick="hide('destModal')">×</button>
-      <div class="dest-hero-overlay"></div>
-      <h1 id="mt"></h1>
-    </div>
-    <div class="dest-content">
-      <div class="dest-meta">
-        <span class="meta-chip" id="mPrice"></span>
-        <span class="meta-chip" id="mBest"></span>
-        <span class="meta-chip" id="mDays"></span>
-      </div>
-      <p class="desc" id="md"></p>
-      <div class="dest-block">
-        <b>Perfect for</b>
-        <div class="dest-tags good" id="mGood"></div>
-      </div>
-      <div class="dest-block">
-        <b>Signature experiences</b>
-        <div class="dest-tags" id="mf"></div>
-      </div>
-      <button class="btn" style="width:100%;margin-top:8px" onclick="useDestination()">Plan this destination →</button>
-    </div>
-  </div>
-</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<div class="modal dest-modal" id="destModal" onclick="if(event.target===this) hide('destModal')"><div class="box" id="destDetail"><button class="dest-close" aria-label="Close destination details" onclick="hide('destModal')">×</button><div id="destDetailContent"></div></div></div>
+<div class="modal" id="mailModal"><div class="box"><button class="close" onclick="hide(&quot;mailModal&quot;)">×</button><h2>Send enquiry</h2><p>Your itinerary will be inserted into an email.</p><div class="enq"><input id="name" placeholder="Name *"><input id="email" placeholder="Email *"><input id="phone" placeholder="Phone / WhatsApp"><textarea id="message" placeholder="Anything else?"></textarea></div><button class="btn" onclick="sendMail()">Open enquiry email →</button><p style="font-size:12px;color:#777">Change the recipient in CONFIG below.</p></div></div>
 <script>
 
+// const CONFIG={email:'YOUR_EMAIL@example.com'};
+const CONFIG = { email: 'apurvaaniket8@gmail.com', scriptURL: 'https://script.google.com/macros/s/AKfycbwt_ZOJlV102sLefJ2atd8gepcgojykxpuRb0SnF-Eo1ZUf0WUczsUP8RZFVqrvqYQd/exec' };
+
+
+const wikiFile=(name)=>'https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(name).replace(/%2F/g,'/');
 const D={
-Kashmir:{img:'https://images.unsplash.com/photo-1609947017136-9daf32a5eb16?auto=format&fit=crop&w=800&q=80',desc:'Snowy mountains, Dal Lake houseboats, valleys and Kashmiri hospitality.',bestTime:'Mar–Jun & Sep–Nov',idealDays:'6–8 days',goodFor:['Honeymoon','Nature'],spots:['Dal Lake','Gulmarg','Pahalgam','Sonamarg','Betaab Valley','Shankaracharya Temple'],tiers:{backpacker:1800,smartBudget:2800,comfort:4800,premium:9500}},
-Kerala:{img:'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80',desc:'Backwaters, beaches, hill stations, food and unhurried travel.',bestTime:'Sep–Mar',idealDays:'6–8 days',goodFor:['Relaxation','Nature'],spots:['Alleppey Backwaters','Munnar Tea Hills','Varkala Cliff','Fort Kochi','Thekkady','Kumarakom'],tiers:{backpacker:1600,smartBudget:2400,comfort:4200,premium:8500}},
-Goa:{img:'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80',desc:'Beaches, Portuguese heritage, cafes and coastal nightlife.',bestTime:'Nov–Feb',idealDays:'4–6 days',goodFor:['Nightlife','Beaches'],spots:['Baga Beach','Anjuna Flea Market','Old Goa Churches','South Goa Beaches','Fort Aguada','Chapora Fort'],tiers:{backpacker:1400,smartBudget:2100,comfort:3800,premium:8000}},
-Rajasthan:{img:'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80',desc:'Forts, palaces, desert landscapes and royal Rajasthani culture.',bestTime:'Oct–Mar',idealDays:'7–9 days',goodFor:['Culture','Heritage'],spots:['Amber Fort Jaipur','Mehrangarh Jodhpur','City Palace Udaipur','Jaisalmer Desert Camp','Hawa Mahal','Local Bazaars'],tiers:{backpacker:1700,smartBudget:2600,comfort:4500,premium:9200}},
-Manali:{img:'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80',desc:'Mountain views, cafes, valleys and easy adventure activities.',bestTime:'Mar–Jun & Oct–Feb',idealDays:'5–7 days',goodFor:['Adventure','Nature'],spots:['Solang Valley','Old Manali Cafes','Atal Tunnel','Kasol','Hidimba Temple','Rohtang Pass'],tiers:{backpacker:1500,smartBudget:2300,comfort:3900,premium:7800}},
-Varanasi:{img:'https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=800&q=80',desc:'Ghats, spirituality, street food and living heritage.',bestTime:'Oct–Mar',idealDays:'2–3 days',goodFor:['Culture','Spirituality'],spots:['Ganga Aarti','Sarnath','Old City Lanes','Sunrise Boat Ride','Kashi Vishwanath Temple','Local Food Trail'],tiers:{backpacker:1000,smartBudget:1600,comfort:2800,premium:6000}},
-Meghalaya:{img:'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80',desc:'Living root bridges, waterfalls, misty hills and nature.',bestTime:'Oct–May',idealDays:'5–7 days',goodFor:['Nature','Adventure'],spots:['Shillong','Cherrapunji Waterfalls','Dawki River','Mawlynnong Village','Living Root Bridges','Elephant Falls'],tiers:{backpacker:1650,smartBudget:2500,comfort:4300,premium:8200}},
-Andaman:{img:'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80',desc:'Island beaches, clear water and marine experiences.',bestTime:'Oct–May',idealDays:'5–6 days',goodFor:['Beaches','Honeymoon'],spots:['Radhanagar Beach','Cellular Jail','Neil Island','Havelock Scuba Diving','Ross Island','North Bay Snorkelling'],tiers:{backpacker:2200,smartBudget:3400,comfort:5800,premium:12000}},
-Ladakh:{img:'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80',desc:'High-altitude desert, Buddhist monasteries and cobalt lakes.',bestTime:'May–Sep',idealDays:'7–9 days',goodFor:['Adventure','Photography'],spots:['Pangong Lake','Nubra Valley','Magnetic Hill','Leh Palace','Khardung La Pass','Diskit Monastery'],tiers:{backpacker:2200,smartBudget:3400,comfort:5600,premium:11000}},
-Hampi:{img:'https://images.unsplash.com/photo-1600100568205-8e0a8b2a2a8e?auto=format&fit=crop&w=800&q=80',desc:'Boulder-strewn ruins of a 14th-century empire, frozen mid-story.',bestTime:'Oct–Feb',idealDays:'2–3 days',goodFor:['History','Backpacking'],spots:['Virupaksha Temple','Vittala Temple Complex','Matanga Hill Sunrise','Hampi Bazaar','Lotus Mahal','Tungabhadra Coracle Ride'],tiers:{backpacker:1200,smartBudget:1900,comfort:3400,premium:7000}},
-Rishikesh:{img:'https://images.unsplash.com/photo-1591017403286-fd8493524e1e?auto=format&fit=crop&w=800&q=80',desc:'Whitewater rapids, riverside yoga and evening aarti on the Ganges.',bestTime:'Sep–Nov & Feb–Apr',idealDays:'3–4 days',goodFor:['Adventure','Wellness'],spots:['Laxman Jhula','Ram Jhula','White Water Rafting','Beatles Ashram','Triveni Ghat Aarti','Neer Garh Waterfall'],tiers:{backpacker:1300,smartBudget:2000,comfort:3600,premium:7200}}
+Kashmir:{from:22000,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStTik5ZwFPG5_DTi9Eflf_FTnS4zerRSRNc_CbGdaMlr9J8p1gKdFTdSQ&s=10',gallery:['Dal Lake, Srinagar, Kashmir.jpg','Gulmarg.jpg','Pahalgam Valley.jpg','Sonamarg.jpg'],desc:'A Himalayan valley known for Dal Lake, Mughal gardens, mountain landscapes and distinctive Kashmiri culture.',spots:['Dal Lake & shikara ride','Gulmarg','Pahalgam','Sonamarg','Nishat & Shalimar Gardens'],why:'Best for scenic escapes, slow travel, photography, mountain experiences and local culture.'},
+Kerala:{from:18000,img:'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1000&q=85',gallery:['Kerala backwaters, Boat, India.jpg','Munnar , Kerala.jpg','Fort Kochi.jpg','Varkala Beach.jpg'],desc:'A lush South Indian destination combining backwaters, hill country, beaches, food and heritage.',spots:['Alleppey backwaters','Munnar tea country','Fort Kochi','Varkala','Kumarakom'],why:'Best for relaxed holidays, nature, food, wellness and couples or family travel.'},
+Goa:{from:14000,img:'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1000&q=85',gallery:['Goa-sea-beach.jpg','Goa sandy beach.jpg','Fort Aguada Goa.jpg','Old Goa Basilica.jpg'],desc:'A coastal destination mixing beaches, Portuguese-era heritage, seafood, cafés and a lively nightlife scene.',spots:['Baga & Anjuna','South Goa beaches','Old Goa churches','Fontainhas','Fort Aguada'],why:'Best for beach time, food, nightlife, heritage walks and easygoing short breaks.'},
+Rajasthan:{from:20000,img:'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1000&q=85',gallery:['Hawa Mahal in Jaipur, India.jpg','Hawa Mahal, Jaipur, India.jpg','Mehrangarh Fort Jodhpur.jpg','Udaipur City Palace.jpg'],desc:'A richly historic region of forts, palaces, desert landscapes, craft traditions and royal-era cities.',spots:['Jaipur','Jodhpur','Udaipur','Jaisalmer','Pushkar'],why:'Best for architecture, history, culture, shopping, photography and heritage stays.'},
+Manali:{from:15000,img:'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1000&q=85',gallery:['Manali,himachal pradesh.jpg','Himalayas Manali.jpg','Solang Valley Manali.jpg','Old Manali.jpg'],desc:'A Himalayan base for mountain scenery, valley walks, cafés and outdoor experiences around the Beas valley.',spots:['Solang Valley','Old Manali','Atal Tunnel','Hidimba Temple','Naggar'],why:'Best for mountain scenery, snow-season trips, cafés, adventure and relaxed Himalayan stays.'},
+Varanasi:{from:9000,img:'https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=1000&q=85',gallery:['Varanasi Ganga Ghat.jpg','Ganga ghat.1.jpg','Sarnath Dhamek Stupa.jpg','Assi Ghat Varanasi.jpg'],desc:'One of India’s oldest living cities, where the Ganga ghats, temples, crafts and everyday life create a deeply atmospheric experience.',spots:['Ganga Aarti','Sunrise boat ride','Old City lanes','Sarnath','Dashashwamedh & Assi Ghats'],why:'Best for culture, spirituality, food, photography and slow exploration of living heritage.'},
+Meghalaya:{from:21000,img:'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85',gallery:['LivingRootBridge.jpg','The Living root bridge in Dawki, Meghalaya.jpg','Living Roots Bridge.jpg','Living Root Bridge in Cherrapunjee, Meghalaya.jpg'],desc:'A northeastern landscape of misty hills, waterfalls, living root bridges, caves and clear-water rivers.',spots:['Shillong','Cherrapunji','Dawki','Mawlynnong','Nohkalikai Falls'],why:'Best for nature, road trips, waterfalls, trekking and monsoon landscapes.'},
+Andaman:{from:26000,img:'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1000&q=85',gallery:['Radhanagar Beach, Havelock Island,Andaman.jpg','Radhanagar Beach (Swaraj Dweep), Andaman and Nicobar Island.jpg','Elephant Beach Havelock.jpg','Cellular Jail Port Blair.jpg'],desc:'A tropical island escape known for clear waters, beaches, marine life and a strong mix of nature and history.',spots:['Radhanagar Beach','Elephant Beach','Cellular Jail','North Bay','Neil Island / Shaheed Dweep'],why:'Best for beaches, snorkelling, diving, island relaxation and marine experiences.'},
+'Bodh Gaya':{img:wikiFile('Mahabodhi Temple, Bodh Gaya, Bihar, India.jpg'),gallery:['Bodh gaya Mahabodhi Temple.jpg','Mahabodhi temple with Stupas, Bodhgaya 01.jpg','Mahabodhi temple at Bodhgaya in Bihar 01.jpg','Mahabodhi temple complex after Sunset, Bodhgaya 20.jpg'],desc:'Bodh Gaya in Bihar is the site associated with the Buddha’s attainment of enlightenment. The Mahabodhi Temple Complex is a UNESCO World Heritage Site.',spots:['Mahabodhi Temple','Sacred Bodhi Tree','Vajrasana','Lotus Pond','Great Buddha Statue'],why:'Ideal for Buddhist pilgrimage, meditation, architecture and a quieter heritage-focused journey.',badge:'Buddhist heritage'},
+Sarnath:{img:wikiFile('Dhamek Stupa, Sarnath.jpg'),gallery:['Dhamek Stupa at Sarnath UP.jpg','Sarnath Archaeological Museum.jpg','Chaukhandi Stupa Sarnath.jpg','Mulagandha Kuti Vihara Sarnath.jpg'],desc:'Sarnath near Varanasi is one of Buddhism’s most important pilgrimage sites, associated with the Buddha’s first teaching after enlightenment.',spots:['Dhamek Stupa','Sarnath Archaeological Museum','Chaukhandi Stupa','Mulagandha Kuti Vihara','Deer Park'],why:'Best for Buddhist history, archaeology, museums, meditation and a meaningful half-day or full-day visit.',badge:'Buddhist heritage'},
+Kushinagar:{img:wikiFile('Mahaparinirvana Temple in Kushinagar U.P. India.jpg'),gallery:['Mahaparinirvan M10.jpg','Parinirvana stupa of Kushinagar.jpg','Ramabhar Stupa kushinagar.jpg','Thai Temple, Kushinagar 3.jpg','Wat Thai Temple, Kushinagar 20160609.jpg'],desc:'Kushinagar in Uttar Pradesh is traditionally identified as the place where the Buddha attained Mahaparinirvana.',spots:['Mahaparinirvana Temple','Parinirvana Stupa','Ramabhar Stupa','Matha Kuar Shrine','International Buddhist monasteries'],why:'Best for pilgrimage, Buddhist architecture, quiet reflection and tracing the final chapter of the Buddha’s life.',badge:'Buddhist heritage'},
+Nalanda:{img:wikiFile('Nalanda Ruins (9).jpg'),gallery:['Nalanda Ruins (2).jpg','Nalanda Ruins.jpg','Nalanda Mahavihara ruins.jpg','Nalanda archaeological site.jpg'],desc:'Nalanda Mahavihara in Bihar was a major monastic and scholastic institution whose archaeological remains span centuries of Buddhist learning.',spots:['Nalanda Mahavihara ruins','Monastery complexes','Stupas & shrines','Archaeological museum','Nearby Rajgir'],why:'Best for archaeology, Buddhist intellectual history, ancient architecture and combining heritage with Rajgir.',badge:'Buddhist heritage'}
 };
 
-let chosen='Kashmir';
+const DEST_EXTRA={
+Kashmir:{region:'Jammu & Kashmir, India',duration:'4–6 days',best:'April–June; September–October',activities:'Shikara ride, mountain sightseeing, gondola ride, photography, local cuisine and handicraft shopping.',transport:'Srinagar Airport is the main gateway; taxis are practical for valley sightseeing.',hotels:'Houseboats and hotels around Dal Lake, with resort stays in Gulmarg and Pahalgam.',tips:'Keep a flexible day for mountain weather and confirm local transport before higher-altitude excursions.'},
+Kerala:{region:'Kerala, India',duration:'4–7 days',best:'October–March',activities:'Houseboat cruise, tea-estate visits, cultural performances, beach time and Kerala cuisine experiences.',transport:'Kochi and Thiruvananthapuram are major gateways; private cabs help combine hill and coastal areas.',hotels:'Backwater resorts and houseboats in Alappuzha/Kumarakom, plus stays in Munnar and Fort Kochi.',tips:'Pair one hill destination with one coastal/backwater area rather than rushing across the state.'},
+Goa:{region:'Goa, India',duration:'3–5 days',best:'November–February',activities:'Beach hopping, water sports, heritage walks, café hopping, sunset viewing and local seafood.',transport:'Goa has two airports; taxis are useful for longer sightseeing days and transfers.',hotels:'Beach resorts, boutique stays in Panjim/Fontainhas and budget hostels.',tips:'North Goa is generally livelier; South Goa suits quieter beach time. Check sea conditions before water activities.'},
+Rajasthan:{region:'Rajasthan, India',duration:'5–8 days',best:'October–March',activities:'Fort and palace tours, bazaar walks, craft shopping, desert excursions, heritage dining and photography.',transport:'Jaipur is a major gateway; trains connect principal cities and private cars work well for circuits.',hotels:'Heritage havelis, palace hotels, boutique stays and budget guesthouses.',tips:'Distances between cities are significant; allow enough time rather than trying to cover every major city.'},
+Manali:{region:'Himachal Pradesh, India',duration:'3–5 days',best:'March–June; October–February for snow',activities:'Short hikes, seasonal snow activities, café hopping, river views, local sightseeing and mountain drives.',transport:'Bhuntar Airport is the nearest airport; buses and cabs from Delhi/Chandigarh are common.',hotels:'Guesthouses in Old Manali, hotels around Mall Road and quieter stays towards Naggar.',tips:'Check road and weather conditions before high-altitude excursions.'},
+Varanasi:{region:'Uttar Pradesh, India',duration:'2–3 days',best:'October–March',activities:'Sunrise boat ride, Ganga Aarti, heritage walks, Banarasi food and silk shopping, plus a Sarnath excursion.',transport:'Varanasi Airport and railway station are well connected; e-rickshaws, autos and cabs help locally.',hotels:'Heritage guesthouses near the ghats, hotels around Godowlia/Cantonment and boutique stays near Assi.',tips:'The old-city lanes are pedestrian-heavy; wear comfortable footwear and allow extra time for crowds.'},
+Meghalaya:{region:'Meghalaya, India',duration:'4–6 days',best:'October–April for clearer conditions; monsoon for dramatic waterfalls',activities:'Road trips, waterfall viewpoints, village visits, trekking, cave exploration and river experiences.',transport:'Guwahati is the main gateway; a hired car is the most practical option for a multi-stop trip.',hotels:'Hotels and homestays in Shillong and Sohra, with smaller guesthouses around rural attractions.',tips:'Rain can change road and trail conditions quickly; carry waterproof layers and comfortable footwear.'},
+Andaman:{region:'Andaman & Nicobar Islands, India',duration:'5–7 days',best:'October–May',activities:'Snorkelling, scuba diving, glass-bottom boat rides, beach time, island cruises and Cellular Jail visits.',transport:'Veer Savarkar International Airport in Port Blair is the main gateway; ferries connect principal islands.',hotels:'Beach resorts and hotels in Port Blair, Swaraj Dweep and Shaheed Dweep.',tips:'Ferry schedules and sea conditions can affect transfers; keep buffer time before flights.'},
+'Bodh Gaya':{region:'Bihar, India',duration:'1–2 days',best:'October–March',activities:'Temple visits, meditation, Buddhist monastery visits, heritage walks and quiet time around the Bodhi Tree.',transport:'Gaya Airport and railway station are the closest major gateways; Bodh Gaya is connected by road.',hotels:'Guesthouses, pilgrimage hotels and international Buddhist monastery accommodation.',tips:'Dress respectfully and expect a calm, contemplative atmosphere around active places of worship.',badge:'Buddhist heritage'},
+Sarnath:{region:'Uttar Pradesh, India',duration:'1 day',best:'October–March',activities:'Archaeological sightseeing, museum visits, meditation, Buddhist temples and a combined Varanasi–Sarnath heritage day.',transport:'Sarnath is a short road journey from Varanasi; taxis and auto-rickshaws are common.',hotels:'Most travellers stay in Varanasi and visit Sarnath as a half-day or full-day excursion.',tips:'Allow time for the museum and archaeological area rather than treating Sarnath as only a photo stop.',badge:'Buddhist heritage'},
+Kushinagar:{region:'Uttar Pradesh, India',duration:'1–2 days',best:'October–March',activities:'Pilgrimage walks, monastery visits, meditation, heritage sightseeing and quiet reflection.',transport:'Kushinagar has its own airport; Gorakhpur is another major rail/air gateway.',hotels:'Pilgrimage hotels, guesthouses and monastery-run accommodation are available.',tips:'The experience is primarily spiritual; plan for respectful and unhurried sightseeing.',badge:'Buddhist heritage'},
+Nalanda:{region:'Bihar, India',duration:'1 day',best:'October–March',activities:'Archaeological exploration, museum visit, heritage photography and combining Nalanda with Rajgir.',transport:'Rajgir is a practical base; road and rail connections link the area with Patna and Gaya.',hotels:'Hotels and guesthouses are available in Rajgir and nearby towns.',tips:'Explore the ruins in cooler hours and combine Nalanda with Rajgir for a fuller heritage day.',badge:'Buddhist heritage'}
+};
+Object.keys(DEST_EXTRA).forEach(k=>{if(D[k])D[k]={...D[k],...DEST_EXTRA[k]};});
+
+let chosen='Kashmir',plan='';
 
 /* ===== HERO SLIDESHOW ===== */
 
@@ -337,39 +427,158 @@ currentHero=(currentHero+1)%heroSlides.length;
 
 heroSlides[currentHero].classList.add("active");
 
-},4000);
+},3000);
+function init(){}
+function openDest(n){
+  chosen=n;
+  const x=D[n];
+  if(!x){console.warn('Destination data not found:',n);return;}
+  const gallery=[x.img,...(x.gallery||[]).map(wikiFile)].slice(0,5);
+  const safe=v=>String(v||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  const fact=(label,value)=>value?`<div class="dest-highlight"><b>${safe(label)}</b>${safe(value)}</div>`:'';
+  const spots=(x.spots||[]).map(s=>`<div class="dest-place">${safe(s)}</div>`).join('');
+  const galleryHtml=gallery.map((g,i)=>`<img src="${g}" alt="${safe(n)} photo ${i+1}" loading="eager" referrerpolicy="no-referrer" onerror="this.remove()">`).join('');
+  destDetailContent.innerHTML=`
+    <div class="dest-detail-hero">
+      <img src="${x.img}" alt="${safe(n)}" crossorigin="anonymous">
+      <div class="dest-detail-title">
+        <small>${safe(x.badge||'TourCraft destination')}</small>
+        <h1>${safe(n)}</h1>
+        <p>${safe(x.region||'India')} · ${safe(x.duration||'Plan your stay')}</p>
+      </div>
+    </div>
+    <div class="dest-detail-body">
+      <div class="dest-breadcrumb">DESTINATIONS / <strong>${safe(n)}</strong></div>
+      <p class="dest-intro">${safe(x.desc)}</p>
+      <div class="dest-highlight-grid">
+        ${fact('Duration',x.duration)}
+        ${fact('Best time to visit',x.best)}
+        ${fact('Starting budget',x.from?`₹${x.from.toLocaleString('en-IN')} / person`:'Not listed')}
+        ${fact('Getting there',x.transport)}
+      </div>
+      <div class="dest-detail-grid">
+        <div>
+          <h3>Places to explore</h3>
+          <div class="dest-places">${spots}</div>
+          <div class="dest-activity-box"><h4>Things to do</h4><p>${safe(x.activities||x.why)}</p></div>
+        </div>
+        <div>
+          <h3>Travel notes</h3>
+          <div class="dest-side-card"><h4>Where to stay</h4><p>${safe(x.hotels||'Choose a stay close to your main sightseeing area.')}</p></div>
+          <div class="dest-side-card"><h4>Local tip</h4><p>${safe(x.tips||'Check current local conditions before travelling.')}</p></div>
+          <div class="dest-side-card"><h4>Why go</h4><p>${safe(x.why||'A memorable destination worth exploring with TourCraft.')}</p></div>
+        </div>
+      </div>
+      <h3 class="dest-gallery-title">A glimpse of ${safe(n)}</h3>
+      <div class="dest-gallery">${galleryHtml}</div>
+      <div class="dest-actions">
+        <button class="dest-action primary" onclick="downloadDestinationCard()">↓ Download full card</button>
+        <button class="dest-action secondary" onclick="window.location.href='planner.html?destination='+encodeURIComponent(chosen)">Plan this destination →</button>
+      </div>
+      <div class="dest-source">Planning details are indicative. Attraction timings, entry fees, transport schedules and accommodation prices can change, so verify current details before travel.</div>
+    </div>`;
+  destModal.style.display='flex';
+  document.body.style.overflow='hidden';
+}
 
-function money(x){return '₹'+Math.round(x).toLocaleString('en-IN')}
+function hide(id){document.getElementById(id).style.display='none';if(id==='destModal')document.body.style.overflow=''}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&destModal.style.display==='flex')hide('destModal')});
 
-function init(){
-  const grid=document.getElementById('destinations-grid');
-  for(const n in D){
-    const t=D[n].tiers;
-    grid.innerHTML+=`<div class='card' style="background-image:url('${D[n].img}')" onclick="openDest('${n}')"><div><h3>${n}</h3><span>From ${money(t.backpacker)}/day</span></div></div>`;
+async function waitForDestinationImages(card){
+  const images=[...card.querySelectorAll('img')];
+  await Promise.all(images.map(img=>new Promise(resolve=>{
+    if(img.complete && img.naturalWidth>0){resolve();return;}
+    const done=()=>{img.removeEventListener('load',done);img.removeEventListener('error',done);resolve();};
+    img.addEventListener('load',done,{once:true});
+    img.addEventListener('error',done,{once:true});
+    setTimeout(done,7000);
+  })));
+}
+
+async function makeImagesCaptureSafe(card){
+  const images=[...card.querySelectorAll('img')];
+  const originals=[];
+  for(const img of images){
+    if(!img.src || img.src.startsWith('data:') || img.src.startsWith('blob:'))continue;
+    try{
+      const response=await fetch(img.src,{mode:'cors',cache:'force-cache'});
+      if(!response.ok)continue;
+      const blob=await response.blob();
+      const local=URL.createObjectURL(blob);
+      originals.push({img,src:img.src,local});
+      img.src=local;
+      await new Promise(resolve=>{if(img.complete)resolve();else img.onload=img.onerror=resolve;});
+    }catch(e){
+      // Keep the already-rendered image if the source does not allow CORS.
+    }
+  }
+  return originals;
+}
+
+async function downloadDestinationCard(){
+  const card=document.getElementById('destDetail');
+  const button=document.querySelector('.dest-action.primary');
+  if(!card||typeof html2canvas==='undefined'){
+    alert('The card download tool could not load. Please refresh the page and try again.');
+    return;
+  }
+  const oldText=button?button.innerHTML:'';
+  if(button){button.disabled=true;button.innerHTML='Preparing all photos…';}
+  let originals=[];
+  try{
+    await waitForDestinationImages(card);
+    if(document.fonts?.ready)await document.fonts.ready;
+    originals=await makeImagesCaptureSafe(card);
+    const canvas=await html2canvas(card,{
+      scale:2,
+      useCORS:true,
+      allowTaint:false,
+      backgroundColor:'#fbfaf6',
+      logging:false,
+      imageTimeout:15000,
+      windowWidth:Math.max(card.scrollWidth,1100),
+      windowHeight:card.scrollHeight,
+      scrollX:0,
+      scrollY:0
+    });
+    canvas.toBlob(blob=>{
+      if(!blob)throw new Error('Could not create image');
+      const a=document.createElement('a');
+      a.href=URL.createObjectURL(blob);
+      a.download=`${chosen.replace(/[^a-z0-9]+/gi,'-').toLowerCase()}-tourcraft-card.png`;
+      document.body.appendChild(a);a.click();a.remove();
+      setTimeout(()=>URL.revokeObjectURL(a.href),1200);
+    },'image/png');
+  }catch(err){
+    console.error('Destination card download failed:',err);
+    alert('The full card could not be captured. Please try again after the photos finish loading.');
+  }finally{
+    originals.forEach(({img,src,local})=>{img.src=src;URL.revokeObjectURL(local);});
+    if(button){button.disabled=false;button.innerHTML=oldText;}
   }
 }
 
-function openDest(n){
-  chosen=n;
-  const dest=D[n];
-  document.getElementById('destHero').style.backgroundImage=`url('${dest.img}')`;
-  document.getElementById('mt').textContent=n;
-  document.getElementById('mPrice').textContent=`${money(dest.tiers.backpacker)} – ${money(dest.tiers.premium)} / day`;
-  document.getElementById('mBest').textContent=`Best time: ${dest.bestTime}`;
-  document.getElementById('mDays').textContent=`Ideal: ${dest.idealDays}`;
-  document.getElementById('md').textContent=dest.desc;
-  document.getElementById('mGood').innerHTML=dest.goodFor.map(g=>`<span>${g}</span>`).join('');
-  document.getElementById('mf').innerHTML=dest.spots.map(s=>`<span>${s}</span>`).join('');
-  destModal.style.display='flex';
+function hydrateDestinationCards(){
+  document.querySelectorAll('.destination-card[data-destination]').forEach(card=>{
+    const name=card.dataset.destination,x=D[name];
+    if(!x)return;
+    const img=card.querySelector('img');
+    if(img&&x.img)img.src=x.img;
+    const meta=card.querySelector('.destination-card-meta');
+    if(meta){
+      const chips=meta.querySelectorAll('span');
+      if(chips[0]&&x.duration)chips[0].textContent=x.duration;
+      if(chips[1]&&x.best)chips[1].textContent=x.best;
+      if(chips[2]&&x.from)chips[2].textContent='₹'+x.from.toLocaleString('en-IN')+'+';
+    }
+  });
 }
 
-function hide(id){document.getElementById(id).style.display='none'}
-
-function useDestination(){
-  hide('destModal');
-  location.href='planner.html?dest='+encodeURIComponent(chosen);
-}
-
+function useDestination(){window.location.href='planner.html?destination='+encodeURIComponent(chosen)}
+function money(x){return '₹'+Math.round(x).toLocaleString('en-IN')}
+function build(){const n=destination.value,p=+people.value,d=+days.value,b=+budget.value,s=style.value,t=transport.value,i=interests.value||'local food, culture and scenic experiences';let per=D[n].from;if(s==='Backpacker')per*=.72;if(s==='Comfort')per*=1.15;if(s==='Premium')per*=1.65;if(t==='Budget')per*=.88;if(t==='Private Cab')per*=1.18;let estimate=Math.round(per*p*Math.max(.65,d/5)),minimum=Math.round(D[n].from*.62*p*Math.max(.55,d/5));if(b<minimum){plan='';result.innerHTML=`<div class='result'><div class='danger'><b>Sorry — this trip is not realistically possible within ${money(b)}.</b><br>For ${p} traveller(s) and ${d} days, TourCraft estimates a realistic minimum of about <b>${money(minimum)}</b>.</div><p><b>Try:</b> increase budget, reduce duration, choose Backpacker style, or use Budget transport.</p></div>`;return}let total=Math.min(estimate,Math.round(b*.96));let daysHtml='';for(let x=1;x<=d;x++){let a=D[n].spots[(x-1)%D[n].spots.length],z=D[n].spots[x%D[n].spots.length];daysHtml+=`<div class='day'><b>Day ${x} — ${x===1?'Arrival & first impressions':x===d?'Relax & departure':a}</b><p>Explore <b>${a}</b> and ${z}. Include ${i}. Enjoy local food and free time.</p><span>Estimated: ${money(total/d)}</span></div>`}plan=`Destination: ${n}\nTravellers: ${p}\nDuration: ${d} days\nBudget: ${money(b)}\nStyle: ${s}\nTransport: ${t}\nInterests: ${i}\nEstimated cost: ${money(total)}\n\n${daysHtml.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ')}`;result.innerHTML=`<div class='result'><h2>${n} — ${d} days</h2><p><b>Estimated trip cost: ${money(total)}</b> · ${money(Math.max(0,b-total))} remaining</p>${daysHtml}<button class='btn' onclick='mailModal.style.display="flex"'>I like this trip — send an enquiry 📩</button></div>`;result.scrollIntoView({behavior:'smooth',block:'nearest'})}
+function sendMail(){const n=name.value.trim(),e=email.value.trim();if(!n||!e){alert('Please enter name and email.');return}const subject=`TourCraft Enquiry — ${destination.value}`;const body=`Hello TourCraft Team,%0D%0A%0D%0AI am interested in this itinerary.%0D%0A%0D%0AName: ${n}%0D%0AEmail: ${e}%0D%0APhone: ${phone.value}%0D%0A%0D%0A${plan}%0D%0A%0D%0AAdditional message: ${message.value}`;location.href=`mailto:${CONFIG.email}?subject=${encodeURIComponent(subject)}&body=${body}`}
+hydrateDestinationCards();
 init();
 
 </script>
