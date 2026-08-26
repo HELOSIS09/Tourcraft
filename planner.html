@@ -104,16 +104,178 @@ font-family: Arial, sans-serif;
 /* ===================================================================== */
 
 /* ---------- page layout (builder only) ---------- */
-.page{max-width:1180px;margin:0 auto;padding:40px 20px 60px}
+.page{
+    max-width:1180px;
+    margin:0 auto;
+    padding:40px 20px 60px;
+}
 
-.planner{background:linear-gradient(160deg,#890a38,#70022b);color:white;border-radius:28px;padding:38px}
-.planner-top{margin-bottom:26px}
-.eyebrow{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#d8f27c;margin-bottom:10px}
-.planner-top h1{font-family:'Playfair Display',serif;font-size:clamp(26px,3.4vw,34px);margin:0 0 8px;color:#fff}
-.planner-top p{margin:0;color:#c8d8d1;font-size:14.5px;max-width:520px}
+.planner{
+    background:linear-gradient(160deg,#890a38,#70022b);
+    color:white;
+    border-radius:28px;
+    padding:38px;
+    position:relative;
+}
 
-.builder-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:26px;align-items:start}
-@media(max-width:900px){.builder-grid{grid-template-columns:1fr}}
+.planner-top{
+    margin-bottom:26px;
+    width:50%;
+}
+
+.eyebrow{
+    display:inline-block;
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:#d8f27c;
+    margin-bottom:10px;
+}
+
+.planner-top h1{
+    font-family:'Playfair Display',serif;
+    font-size:clamp(26px,3.4vw,34px);
+    margin:0 0 8px;
+    color:#fff;
+}
+
+.planner-top p{
+    margin:0;
+    color:#c8d8d1;
+    font-size:14.5px;
+    max-width:520px;
+}
+
+.builder-grid{
+    display:block;
+    position:relative;
+}
+
+.form{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    width:50%;
+}
+
+.field label{
+    display:block;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    margin-bottom:7px;
+    color:#a9c2b7;
+}
+
+.field input,
+.field select{
+    width:100%;
+    padding:12px 14px;
+    border-radius:11px;
+    border:1px solid #ffffff30;
+    background:#ffffff10;
+    color:white;
+    box-sizing:border-box;
+    font-family:inherit;
+    font-size:14.5px;
+}
+
+.wide{
+    grid-column:span 2;
+}
+
+.form-actions{
+    margin-top:22px;
+}
+
+/* DESTINATION IMAGE */
+
+.snapshot{
+    background:#ffffff0d;
+    border:1px solid #ffffff22;
+    border-radius:18px;
+    overflow:hidden;
+
+    position:absolute;
+    top:-178px;
+    right:0;
+
+    width:48%;
+    box-sizing:border-box;
+}
+
+.snapshot-media{
+    height:350px;
+    background-size:cover;
+    background-position:center;
+}
+
+.snapshot-body{
+    padding:18px 20px 20px;
+}
+
+.snapshot-body h3{
+    font-family:'Playfair Display',serif;
+    font-size:19px;
+    margin:0 0 4px;
+    color:#fff;
+}
+
+.snapshot-body .range{
+    font-size:12.5px;
+    color:#d8f27c;
+    font-weight:700;
+    margin-bottom:10px;
+}
+
+.snapshot-body p{
+    font-size:13px;
+    color:#c8d8d1;
+    line-height:1.55;
+    margin:0 0 12px;
+}
+
+.snapshot-body .best{
+    font-size:12px;
+    color:#a9c2b7;
+    margin-bottom:12px;
+}
+
+.snapshot-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+}
+
+.snapshot-tags span{
+    background:#ffffff14;
+    color:#e5efe9;
+    padding:5px 10px;
+    border-radius:999px;
+    font-size:11.5px;
+}
+
+@media(max-width:900px){
+
+    .planner-top{
+        width:100%;
+    }
+
+    .form{
+        width:100%;
+    }
+
+    .snapshot{
+        position:relative;
+        top:auto;
+        right:auto;
+        width:100%;
+        margin-top:30px;
+    }
+}
+
 
 .form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .field label{display:block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:7px;color:#a9c2b7}
@@ -125,15 +287,52 @@ font-family: Arial, sans-serif;
 .form-actions{margin-top:22px}
 .form-actions .hint{display:block;margin-top:10px;font-size:12px;color:#a9c2b7}
 
-.live-estimate{margin-top:16px;padding:13px 16px;border-radius:12px;font-size:13px;background:#ffffff10;border:1px solid #ffffff20;color:#e5efe9;display:none}
-.live-estimate.show{display:block}
-.live-estimate b{color:#fff}
-.live-estimate.fits{border-color:#7fd9a0}
-.live-estimate.short{border-color:#f2a99a}
+.live-estimate{
+    margin-top:16px;
+    padding:16px 22px;
+    border-radius:1099px;
+    font-size:13px;
+    background:#ffffff10;
+    border:1px solid #ffffff20;
+    color:#e5efe9;
+
+    display:none;
+    width:fit-content;
+    max-width:130%;
+    box-sizing:border-box;
+}
+
+.live-estimate.show{
+    display:block;
+}
+
+.live-estimate b{
+    color:#fff;
+}
+
+.live-estimate.fits{
+    border-color:#7fd9a0;
+}
+
+.live-estimate.short{
+    border-color:#f2a99a;
+}
 
 /* ---------- destination snapshot (right column) ---------- */
-.snapshot{background:#ffffff0d;border:1px solid #ffffff22;border-radius:18px;overflow:hidden}
-.snapshot-media{height:150px;background-size:cover;background-position:center}
+.snapshot{
+    background:#ffffff0d;
+    border:1px solid #ffffff22;
+    border-radius:18px;
+    overflow:hidden;
+
+    position:absolute;
+    top:-78px;
+    right:0;
+
+    width:42%;
+    box-sizing:border-box;
+}
+.snapshot-media{height:250px;background-size:cover;background-position:center}
 .snapshot-body{padding:18px 20px 20px}
 .snapshot-body h3{font-family:'Playfair Display',serif;font-size:19px;margin:0 0 4px;color:#fff}
 .snapshot-body .range{font-size:12.5px;color:#d8f27c;font-weight:700;margin-bottom:10px}
@@ -309,6 +508,10 @@ const D = {
   Varanasi:  { img:'https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=800&q=80', desc:'Ghats, spirituality, street food and living heritage.', bestTime:'Oct–Mar', spots:['Ganga Aarti','Sarnath','Old City Lanes','Sunrise Boat Ride','Kashi Vishwanath Temple','Local Food Trail'], tiers:{ backpacker:1000, smartBudget:1600, comfort:2800, premium:6000 } },
   Meghalaya: { img:'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80', desc:'Living root bridges, waterfalls, misty hills and nature.', bestTime:'Oct–May', spots:['Shillong','Cherrapunji Waterfalls','Dawki River','Mawlynnong Village','Living Root Bridges','Elephant Falls'], tiers:{ backpacker:1650, smartBudget:2500, comfort:4300, premium:8200 } },
   Andaman:   { img:'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80', desc:'Island beaches, clear water and marine experiences.', bestTime:'Oct–May', spots:['Radhanagar Beach','Cellular Jail','Neil Island','Havelock Scuba Diving','Ross Island','North Bay Snorkelling'], tiers:{ backpacker:2200, smartBudget:3400, comfort:5800, premium:12000 } },
+  'Bodh Gaya': { img:'https://commons.wikimedia.org/wiki/Special:FilePath/Mahabodhi%20Temple%2C%20Bodh%20Gaya%2C%20Bihar%2C%20India.jpg', desc:'The sacred site of the Buddha’s enlightenment, centred around the Mahabodhi Temple and Bodhi Tree.', bestTime:'Oct–Mar', spots:['Mahabodhi Temple','Sacred Bodhi Tree','Vajrasana','Lotus Pond','Great Buddha Statue','Buddhist Monasteries'], tiers:{ backpacker:1100, smartBudget:1700, comfort:3000, premium:6200 } },
+  Sarnath: { img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSocS5Necr2Z_wLBCfJGiD3mh5xzwtBcx_4evpw6AsQEw&s=10', desc:'A major Buddhist heritage site near Varanasi, associated with the Buddha’s first teaching after enlightenment.', bestTime:'Oct–Mar', spots:['Dhamek Stupa','Sarnath Archaeological Museum','Chaukhandi Stupa','Mulagandha Kuti Vihara','Deer Park','Ashoka Pillar'], tiers:{ backpacker:1000, smartBudget:1600, comfort:2800, premium:5800 } },
+  Kushinagar: { img:'https://commons.wikimedia.org/wiki/Special:FilePath/Mahaparinirvana%20Temple%20in%20Kushinagar%20U.P.%20India.jpg', desc:'A peaceful Buddhist pilgrimage destination traditionally identified with the Buddha’s Mahaparinirvana.', bestTime:'Oct–Mar', spots:['Mahaparinirvana Temple','Parinirvana Stupa','Ramabhar Stupa','Matha Kuar Shrine','International Buddhist Monasteries','Wat Thai Temple'], tiers:{ backpacker:1100, smartBudget:1700, comfort:3000, premium:6200 } },
+  Nalanda: { img:'https://commons.wikimedia.org/wiki/Special:FilePath/Nalanda%20Ruins%20%289%29.jpg', desc:'Ancient Buddhist university ruins in Bihar, offering a glimpse into India’s historic centre of learning.', bestTime:'Oct–Mar', spots:['Nalanda Mahavihara Ruins','Monastery Complexes','Stupas & Shrines','Archaeological Museum','Nearby Rajgir','Xuanzang Memorial'], tiers:{ backpacker:1000, smartBudget:1600, comfort:2800, premium:5600 } },
 };
 
 const STYLE_TO_TIER = { 'Backpacker':'backpacker', 'Smart Budget':'smartBudget', 'Comfort':'comfort', 'Premium':'premium' };
