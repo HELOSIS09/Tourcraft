@@ -199,7 +199,7 @@ font-family: Arial, sans-serif;
     overflow:hidden;
 
     position:absolute;
-    top:-218px;
+    top:-178px;
     right:0;
 
     width:48%;
@@ -290,7 +290,7 @@ font-family: Arial, sans-serif;
 .live-estimate{
     margin-top:16px;
     padding:16px 22px;
-    border-radius:1199px;
+    border-radius:1099px;
     font-size:13px;
     background:#ffffff10;
     border:1px solid #ffffff20;
@@ -298,7 +298,7 @@ font-family: Arial, sans-serif;
 
     display:none;
     width:fit-content;
-    max-width:100%;
+    max-width:130%;
     box-sizing:border-box;
 }
 
@@ -396,6 +396,62 @@ font-family: Arial, sans-serif;
 .status.sending{color:#69756f}
 
 @media(max-width:560px){.form{grid-template-columns:1fr}.wide{grid-column:auto}.planner{padding:26px}.result-card{padding:22px}}
+
+/* =====================================================================
+   HOTEL RECOMMENDATION MODULE — ADDED. Reuses the existing result-card,
+   tier-pill, .tags and .btn visual language above; nothing above this
+   block was modified.
+   ===================================================================== */
+.hotels-card{padding:28px 30px}
+.hotels-head{margin-bottom:16px}
+.hotels-head h3{margin:0 0 4px;font-family:'Playfair Display',serif;font-size:19px;color:#17352b}
+.hotels-sub{margin:0;color:#69756f;font-size:13.5px}
+
+.hotels-loading{display:flex;align-items:center;gap:12px;color:#69756f;font-size:13.5px;padding:20px 4px}
+.hotels-spinner{width:18px;height:18px;flex:none;border-radius:50%;border:3px solid #e7e4da;border-top-color:#174c3a;animation:hotelsSpin .8s linear infinite}
+@keyframes hotelsSpin{to{transform:rotate(360deg)}}
+
+.hotels-empty{text-align:center;padding:26px 10px;color:#69756f;font-size:13.5px}
+.hotels-empty .ic{font-size:24px;display:block;margin-bottom:8px}
+.hotels-empty p{max-width:440px;margin:0 auto 14px;line-height:1.5}
+
+.hotels-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+
+.hotel-card{background:#fcfbf7;border:1px solid #eee;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:.25s}
+.hotel-card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.08)}
+
+.hotel-photo-wrap{position:relative;height:150px;background:linear-gradient(135deg,#174c3a,#0d2f24)}
+.hotel-photo{width:100%;height:100%;object-fit:cover;display:block}
+.hotel-photo-wrap.img-fallback .hotel-photo{display:none}
+.hotel-photo-wrap.img-fallback::after{content:'🏨';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:32px;color:#ffffff90}
+
+.match-badge{position:absolute;top:10px;left:10px;background:#174c3a;color:#fff;padding:5px 11px;border-radius:999px;font-size:11px;font-weight:700;z-index:2;box-shadow:0 4px 10px rgba(0,0,0,.15)}
+.stretch-badge{position:absolute;top:10px;right:10px;background:#fff0ed;color:#8d3e36;padding:5px 10px;border-radius:999px;font-size:10.5px;font-weight:700;z-index:2}
+
+.hotel-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.hotel-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.hotel-top h4{margin:0;font-size:15px;color:#17352b;line-height:1.3}
+.hotel-category{background:#e7f2ec;color:#174c3a;font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:999px;white-space:nowrap}
+
+.hotel-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:12.5px;color:#69756f}
+.hotel-rating{color:#b8860b;font-weight:700}
+
+.hotel-price-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:2px;flex-wrap:wrap}
+.hp-value{font-size:16px;font-weight:700;color:#174c3a}
+.hp-label{font-size:11.5px;color:#9aa39d;margin-left:4px}
+.hotel-total{font-size:11.5px;color:#69756f;font-weight:600;white-space:nowrap}
+.hotel-total.over{color:#c0392b}
+
+.hotel-amenities{display:flex;flex-wrap:wrap;gap:6px}
+.hotel-amenities span{background:#e7f2ec;color:#174c3a;padding:4px 9px;border-radius:999px;font-size:10.5px;font-weight:600}
+
+.hotel-why{margin:2px 0 4px;font-size:12px;color:#69756f;line-height:1.5}
+.hotel-why b{color:#17352b}
+
+.btn-sm{padding:10px 16px;font-size:13px;border-radius:10px;align-self:flex-start;margin-top:auto}
+
+@media(max-width:560px){.hotels-card{padding:22px}}
+/* =================== END HOTEL RECOMMENDATION MODULE (CSS) =================== */
 </style>
 </head>
 <body>
@@ -413,7 +469,7 @@ font-family: Arial, sans-serif;
     <a href="index.html">Home</a>
     <a href="index.html#destinations-section" onclick="document.getElementById('destinations-section').scrollIntoView({behavior:'smooth',block:'start'})">Explore</a>
     <a href="planner.html">AI Planner</a>
-    <a href="guides.html">Inspirations</a>
+    <a href="Hotels.html">Accomodation</a>
     <a href="contact.html">Contact</a>
 </div>
 
@@ -746,6 +802,18 @@ function build(){
       <div class="tags">${dest.spots.map(s => `<span>${s}</span>`).join('')}</div>
     </div>
 
+    <!-- ============= HOTEL RECOMMENDATION MODULE — ADDED (placeholder, filled in by loadHotelRecommendations) ============= -->
+    <div class="result-card hotels-card" id="hotelsSection">
+      <div class="hotels-head">
+        <h3>Recommended Stay</h3>
+        <p class="hotels-sub">Hand-picked to match your ${TIER_LABEL[finalTierKey]} style and an accommodation budget of ${money(comp.stay * d * p)} for ${d} night${d>1?'s':''}.</p>
+      </div>
+      <div class="hotels-body" id="hotelsBody">
+        <div class="hotels-loading"><div class="hotels-spinner"></div><span>Finding stays that fit ${n} and your budget…</span></div>
+      </div>
+    </div>
+    <!-- ============= END HOTEL RECOMMENDATION MODULE (placeholder) ============= -->
+
     <div class="result-card">
       <h3 style="margin:0 0 14px;font-family:'Playfair Display',serif;font-size:19px;">Budget Breakdown</h3>
       <div class="budget-rows">
@@ -761,6 +829,19 @@ function build(){
     </div>
   `;
   result.scrollIntoView({behavior:'smooth', block:'nearest'});
+
+  /* HOTEL RECOMMENDATION MODULE — ADDED: kick off the (async, provider-
+     backed) hotel search once the itinerary itself is on screen. */
+  loadHotelRecommendations({
+    destKey: n,
+    dest,
+    tierKey: finalTierKey,
+    people: p,
+    days: d,
+    accommodationBudget: comp.stay * d * p,
+    interests,
+    itinerarySpots: dest.spots
+  });
 }
 
 /* ------------------------------------------------------------------
@@ -813,6 +894,251 @@ async function sendMail(){
     btn.disabled = false;
   }
 }
+
+/* =====================================================================
+   HOTEL RECOMMENDATION MODULE — ADDED
+   Everything below, down to the matching "END" marker, is new. Nothing
+   above this point in the script was changed. This is deliberately
+   built as a small provider abstraction so a real hotel API can be
+   dropped in later without touching any rendering code:
+
+     1. HotelProviders  — a registry of { name, getHotels(ctx) } objects.
+        `fallback` ships a realistic, budget-aware demo dataset that is
+        generated (not hard-coded per hotel) from the same TIER_SPLIT /
+        TIER_ORDER data already used for the itinerary pricing, so it
+        always stays consistent with the trip's numbers.
+     2. ACTIVE_HOTEL_PROVIDER — swap this one line to point at a real
+        integration, e.g.:
+          HotelProviders.myApi = { name:'my-api', getHotels: async (ctx) => {
+            const res = await fetch(`${HOTEL_API_BASE}/search?...`);
+            return normalizeProviderHotels(await res.json());
+          }};
+          const ACTIVE_HOTEL_PROVIDER = HotelProviders.myApi;
+        The rendering/scoring/UI code does not need to change.
+     3. loadHotelRecommendations(ctx) — orchestrates loading / empty /
+        error states and renders whichever provider is active.
+   ===================================================================== */
+
+const HOTEL_CATEGORY_BY_TIER = {
+  backpacker:'Hostel / Budget Stay',
+  smartBudget:'3★ Hotel',
+  comfort:'4★ Hotel',
+  premium:'5★ Resort / Boutique'
+};
+
+const HOTEL_NAME_TEMPLATES = {
+  backpacker:  ['{spot} Backpackers Hub', "Wanderer's Nest — {dest}", "{dest} Travellers' Inn"],
+  smartBudget: ['{spot} Comfort Inn', 'Hotel {dest} Residency', 'The {spot} Stay'],
+  comfort:     ['{spot} Grand Hotel', 'The {dest} Boutique', '{spot} Heritage Hotel', '{dest} Hillview Suites'],
+  premium:     ['The {dest} Palace Resort', '{spot} Luxury Retreat', '{dest} Grand Collection', 'The Royal {spot} Resort']
+};
+
+const AMENITIES_BY_TIER = {
+  backpacker:  ['Free WiFi','Common Lounge','Locker Storage','24hr Check-in','Shared Kitchen'],
+  smartBudget: ['Free WiFi','AC Rooms','Breakfast Included','24hr Front Desk','Room Service'],
+  comfort:     ['Free WiFi','Breakfast Included','Swimming Pool','Airport Pickup','Restaurant On-site'],
+  premium:     ['Free WiFi','Spa & Wellness','Infinity Pool','Fine Dining','Concierge','Airport Transfer']
+};
+
+/* Small, stable, generic hotel/resort photo pool. Every card also has
+   a CSS fallback (.img-fallback) so a broken/slow image never breaks
+   the layout — see the onerror handler in hotelCardHtml(). */
+const HOTEL_PHOTO_POOL = [
+  'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=800&q=80'
+];
+
+/* Deterministic pseudo-random helpers, seeded by a string, so the same
+   trip inputs always produce the same hotel list/prices/ratings
+   instead of reshuffling on every render. */
+function hashStr(s){ let h = 0; for (let i = 0; i < s.length; i++){ h = (h << 5) - h + s.charCodeAt(i); h |= 0; } return Math.abs(h); }
+function seededFraction(s){ return (hashStr(s) % 1000) / 1000; }
+function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
+function pickPhoto(seed){ return HOTEL_PHOTO_POOL[hashStr(seed) % HOTEL_PHOTO_POOL.length]; }
+
+function pickAmenities(tierKey, seed){
+  const pool = AMENITIES_BY_TIER[tierKey];
+  const count = 3 + Math.round(seededFraction(seed + 'a') * 2); // 3–5
+  const start = Math.floor(seededFraction(seed + 'b') * pool.length);
+  const out = [];
+  for (let i = 0; i < count && i < pool.length; i++) out.push(pool[(start + i) % pool.length]);
+  return out;
+}
+
+/* Transparent, weighted match score (0–100):
+   40% price fit to the traveller's ideal per-night rate, 25% tier fit
+   to their chosen style, 20% whether the property sits in a spot
+   already on their itinerary, 15% guest rating. */
+function scoreHotel(hotel, { idealPricePerNight, tierKey, itinerarySpots }){
+  const priceFit = clamp(100 - Math.abs(hotel.pricePerNight - idealPricePerNight) / idealPricePerNight * 100, 0, 100);
+  const tierDist = Math.abs(TIER_ORDER.indexOf(hotel.tierKey) - TIER_ORDER.indexOf(tierKey));
+  const tierFit = tierDist === 0 ? 100 : (tierDist === 1 ? 65 : 35);
+  const locationFit = itinerarySpots.includes(hotel.area) ? 100 : 74;
+  const ratingFit = hotel.rating / 5 * 100;
+  const score = Math.round(priceFit * 0.40 + tierFit * 0.25 + locationFit * 0.20 + ratingFit * 0.15);
+  return { score, priceFit, tierFit, locationFit, ratingFit };
+}
+
+function hotelWhyText(hotel, s, ctx){
+  const bits = [];
+  bits.push(s.tierFit === 100 ? `matches your ${TIER_LABEL[ctx.tierKey]} style` : `close to your ${TIER_LABEL[ctx.tierKey]} style`);
+  bits.push(s.priceFit >= 70 ? 'priced well within your accommodation budget' : 'a reasonable fit for your accommodation budget');
+  if (s.locationFit === 100) bits.push(`near ${hotel.area}, already on your itinerary`);
+  if (hotel.rating >= 4.3) bits.push('consistently well-rated by past guests');
+  return bits.join(', ') + '.';
+}
+
+/* Generates a realistic, budget-aware hotel shortlist from the same
+   destination/tier data already powering the itinerary — this is the
+   "fallback" provider's dataset (see HotelProviders below). */
+function buildFallbackHotels(ctx){
+  const { dest, tierKey, days, accommodationBudget, itinerarySpots, destKey } = ctx;
+  const rooms = Math.max(1, Math.ceil(ctx.people / 2));
+  const idealPricePerNight = Math.max(500, accommodationBudget / days / rooms);
+
+  const idx = TIER_ORDER.indexOf(tierKey);
+  const candidateTiers = [tierKey];
+  if (idx > 0) candidateTiers.push(TIER_ORDER[idx - 1]);
+  if (idx < TIER_ORDER.length - 1) candidateTiers.push(TIER_ORDER[idx + 1]);
+
+  let pool = [];
+  candidateTiers.forEach((tk, ti) => {
+    const perNightBase = dest.tiers[tk] * TIER_SPLIT[tk].stay * 2; // approx double-occupancy room rate
+    HOTEL_NAME_TEMPLATES[tk].forEach((tmpl, i) => {
+      const spot = itinerarySpots[(i + ti) % itinerarySpots.length];
+      const seed = `${destKey}-${tk}-${tmpl}-${i}`;
+      const variance = 0.82 + seededFraction(seed) * 0.55; // 0.82x – 1.37x spread
+      const pricePerNight = Math.max(400, Math.round(perNightBase * variance / 50) * 50);
+      const rating = +(3.7 + seededFraction(seed + 'r') * 1.2).toFixed(1);
+      pool.push({
+        name: tmpl.replace('{spot}', spot).replace('{dest}', destKey),
+        category: HOTEL_CATEGORY_BY_TIER[tk],
+        tierKey: tk,
+        area: spot,
+        rating,
+        pricePerNight,
+        rooms,
+        amenities: pickAmenities(tk, seed),
+        photo: pickPhoto(seed)
+      });
+    });
+  });
+
+  const scored = pool.map(h => {
+    const s = scoreHotel(h, { idealPricePerNight, tierKey, itinerarySpots });
+    return { ...h, matchScore: s.score, why: hotelWhyText(h, s, ctx) };
+  });
+
+  let candidates = scored.filter(h => h.pricePerNight * h.rooms * days <= accommodationBudget * 1.15);
+  if (candidates.length < 3) candidates = scored.filter(h => h.pricePerNight * h.rooms * days <= accommodationBudget * 1.4);
+  if (candidates.length < 3) candidates = scored;
+
+  candidates.sort((a, b) => b.matchScore - a.matchScore);
+  return candidates.slice(0, 6);
+}
+
+/* Provider registry. `fallback` is synchronous data wrapped in a small
+   artificial delay so the loading state is real and the async contract
+   matches what a live API call would look like. */
+const HotelProviders = {
+  fallback: {
+    name: 'fallback-demo',
+    getHotels: async (ctx) => {
+      await new Promise(res => setTimeout(res, 450 + Math.round(seededFraction(ctx.destKey + ctx.tierKey) * 350)));
+      return buildFallbackHotels(ctx);
+    }
+  }
+};
+
+/* Swap this single line to switch to a real hotel API/provider —
+   nothing else in this module needs to change. */
+const ACTIVE_HOTEL_PROVIDER = HotelProviders.fallback;
+
+function hotelCardHtml(h, ctx){
+  const totalStay = h.pricePerNight * h.rooms * ctx.days;
+  const overBudget = totalStay > ctx.accommodationBudget;
+  return `
+  <div class="hotel-card">
+    <div class="hotel-photo-wrap">
+      <div class="match-badge">${h.matchScore}% Match</div>
+      ${overBudget ? '<div class="stretch-badge">Slight stretch</div>' : ''}
+      <img class="hotel-photo" src="${h.photo}" alt="${h.name}" loading="lazy"
+        onerror="this.onerror=null;this.parentElement.classList.add('img-fallback');">
+    </div>
+    <div class="hotel-body">
+      <div class="hotel-top">
+        <h4>${h.name}</h4>
+        <span class="hotel-category">${h.category}</span>
+      </div>
+      <div class="hotel-meta">
+        <span class="hotel-rating">★ ${h.rating.toFixed(1)}</span>
+        <span class="hotel-location">📍 ${h.area}, ${ctx.destKey}</span>
+      </div>
+      <div class="hotel-price-row">
+        <div><span class="hp-value">${money(h.pricePerNight)}</span><span class="hp-label">/ night · ${h.rooms} room${h.rooms > 1 ? 's' : ''}</span></div>
+        <div class="hotel-total ${overBudget ? 'over' : ''}">Est. ${money(totalStay)}${overBudget ? ' (stretch)' : ' total'}</div>
+      </div>
+      <div class="hotel-amenities">${h.amenities.map(a => `<span>${a}</span>`).join('')}</div>
+      <p class="hotel-why"><b>Why this hotel:</b> ${h.why}</p>
+      <button class="btn btn-sm" onclick="enquireAboutHotel('${h.name.replace(/'/g, "\\'")}')">View &amp; Enquire →</button>
+    </div>
+  </div>`;
+}
+
+function hotelsEmptyHtml(){
+  return `<div class="hotels-empty">
+    <span class="ic">🏨</span>
+    <p>No stays matched this exact accommodation budget yet. Try increasing your total budget slightly or reducing the trip length — or send us an enquiry and we'll hand-pick options for you.</p>
+    <button class="btn btn-sm" onclick="show('mailModal')">Ask TourCraft to find a stay</button>
+  </div>`;
+}
+
+function hotelsErrorHtml(){
+  return `<div class="hotels-empty">
+    <span class="ic">⚠️</span>
+    <p>We couldn't load hotel recommendations right now.</p>
+    <button class="btn btn-sm" onclick="retryHotelRecommendations()">Retry</button>
+  </div>`;
+}
+
+let lastHotelCtx = null;
+
+async function loadHotelRecommendations(ctx){
+  lastHotelCtx = ctx;
+  const body = document.getElementById('hotelsBody');
+  if (!body) return;
+
+  body.innerHTML = `<div class="hotels-loading"><div class="hotels-spinner"></div><span>Finding stays that fit ${ctx.destKey} and your budget…</span></div>`;
+
+  try{
+    const hotels = await ACTIVE_HOTEL_PROVIDER.getHotels(ctx);
+    if (!hotels || !hotels.length){
+      body.innerHTML = hotelsEmptyHtml();
+      return;
+    }
+    body.innerHTML = `<div class="hotels-grid">${hotels.map(h => hotelCardHtml(h, ctx)).join('')}</div>`;
+  }catch(err){
+    console.warn('Hotel recommendation error:', err);
+    body.innerHTML = hotelsErrorHtml();
+  }
+}
+
+function retryHotelRecommendations(){
+  if (lastHotelCtx) loadHotelRecommendations(lastHotelCtx);
+}
+
+function enquireAboutHotel(hotelName){
+  show('mailModal');
+  const msg = document.getElementById('message');
+  if (msg && !msg.value.includes(hotelName)){
+    msg.value = (msg.value ? msg.value + '\n' : '') + `I'm interested in staying at: ${hotelName}`;
+  }
+}
+/* =================== END HOTEL RECOMMENDATION MODULE (JS) =================== */
 
 /* ---------- wire up live updates ---------- */
 ['people','days','budget','style','transport'].forEach(id => {

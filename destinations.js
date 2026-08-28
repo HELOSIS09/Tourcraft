@@ -16,3 +16,5 @@ const destinations = [
  image:"assets/goa.jpg"
 }
 ];
+
+
