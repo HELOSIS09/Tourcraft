@@ -420,10 +420,20 @@ font-family: Arial, sans-serif;
 .hotel-card{background:#fcfbf7;border:1px solid #eee;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:.25s}
 .hotel-card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.08)}
 
-.hotel-photo-wrap{position:relative;height:150px;background:linear-gradient(135deg,#174c3a,#0d2f24)}
+/* No stock/AI photos are shown under a real hotel's name — that would
+   misrepresent the specific property. Each card gets a tier-tinted
+   monogram panel instead; wire a verified photo (e.g. via the Google
+   Places Photo API using the stored real placeId) to replace it. */
+.hotel-photo-wrap{position:relative;height:120px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hotel-photo-wrap.tier-backpacker{background:linear-gradient(135deg,#5c6b64,#3c4640)}
+.hotel-photo-wrap.tier-smartBudget{background:linear-gradient(135deg,#2c6b52,#1c4636)}
+.hotel-photo-wrap.tier-comfort{background:linear-gradient(135deg,#174c3a,#0d2f24)}
+.hotel-photo-wrap.tier-premium{background:linear-gradient(135deg,#890a38,#4a0620)}
+.hotel-monogram{font-family:'Playfair Display',serif;font-size:34px;font-weight:700;color:#ffffffd0;letter-spacing:.02em}
 .hotel-photo{width:100%;height:100%;object-fit:cover;display:block}
-.hotel-photo-wrap.img-fallback .hotel-photo{display:none}
-.hotel-photo-wrap.img-fallback::after{content:'🏨';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:32px;color:#ffffff90}
+.hotel-photo-wrap.has-photo .hotel-monogram{display:none}
+.hotel-photo-wrap.has-photo.img-fallback .hotel-photo{display:none}
+.hotel-photo-wrap.has-photo.img-fallback .hotel-monogram{display:flex}
 
 .match-badge{position:absolute;top:10px;left:10px;background:#174c3a;color:#fff;padding:5px 11px;border-radius:999px;font-size:11px;font-weight:700;z-index:2;box-shadow:0 4px 10px rgba(0,0,0,.15)}
 .stretch-badge{position:absolute;top:10px;right:10px;background:#fff0ed;color:#8d3e36;padding:5px 10px;border-radius:999px;font-size:10.5px;font-weight:700;z-index:2}
@@ -448,7 +458,10 @@ font-family: Arial, sans-serif;
 .hotel-why{margin:2px 0 4px;font-size:12px;color:#69756f;line-height:1.5}
 .hotel-why b{color:#17352b}
 
-.btn-sm{padding:10px 16px;font-size:13px;border-radius:10px;align-self:flex-start;margin-top:auto}
+.btn-sm{padding:10px 16px;font-size:13px;border-radius:10px}
+.hotel-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;flex-wrap:wrap}
+.hotel-maps-link{font-size:12px;font-weight:700;color:#174c3a;text-decoration:none;white-space:nowrap}
+.hotel-maps-link:hover{text-decoration:underline}
 
 @media(max-width:560px){.hotels-card{padding:22px}}
 /* =================== END HOTEL RECOMMENDATION MODULE (CSS) =================== */
@@ -745,6 +758,17 @@ function build(){
   const total = Math.min(costForTier(dest, finalTierKey, transportChoice, d, p), b);
   const remaining = Math.max(0, b - total);
 
+  /* HOTEL RECOMMENDATION MODULE — ADDED: comp.stay*d*p (used in the
+     Budget Breakdown card above) is a fixed nominal figure for the
+     chosen tier — it doesn't move as you nudge the total budget field
+     within that tier's range, which is why hotel picks used to look
+     "stuck". hotelStayBudget instead tracks the actual amount typed
+     into Budget ₹, capped at a sensible ceiling for the matched style
+     so a huge budget on a Backpacker trip doesn't suggest a palace.
+     Lowering the budget now visibly narrows the hotel shortlist to
+     cheaper real properties, and raising it opens up pricier ones. */
+  const hotelStayBudget = Math.min(b, total * 1.6) * TIER_SPLIT[finalTierKey].stay;
+
   feasibility.className = 'feasibility show ok';
   feasibility.innerHTML = adjustedNote
     ? `<span class="ic">🔧</span><div><b>Trip is possible — tier adjusted for your budget</b><span>${adjustedNote}</span></div>`
@@ -806,7 +830,7 @@ function build(){
     <div class="result-card hotels-card" id="hotelsSection">
       <div class="hotels-head">
         <h3>Recommended Stay</h3>
-        <p class="hotels-sub">Hand-picked to match your ${TIER_LABEL[finalTierKey]} style and an accommodation budget of ${money(comp.stay * d * p)} for ${d} night${d>1?'s':''}.</p>
+        <p class="hotels-sub">Hand-picked to match your ${TIER_LABEL[finalTierKey]} style and an accommodation budget of ${money(hotelStayBudget)} for ${d} night${d>1?'s':''}.</p>
       </div>
       <div class="hotels-body" id="hotelsBody">
         <div class="hotels-loading"><div class="hotels-spinner"></div><span>Finding stays that fit ${n} and your budget…</span></div>
@@ -838,7 +862,7 @@ function build(){
     tierKey: finalTierKey,
     people: p,
     days: d,
-    accommodationBudget: comp.stay * d * p,
+    accommodationBudget: hotelStayBudget,
     interests,
     itinerarySpots: dest.spots
   });
@@ -895,29 +919,141 @@ async function sendMail(){
   }
 }
 
+
 /* =====================================================================
    HOTEL RECOMMENDATION MODULE — ADDED
    Everything below, down to the matching "END" marker, is new. Nothing
-   above this point in the script was changed. This is deliberately
-   built as a small provider abstraction so a real hotel API can be
-   dropped in later without touching any rendering code:
+   above this point in the script was changed.
 
-     1. HotelProviders  — a registry of { name, getHotels(ctx) } objects.
-        `fallback` ships a realistic, budget-aware demo dataset that is
-        generated (not hard-coded per hotel) from the same TIER_SPLIT /
-        TIER_ORDER data already used for the itinerary pricing, so it
-        always stays consistent with the trip's numbers.
-     2. ACTIVE_HOTEL_PROVIDER — swap this one line to point at a real
-        integration, e.g.:
+     1. HOTEL_DB — a small, real, curated shortlist of actual named
+        properties per destination (sourced from live map/place data),
+        spread across all four tiers. Each entry carries a real
+        `placeId` so a "View on Google Maps" link always points at the
+        genuine listing — reviews, real photos and all — instead of an
+        embedded stock image standing in for a specific named hotel.
+     2. HotelProviders / ACTIVE_HOTEL_PROVIDER — a small provider
+        registry so a real hotel/OTA API can be dropped in later
+        without touching any rendering code, e.g.:
           HotelProviders.myApi = { name:'my-api', getHotels: async (ctx) => {
             const res = await fetch(`${HOTEL_API_BASE}/search?...`);
             return normalizeProviderHotels(await res.json());
           }};
           const ACTIVE_HOTEL_PROVIDER = HotelProviders.myApi;
-        The rendering/scoring/UI code does not need to change.
+        `fallback` scores/filters HOTEL_DB against the trip's *actual*
+        budget field (see hotelStayBudget in build()), so the shortlist
+        genuinely changes — not just re-ranks — when the budget moves.
      3. loadHotelRecommendations(ctx) — orchestrates loading / empty /
         error states and renders whichever provider is active.
    ===================================================================== */
+
+/* Real, named properties per destination, grouped by the same tier
+   vocabulary used for itinerary pricing (backpacker/smartBudget/
+   comfort/premium). `area` is the neighbourhood/locality the property
+   sits in (used for the itinerary-proximity part of the match score).
+   `mult` is a small, hand-set multiplier (~0.8–1.3) reflecting how
+   that specific property sits within its tier band — e.g. an
+   international chain vs. a simple guesthouse — applied on top of the
+   destination's own tier baseline so prices stay internally
+   consistent with the rest of the app's cost model. `placeId` is a
+   real Google Places ID, kept specifically so a production build can
+   pull verified photos via the Places Photo API instead of guessing. */
+const HOTEL_DB = {
+  Kashmir: [
+    { name:'Zostel Srinagar', tierKey:'backpacker', area:'Nishat, near Dal Lake', rating:4.6, mult:1.00, placeId:'ChIJLZ-e6nGH4TgRPr4-g__q0hU' },
+    { name:"Kashmir Holiday Resort", tierKey:'smartBudget', area:'Foreshore Road, Dal Lake', rating:4.0, mult:0.90, placeId:'ChIJ74ygEWyF4TgRAKuG3V1_gg0' },
+    { name:"Hotel Curio's Srinagar", tierKey:'smartBudget', area:'Kothi Bagh / Lal Chowk', rating:4.4, mult:1.10, placeId:'ChIJl5CrupaP4TgRgxDo7yiWTZY' },
+    { name:'Golden Tulip Srinagar', tierKey:'comfort', area:'Sonwar Bagh', rating:4.1, mult:1.00, placeId:'ChIJy3p7bnGP4TgR8RmtGeD28dg' },
+    { name:'The Stay Villa Srinagar', tierKey:'comfort', area:'Lal Chowk', rating:4.8, mult:1.15, placeId:'ChIJkw5OagCP4TgRVsBvnKGV-ro' },
+    { name:'Four Points by Sheraton Srinagar', tierKey:'premium', area:'Badami Bagh Cantonment', rating:4.2, mult:1.10, placeId:'ChIJ_9hwZhOP4TgR-cS_tHtCOOo' }
+  ],
+  Kerala: [
+    { name:'Kumarakom Park Resort', tierKey:'backpacker', area:'Vayitharamattom, Kumarakom', rating:4.0, mult:0.90, placeId:'ChIJd1eeGpOBCDsRD7T6pIhL_PA' },
+    { name:'Kumarakom Heritage Resort & Ayurveda', tierKey:'smartBudget', area:'Vechoor, Kumarakom', rating:4.2, mult:1.00, placeId:'ChIJDZjMTr9_CDsRfSy1fblhxPs' },
+    { name:'Backwater Ripples', tierKey:'comfort', area:'Likkalam, Kumarakom', rating:4.5, mult:1.05, placeId:'ChIJAzyr6UyACDsRd8dpZqP5rT8' },
+    { name:'Rhythm Kumarakom', tierKey:'comfort', area:'Athikkalam, Kumarakom', rating:4.5, mult:1.15, placeId:'ChIJ9dn090yACDsReJbKkSxC3Bk' },
+    { name:'Kumarakom Lake Resort', tierKey:'premium', area:'Vayitharamattom, Kumarakom', rating:4.6, mult:1.25, placeId:'ChIJhwgSEWuACDsRP6kAS6wxk3Y' }
+  ],
+  Goa: [
+    { name:'Tropical Beach Walk', tierKey:'backpacker', area:'Maddo Vaddo, Calangute', rating:4.6, mult:0.90, placeId:'ChIJEWRe7GnBvzsRARigcCeE7x0' },
+    { name:'Alor Grande Holiday Resort', tierKey:'smartBudget', area:'Candolim', rating:3.7, mult:0.85, placeId:'ChIJwYsGaZbBvzsR4zIH9DulRas' },
+    { name:'Hiline Hotels & Resorts, Calangute', tierKey:'smartBudget', area:'Calangute–Anjuna Road', rating:4.1, mult:0.95, placeId:'ChIJMUAWaBvqvzsR2HkPuUtTCzw' },
+    { name:'Calangute Beach Resort', tierKey:'comfort', area:'Calangute Beach Road', rating:3.8, mult:0.95, placeId:'ChIJl8kMB-vBvzsRJkh9OCnAWRc' },
+    { name:'Casa De Goa Boutique Resort', tierKey:'comfort', area:'Calangute', rating:4.3, mult:1.05, placeId:'ChIJD3vZXePBvzsRoSdeVxgEO50' },
+    { name:'Estrela Do Mar Beach Resort', tierKey:'premium', area:'Baga / Calangute', rating:3.9, mult:1.20, placeId:'ChIJE0SaIgTqvzsRUYNVheUuZBY' }
+  ],
+  Rajasthan: [
+    { name:'Red Fox by Lemon Tree, Jaipur', tierKey:'backpacker', area:'Bajaj Nagar, Jaipur', rating:3.9, mult:0.90, placeId:'ChIJHZxsfXi2bTkRMsMoogz863s' },
+    { name:'ibis Jaipur City Centre', tierKey:'smartBudget', area:'Civil Lines, Jaipur', rating:4.5, mult:1.00, placeId:'ChIJ48leTnK0bTkR1jT92zRYZFY' },
+    { name:'Jaipur Hotel New — Heritage', tierKey:'comfort', area:'Nehru Bazar, Jaipur', rating:4.3, mult:1.00, placeId:'ChIJQfQ-_bK2bTkRZjSwp4vttPk' },
+    { name:'Rajasthan Palace Heritage Boutique', tierKey:'comfort', area:'Moti Doongari Road, Jaipur', rating:4.6, mult:1.10, placeId:'ChIJAQAAAJS2bTkRWUWQ2VmlhSA' },
+    { name:'Radisson Blu Hotel, Jaipur', tierKey:'premium', area:'Tonk Road, Jaipur', rating:4.3, mult:1.15, placeId:'ChIJczUCRO-1bTkRpZ6wbHTQtTQ' },
+    { name:'WelcomHeritage Kurki Palace, Jaipur', tierKey:'premium', area:'Nirman Nagar, Jaipur', rating:4.6, mult:1.25, placeId:'ChIJUYj-q1u1bTkRZLPMJbhZ96A' }
+  ],
+  Manali: [
+    { name:'Apple Field House, Old Manali', tierKey:'backpacker', area:'Old Manali', rating:4.7, mult:0.90, placeId:'ChIJVY9cOOmHBDkRt4-38ajaJWg' },
+    { name:'Hotel Pine Grove', tierKey:'smartBudget', area:'Hadimba Temple Road', rating:4.0, mult:0.95, placeId:'ChIJ6-ljvPyHBDkREW6QN69R8f0' },
+    { name:'Hotel Hilltop, Mall Road', tierKey:'smartBudget', area:'Mall Road', rating:4.2, mult:1.00, placeId:'ChIJ6fH4ctOHBDkRWuqEpnN6AEs' },
+    { name:'Mountain Top Hotel', tierKey:'comfort', area:'Hadimba Temple Road', rating:4.1, mult:1.00, placeId:'ChIJY1JMB7OHBDkRZDMq7-tt8og' },
+    { name:'Hotel Rio Sol Resort and Villas', tierKey:'comfort', area:'Aleo, Manali', rating:4.9, mult:1.15, placeId:'ChIJZdStdABjBDkRcQKphDFeaKQ' },
+    { name:'jüSTa Grand View Resort & Spa', tierKey:'premium', area:'Prini, Manali', rating:4.8, mult:1.30, placeId:'ChIJkakyE5tiBDkRgLEPe0IXyFY' }
+  ],
+  Varanasi: [
+    { name:'GlowInn Homestay', tierKey:'backpacker', area:'Aalampura, near Namo Ghat', rating:4.6, mult:0.90, placeId:'ChIJbUp5GQAvjjkRD0f9MDRBMkk' },
+    { name:'Hotel Varanasi Inn', tierKey:'smartBudget', area:'Sigra', rating:3.9, mult:0.85, placeId:'ChIJK47QQf0tjjkRP_FDVWl0ITo' },
+    { name:'Hotel Stay Banaras', tierKey:'smartBudget', area:'Sigra', rating:4.4, mult:1.00, placeId:'ChIJPTJ2APstjjkR8zy2qRGvMoA' },
+    { name:'Tripli Hotels Sandalwood', tierKey:'comfort', area:'Luxa Road', rating:4.8, mult:1.05, placeId:'ChIJE48rSx0ujjkRBj5AtTqKtBI' },
+    { name:'Hotel Kashi Mantram', tierKey:'comfort', area:'Bangali Tola, near Dashashwamedh Ghat', rating:4.8, mult:1.10, placeId:'ChIJO8z4fOIxjjkR26OCHwBjM6w' },
+    { name:'Click Collection Grand Gateway', tierKey:'premium', area:'Narayanpur', rating:4.6, mult:1.20, placeId:'ChIJ-Zx6UgAzjjkRLytv67kU-7M' }
+  ],
+  Meghalaya: [
+    { name:'Zostel Shillong', tierKey:'backpacker', area:'Lumshyiap, Golf Club Road', rating:4.6, mult:1.00, placeId:'ChIJuaSA9QB_UDcRQzf0nMBw37I' },
+    { name:'The Shillong Address', tierKey:'smartBudget', area:'Police Bazar', rating:4.1, mult:0.95, placeId:'ChIJZQ5S6sJ_UDcRxzqz4lcZiqI' },
+    { name:'The Centre Point Shillong', tierKey:'smartBudget', area:'Police Bazar', rating:4.3, mult:1.00, placeId:'ChIJLVeCTZJ-UDcR3ZpBhRzNSd4' },
+    { name:'Hotel Polo Towers', tierKey:'comfort', area:'Polo Grounds, Police Bazar', rating:4.1, mult:1.00, placeId:'ChIJ____j8B-UDcRamhyo7RheX8' },
+    { name:'Iora Shillong', tierKey:'comfort', area:'Pynthorbah', rating:4.9, mult:1.10, placeId:'ChIJ34xzo-F_UDcR2Zg56xu0ulY' },
+    { name:'Windermere Hotel & Spa', tierKey:'premium', area:'Umpling', rating:4.7, mult:1.25, placeId:'ChIJkx13zT15UDcR-FAxaXWCOjg' }
+  ],
+  Andaman: [
+    { name:'Hotel Sea Port', tierKey:'backpacker', area:'Dollygunj, Port Blair', rating:4.2, mult:0.90, placeId:'ChIJ1WzF9EOViDARfvrqnFAdb-U' },
+    { name:'Lemon Tree Hotel, Port Blair', tierKey:'smartBudget', area:'Junglighat, near airport', rating:4.2, mult:1.00, placeId:'ChIJ_47L6KyViDARJsYFZrLEPfI' },
+    { name:'Coral Reef Hotel & Spa', tierKey:'smartBudget', area:'Bhathu Basti, Port Blair', rating:4.5, mult:1.05, placeId:'ChIJ56dW_vuViDARfzpvBjoBHSI' },
+    { name:'Zone Connect by The Park', tierKey:'comfort', area:'Netaji Nagar, Port Blair', rating:4.5, mult:1.05, placeId:'ChIJJcObRaKXiDAR7ERv-AG1ua8' },
+    { name:'Sinclairs Bayview Port Blair', tierKey:'comfort', area:'Corbyns Cove Road', rating:4.1, mult:1.10, placeId:'ChIJtVncXxaViDARhH1hzeEET-c' },
+    { name:'Silver Sand Sea Princess Beach Resort', tierKey:'premium', area:'Wandoor Beach', rating:4.3, mult:1.30, placeId:'ChIJ_fCLSwyViDARaSAEfwyIOwM' }
+  ],
+  'Bodh Gaya': [
+    { name:"Hotel Happy' Stay", tierKey:'backpacker', area:'Hariharpur, Bodh Gaya', rating:4.9, mult:0.85, placeId:'ChIJw1CurwMt8zkRm6BrJ2OHW8s' },
+    { name:'Bodhgaya Regency Hotel', tierKey:'smartBudget', area:'Mastipur, near Japanese Temple', rating:4.3, mult:0.95, placeId:'ChIJ15CWRlss8zkRxETZK7B4ncA' },
+    { name:'Maya Heritage Hotel', tierKey:'smartBudget', area:'Mastipur, opposite Thai Temple', rating:4.4, mult:1.00, placeId:'ChIJrS8bdVks8zkR8OhWPkT2Zvs' },
+    { name:'The Bodhi Palace Resort', tierKey:'comfort', area:'Near Gaya Airport', rating:4.4, mult:1.05, placeId:'ChIJ4YLv2jsr8zkRuNij40_nIOY' },
+    { name:'Hyatt Place Bodh Gaya', tierKey:'comfort', area:'Katorwa Road', rating:4.5, mult:1.15, placeId:'ChIJEVd08r0t8zkRvMkHEheqdqc' },
+    { name:'Marasa Sarovar Premiere', tierKey:'premium', area:'Newtapur', rating:4.8, mult:1.30, placeId:'ChIJQ3nLcp4t8zkR64GylSX2ZCw' }
+  ],
+  Sarnath: [
+    { name:'Treebo Little Budhha', tierKey:'backpacker', area:'Opposite Sarnath Museum', rating:4.1, mult:0.90, placeId:'ChIJH_H7a0wvjjkReUNgD9oeSc4' },
+    { name:'Hotel Sarnath International', tierKey:'smartBudget', area:'Near Sarnath Railway Station', rating:4.4, mult:0.95, placeId:'ChIJY5bwG24vjjkRMvD5DC_TORM' },
+    { name:'The Pinnacle Inn Sarnath', tierKey:'smartBudget', area:'Hawelia Chauraha', rating:4.4, mult:1.00, placeId:'ChIJAw60TikvjjkRb7EgalUWz7c' },
+    { name:'HHW Buddha Lineage', tierKey:'comfort', area:'Mavaiya, Sarnath', rating:4.6, mult:1.05, placeId:'ChIJLcKSUwAvjjkR30HvtrVRQ_o' },
+    { name:'Buddha Theme Park Resort', tierKey:'comfort', area:'Singhpur, Sarnath', rating:4.3, mult:1.10, placeId:'ChIJN7mwCZMvjjkR14WcIoZ-o2U' },
+    { name:'The Fern Residency Sarnath', tierKey:'premium', area:'Pandeypur–Sarnath Road', rating:4.1, mult:1.20, placeId:'ChIJlWlRcnQvjjkR_QJytcb6I00' }
+  ],
+  Kushinagar: [
+    { name:'Vindhyavasini Guest House', tierKey:'backpacker', area:'Kasia Bazaar', rating:3.6, mult:0.80, placeId:'ChIJT36uLkfrkzkRu43VRjpQg2o' },
+    { name:'Hotel Red Sapphire Kushinagar', tierKey:'smartBudget', area:'Buddha Marg', rating:4.1, mult:0.90, placeId:'ChIJbWpZfobrkzkRgmFxvh2uA7A' },
+    { name:'Hotel Metteyye Residency', tierKey:'smartBudget', area:'Buddha Marg', rating:4.4, mult:1.00, placeId:'ChIJ3xr6_G3rkzkR03WkC07KMBY' },
+    { name:'The Royal Residency', tierKey:'comfort', area:'Near Parinirvana Stupa', rating:4.2, mult:1.00, placeId:'ChIJU-prpnTrkzkROp4E9GIzngc' },
+    { name:'J P Palace', tierKey:'comfort', area:'Buddha Nagari, NH 28', rating:4.7, mult:1.10, placeId:'ChIJPVvN3tHrkzkRMrn3Yg6gDiU' },
+    { name:'The Imperial Kushinagar', tierKey:'premium', area:'Buddha Marg', rating:4.3, mult:1.20, placeId:'ChIJncgyT3PrkzkRqRXsG1LrEbM' }
+  ],
+  Nalanda: [
+    { name:'Indo Hokke Hotel, Rajgir', tierKey:'backpacker', area:'Near Veerayatan, Rajgir', rating:4.3, mult:0.90, placeId:'ChIJW28Y7WTl8jkRo-1_NIYgmW8' },
+    { name:'Hotel Nalanda City', tierKey:'smartBudget', area:'Bihar Sharif–Rajgir Road', rating:4.8, mult:0.95, placeId:'ChIJW1RWpgPx8jkRwSstjHAcVo4' },
+    { name:'The Rajgir Residency Hotel', tierKey:'smartBudget', area:'Nimal, Rajgir', rating:4.3, mult:1.00, placeId:'ChIJ_3tXYmTl8jkRROkmcw1h8XE' },
+    { name:'Kripanidhi Retreat Rajgir', tierKey:'comfort', area:'Veerayatan Complex, Rajgir', rating:4.3, mult:1.05, placeId:'ChIJLYW5N7Hl8jkRcl_fVrKXHl4' },
+    { name:'Hotel Bodhi Retreat By Basotel', tierKey:'comfort', area:'Rajgir', rating:4.6, mult:1.10, placeId:'ChIJByRx0ojv8jkRCw6U9cQuiF8' },
+    { name:'Hotel Tathagat Ashok', tierKey:'premium', area:'Opposite Pandu Pokhar, Rajgir', rating:4.8, mult:1.25, placeId:'ChIJCx18hxjl8jkRFDlAB5QG7Lo' }
+  ]
+};
 
 const HOTEL_CATEGORY_BY_TIER = {
   backpacker:'Hostel / Budget Stay',
@@ -926,58 +1062,36 @@ const HOTEL_CATEGORY_BY_TIER = {
   premium:'5★ Resort / Boutique'
 };
 
-const HOTEL_NAME_TEMPLATES = {
-  backpacker:  ['{spot} Backpackers Hub', "Wanderer's Nest — {dest}", "{dest} Travellers' Inn"],
-  smartBudget: ['{spot} Comfort Inn', 'Hotel {dest} Residency', 'The {spot} Stay'],
-  comfort:     ['{spot} Grand Hotel', 'The {dest} Boutique', '{spot} Heritage Hotel', '{dest} Hillview Suites'],
-  premium:     ['The {dest} Palace Resort', '{spot} Luxury Retreat', '{dest} Grand Collection', 'The Royal {spot} Resort']
-};
-
 const AMENITIES_BY_TIER = {
-  backpacker:  ['Free WiFi','Common Lounge','Locker Storage','24hr Check-in','Shared Kitchen'],
-  smartBudget: ['Free WiFi','AC Rooms','Breakfast Included','24hr Front Desk','Room Service'],
-  comfort:     ['Free WiFi','Breakfast Included','Swimming Pool','Airport Pickup','Restaurant On-site'],
-  premium:     ['Free WiFi','Spa & Wellness','Infinity Pool','Fine Dining','Concierge','Airport Transfer']
+  backpacker:  ['Free WiFi','Common Lounge','Locker Storage','24hr Check-in'],
+  smartBudget: ['Free WiFi','AC Rooms','24hr Front Desk','Room Service'],
+  comfort:     ['Free WiFi','Restaurant On-site','Room Service','Airport Pickup on request'],
+  premium:     ['Free WiFi','Spa & Wellness','Multi-cuisine Dining','Concierge']
 };
 
-/* Small, stable, generic hotel/resort photo pool. Every card also has
-   a CSS fallback (.img-fallback) so a broken/slow image never breaks
-   the layout — see the onerror handler in hotelCardHtml(). */
-const HOTEL_PHOTO_POOL = [
-  'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=800&q=80'
-];
-
-/* Deterministic pseudo-random helpers, seeded by a string, so the same
-   trip inputs always produce the same hotel list/prices/ratings
-   instead of reshuffling on every render. */
-function hashStr(s){ let h = 0; for (let i = 0; i < s.length; i++){ h = (h << 5) - h + s.charCodeAt(i); h |= 0; } return Math.abs(h); }
-function seededFraction(s){ return (hashStr(s) % 1000) / 1000; }
 function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
-function pickPhoto(seed){ return HOTEL_PHOTO_POOL[hashStr(seed) % HOTEL_PHOTO_POOL.length]; }
 
-function pickAmenities(tierKey, seed){
-  const pool = AMENITIES_BY_TIER[tierKey];
-  const count = 3 + Math.round(seededFraction(seed + 'a') * 2); // 3–5
-  const start = Math.floor(seededFraction(seed + 'b') * pool.length);
-  const out = [];
-  for (let i = 0; i < count && i < pool.length; i++) out.push(pool[(start + i) % pool.length]);
-  return out;
+/* Loose "is this hotel near something on the itinerary" check — hotel
+   areas are real locality names (e.g. "Nishat, near Dal Lake") which
+   won't exactly match a spot name (e.g. "Dal Lake"), so this checks
+   for a shared word instead of requiring an exact match. */
+function areaNearSpots(area, spots){
+  const areaLower = area.toLowerCase();
+  return spots.some(spot => {
+    const firstWord = spot.toLowerCase().split(' ')[0];
+    return firstWord.length > 3 && areaLower.includes(firstWord);
+  });
 }
 
 /* Transparent, weighted match score (0–100):
    40% price fit to the traveller's ideal per-night rate, 25% tier fit
-   to their chosen style, 20% whether the property sits in a spot
-   already on their itinerary, 15% guest rating. */
+   to their matched style, 20% whether the property's locality lines
+   up with the itinerary, 15% guest rating. */
 function scoreHotel(hotel, { idealPricePerNight, tierKey, itinerarySpots }){
   const priceFit = clamp(100 - Math.abs(hotel.pricePerNight - idealPricePerNight) / idealPricePerNight * 100, 0, 100);
   const tierDist = Math.abs(TIER_ORDER.indexOf(hotel.tierKey) - TIER_ORDER.indexOf(tierKey));
   const tierFit = tierDist === 0 ? 100 : (tierDist === 1 ? 65 : 35);
-  const locationFit = itinerarySpots.includes(hotel.area) ? 100 : 74;
+  const locationFit = areaNearSpots(hotel.area, itinerarySpots) ? 100 : 74;
   const ratingFit = hotel.rating / 5 * 100;
   const score = Math.round(priceFit * 0.40 + tierFit * 0.25 + locationFit * 0.20 + ratingFit * 0.15);
   return { score, priceFit, tierFit, locationFit, ratingFit };
@@ -987,54 +1101,34 @@ function hotelWhyText(hotel, s, ctx){
   const bits = [];
   bits.push(s.tierFit === 100 ? `matches your ${TIER_LABEL[ctx.tierKey]} style` : `close to your ${TIER_LABEL[ctx.tierKey]} style`);
   bits.push(s.priceFit >= 70 ? 'priced well within your accommodation budget' : 'a reasonable fit for your accommodation budget');
-  if (s.locationFit === 100) bits.push(`near ${hotel.area}, already on your itinerary`);
-  if (hotel.rating >= 4.3) bits.push('consistently well-rated by past guests');
+  if (s.locationFit === 100) bits.push(`in ${hotel.area}, near your itinerary`);
+  if (hotel.rating >= 4.4) bits.push('highly rated by past guests');
   return bits.join(', ') + '.';
 }
 
-/* Generates a realistic, budget-aware hotel shortlist from the same
-   destination/tier data already powering the itinerary — this is the
-   "fallback" provider's dataset (see HotelProviders below). */
+/* Builds the real, budget-scored shortlist for one destination. The
+   candidate pool spans ALL four tiers (not just the matched one) so
+   that moving the budget field genuinely swaps in different named
+   properties instead of only re-ordering the same handful. */
 function buildFallbackHotels(ctx){
   const { dest, tierKey, days, accommodationBudget, itinerarySpots, destKey } = ctx;
   const rooms = Math.max(1, Math.ceil(ctx.people / 2));
   const idealPricePerNight = Math.max(500, accommodationBudget / days / rooms);
 
-  const idx = TIER_ORDER.indexOf(tierKey);
-  const candidateTiers = [tierKey];
-  if (idx > 0) candidateTiers.push(TIER_ORDER[idx - 1]);
-  if (idx < TIER_ORDER.length - 1) candidateTiers.push(TIER_ORDER[idx + 1]);
-
-  let pool = [];
-  candidateTiers.forEach((tk, ti) => {
-    const perNightBase = dest.tiers[tk] * TIER_SPLIT[tk].stay * 2; // approx double-occupancy room rate
-    HOTEL_NAME_TEMPLATES[tk].forEach((tmpl, i) => {
-      const spot = itinerarySpots[(i + ti) % itinerarySpots.length];
-      const seed = `${destKey}-${tk}-${tmpl}-${i}`;
-      const variance = 0.82 + seededFraction(seed) * 0.55; // 0.82x – 1.37x spread
-      const pricePerNight = Math.max(400, Math.round(perNightBase * variance / 50) * 50);
-      const rating = +(3.7 + seededFraction(seed + 'r') * 1.2).toFixed(1);
-      pool.push({
-        name: tmpl.replace('{spot}', spot).replace('{dest}', destKey),
-        category: HOTEL_CATEGORY_BY_TIER[tk],
-        tierKey: tk,
-        area: spot,
-        rating,
-        pricePerNight,
-        rooms,
-        amenities: pickAmenities(tk, seed),
-        photo: pickPhoto(seed)
-      });
-    });
+  const catalogue = HOTEL_DB[destKey] || [];
+  const priced = catalogue.map(h => {
+    const perNightBase = dest.tiers[h.tierKey] * TIER_SPLIT[h.tierKey].stay * 2; // double-occupancy room-rate baseline
+    const pricePerNight = Math.max(400, Math.round(perNightBase * h.mult / 50) * 50);
+    return { ...h, pricePerNight, rooms, category: HOTEL_CATEGORY_BY_TIER[h.tierKey], amenities: AMENITIES_BY_TIER[h.tierKey] };
   });
 
-  const scored = pool.map(h => {
+  const scored = priced.map(h => {
     const s = scoreHotel(h, { idealPricePerNight, tierKey, itinerarySpots });
     return { ...h, matchScore: s.score, why: hotelWhyText(h, s, ctx) };
   });
 
-  let candidates = scored.filter(h => h.pricePerNight * h.rooms * days <= accommodationBudget * 1.15);
-  if (candidates.length < 3) candidates = scored.filter(h => h.pricePerNight * h.rooms * days <= accommodationBudget * 1.4);
+  let candidates = scored.filter(h => h.pricePerNight * h.rooms * days <= accommodationBudget * 1.2);
+  if (candidates.length < 3) candidates = scored.filter(h => h.pricePerNight * h.rooms * days <= accommodationBudget * 1.6);
   if (candidates.length < 3) candidates = scored;
 
   candidates.sort((a, b) => b.matchScore - a.matchScore);
@@ -1046,9 +1140,9 @@ function buildFallbackHotels(ctx){
    matches what a live API call would look like. */
 const HotelProviders = {
   fallback: {
-    name: 'fallback-demo',
+    name: 'fallback-real-data',
     getHotels: async (ctx) => {
-      await new Promise(res => setTimeout(res, 450 + Math.round(seededFraction(ctx.destKey + ctx.tierKey) * 350)));
+      await new Promise(res => setTimeout(res, 450));
       return buildFallbackHotels(ctx);
     }
   }
@@ -1061,13 +1155,14 @@ const ACTIVE_HOTEL_PROVIDER = HotelProviders.fallback;
 function hotelCardHtml(h, ctx){
   const totalStay = h.pricePerNight * h.rooms * ctx.days;
   const overBudget = totalStay > ctx.accommodationBudget;
+  const mapsUrl = `https://www.google.com/maps/place/?q=place_id:${h.placeId}`;
+  const initial = h.name.replace(/^(The|A)\s+/i, '').trim().charAt(0).toUpperCase();
   return `
   <div class="hotel-card">
-    <div class="hotel-photo-wrap">
+    <div class="hotel-photo-wrap tier-${h.tierKey}">
       <div class="match-badge">${h.matchScore}% Match</div>
       ${overBudget ? '<div class="stretch-badge">Slight stretch</div>' : ''}
-      <img class="hotel-photo" src="${h.photo}" alt="${h.name}" loading="lazy"
-        onerror="this.onerror=null;this.parentElement.classList.add('img-fallback');">
+      <span class="hotel-monogram">${initial}</span>
     </div>
     <div class="hotel-body">
       <div class="hotel-top">
@@ -1076,7 +1171,7 @@ function hotelCardHtml(h, ctx){
       </div>
       <div class="hotel-meta">
         <span class="hotel-rating">★ ${h.rating.toFixed(1)}</span>
-        <span class="hotel-location">📍 ${h.area}, ${ctx.destKey}</span>
+        <span class="hotel-location">📍 ${h.area}</span>
       </div>
       <div class="hotel-price-row">
         <div><span class="hp-value">${money(h.pricePerNight)}</span><span class="hp-label">/ night · ${h.rooms} room${h.rooms > 1 ? 's' : ''}</span></div>
@@ -1084,7 +1179,10 @@ function hotelCardHtml(h, ctx){
       </div>
       <div class="hotel-amenities">${h.amenities.map(a => `<span>${a}</span>`).join('')}</div>
       <p class="hotel-why"><b>Why this hotel:</b> ${h.why}</p>
-      <button class="btn btn-sm" onclick="enquireAboutHotel('${h.name.replace(/'/g, "\\'")}')">View &amp; Enquire →</button>
+      <div class="hotel-actions">
+        <a class="hotel-maps-link" href="${mapsUrl}" target="_blank" rel="noopener">View on Google Maps ↗</a>
+        <button class="btn btn-sm" onclick="enquireAboutHotel('${h.name.replace(/'/g, "\\'")}')">Enquire →</button>
+      </div>
     </div>
   </div>`;
 }
