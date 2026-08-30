@@ -1,205 +1,639 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI Planner — TourCraft</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TourCraft — Hotels</title>
 <link rel="icon" type="image/x-icon" href="logo.jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+
 <style>
-body{margin:0;font-family:'Inter',Arial,sans-serif;background:#f5f4ee;color:#63192b}
-.btn{background:#174c3a;color:#fff;border:0;padding:13px 20px;border-radius:12px;font-weight:700;cursor:pointer;font-size:15px;font-family:inherit}
-.btn:hover{background:#1e6350}
-.btn[disabled]{opacity:.55;cursor:not-allowed}
-
-
-
-.navbar {
-    position: fixed;
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(1180px, 95%);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 22px;
-    border-radius: 22px;
-    margin: 1px auto;
-    background: rgb(147 144 144 / 75%);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,.8);
-    box-shadow: 0 10px 40px rgba(0,0,0,.08);
-    z-index: 100;
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+    margin:0;
+    font-family:Inter,Arial,sans-serif;
+    background:#f5f4ee;
+    color:#26312d;
 }
-.navbar .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+button,input,select{font:inherit}
 
-.navbar .logo img {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
+/* =========================================================
+   TOURCRAFT NAVBAR — SAME AS YOUR INDEX PAGE
+   ========================================================= */
+.navbar{
+ position:fixed;
+ top:16px;
+ left:50%;
+ transform:translateX(-50%);
+ width:min(1380px,95%);
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ padding:14px 22px;
+ border-radius:22px;
+ margin:1px auto;
+ background:rgb(147 144 144 / 75%);
+ backdrop-filter:blur(20px);
+ border:1px solid rgba(255,255,255,.8);
+ box-shadow:0 10px 40px rgba(0,0,0,.08);
+ z-index:100;
 }
-
-.navbar .logo span {
-    font-family: 'Playfair Display', serif;
-    font-size: 23px;
-    font-weight: 900;
-    line-height: 1;
-    color: #212b27;
-    white-space: nowrap;
+.logo{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ font-size:26px;
+ font-family:'Playfair Display',serif;
+ font-weight:700;
+ color:#212b27;
 }
-
-.nav-links {
-    display: flex;
-    gap: 28px;
+.logo img{
+ width:42px;
+ height:42px;
+ border-radius:12px;
+ object-fit:cover;
 }
-
-.nav-links a {
-    text-decoration: none;
-    color: #000b06;
-    font-weight: 600;
-    transition: .25s;
-    position: relative;
+.nav-links{
+ display:flex;
+ gap:28px;
 }
-
-.nav-links a:hover {
-    color: #103D2E;
+.nav-links a{
+ text-decoration:none;
+ color:#000b06;
+ font-weight:700;
+ transition:.25s;
+ position:relative;
 }
-
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    left: 0;
-    width: 0%;
-    height: 2px;
-    background: #D8F27C;
-    transition: .3s;
+.nav-links a:hover{color:#103D2E}
+.nav-links a::after{
+ content:'';
+ position:absolute;
+ bottom:-6px;
+ left:0;
+ width:0%;
+ height:2px;
+ background:#D8F27C;
+ transition:.3s;
 }
-
-.nav-links a:hover::after {
-    width: 100%;
+.nav-links a:hover::after{width:100%}
+.cta{
+ background:#c30d53;
+ color:white;
+ padding:12px 18px;
+ border-radius:14px;
+ text-decoration:none;
+ font-weight:700;
+ transition:.25s;
 }
-
-.cta {
-    background: #103D2E;
-    color: white;
-    padding: 12px 18px;
-    border-radius: 14px;
-    text-decoration: none;
-    font-weight: 700;
-    transition: .25s;
+.cta:hover{
+ background:#7e041e;
+ transform:translateY(-2px);
 }
 
-.cta:hover {
-    background: #1b5a46;
-    transform: translateY(-2px);
+/* HERO */
+.hotels-hero{
+ max-width:1160px;
+ margin:0 auto;
+ padding:145px 25px 45px;
+ display:grid;
+ grid-template-columns:1.08fr .92fr;
+ gap:55px;
+ align-items:center;
 }
-    /* ===================================================================== */
+.hero-copy small{
+ color:#7B2940;
+ font-size:12px;
+ font-weight:800;
+ letter-spacing:2.5px;
+}
+.hero-copy h1{
+ margin:15px 0 18px;
+ font-family:'Playfair Display',serif;
+ color:#63192b;
+ font-size:clamp(52px,6vw,78px);
+ line-height:.94;
+ letter-spacing:-2px;
+}
+.hero-copy h1 span{
+ color:#174c3a;
+ font-style:italic;
+}
+.hero-copy p{
+ max-width:650px;
+ color:#66726d;
+ font-size:17px;
+ line-height:1.75;
+ margin:0;
+}
+.hero-pills{
+ display:flex;
+ flex-wrap:wrap;
+ gap:9px;
+ margin-top:23px;
+}
+.hero-pill{
+ background:#fff;
+ border:1px solid #e5e0d8;
+ color:#4f5b56;
+ padding:9px 13px;
+ border-radius:999px;
+ font-size:12px;
+ font-weight:700;
+ box-shadow:0 6px 18px rgba(36,53,45,.05);
+}
+.hero-visual{
+ height:440px;
+ border-radius:30px;
+ overflow:hidden;
+ position:relative;
+ background:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=85') center/cover;
+ box-shadow:0 24px 55px rgba(26,45,37,.18);
+}
+.hero-visual:after{
+ content:'';
+ position:absolute;
+ inset:0;
+ background:linear-gradient(180deg,rgba(0,0,0,.03),rgba(0,0,0,.72));
+}
+.hero-floating{
+ position:absolute;
+ z-index:2;
+ left:22px;
+ right:22px;
+ bottom:22px;
+ padding:18px;
+ border:1px solid rgba(255,255,255,.3);
+ background:rgba(255,255,255,.13);
+ backdrop-filter:blur(14px);
+ border-radius:20px;
+ color:#fff;
+}
+.hero-floating b{font-size:15px}
+.hero-floating span{
+ display:block;
+ margin-top:6px;
+ color:rgba(255,255,255,.82);
+ font-size:12px;
+ line-height:1.5;
+}
 
-/* ---------- page layout (builder only) ---------- */
-.page{max-width:1180px;margin:0 auto;padding:40px 20px 60px}
+/* MAIN */
+.section{
+ max-width:1160px;
+ margin:0 auto;
+ padding:35px 25px 80px;
+}
+.section-heading{
+ margin-bottom:25px;
+}
+.kicker{
+ display:inline-flex;
+ align-items:center;
+ gap:9px;
+ color:#7B2940;
+ font-size:11px;
+ font-weight:800;
+ letter-spacing:2.3px;
+ text-transform:uppercase;
+}
+.kicker:before{
+ content:'';
+ width:27px;
+ height:2px;
+ border-radius:3px;
+ background:#7B2940;
+}
+.section-heading h2{
+ margin:10px 0 8px;
+ color:#63192b;
+ font-family:'Playfair Display',serif;
+ font-size:clamp(38px,4vw,55px);
+ line-height:1;
+ letter-spacing:-1.2px;
+}
+.section-heading h2 span{
+ color:#174c3a;
+ font-style:italic;
+}
+.section-heading p{
+ margin:0;
+ color:#69756f;
+ font-size:15px;
+ line-height:1.65;
+ max-width:760px;
+}
 
-.planner{background:linear-gradient(160deg,#890a38,#70022b);color:white;border-radius:28px;padding:38px}
-.planner-top{margin-bottom:26px}
-.eyebrow{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#d8f27c;margin-bottom:10px}
-.planner-top h1{font-family:'Playfair Display',serif;font-size:clamp(26px,3.4vw,34px);margin:0 0 8px;color:#fff}
-.planner-top p{margin:0;color:#c8d8d1;font-size:14.5px;max-width:520px}
+/* CONTROLS */
+.hotel-controls{
+ background:#174c3a;
+ border-radius:24px;
+ padding:18px;
+ display:grid;
+ grid-template-columns:1.25fr 1fr 1fr 1fr;
+ gap:11px;
+ margin-bottom:30px;
+ box-shadow:0 16px 35px rgba(23,76,58,.16);
+}
+.control{
+ min-width:0;
+}
+.control label{
+ display:block;
+ color:#c9d9d2;
+ font-size:10px;
+ font-weight:800;
+ letter-spacing:1.1px;
+ margin:0 0 6px 4px;
+ text-transform:uppercase;
+}
+.control select,.control input{
+ width:100%;
+ border:1px solid rgba(255,255,255,.18);
+ background:rgba(255,255,255,.1);
+ color:#fff;
+ padding:12px 13px;
+ border-radius:12px;
+ outline:none;
+}
+.control select option{color:#17352b}
+.control input::placeholder{color:#d7e2dd}
+.budget-range{
+ display:flex;
+ align-items:center;
+ gap:10px;
+}
+.budget-value{
+ white-space:nowrap;
+ color:#dff08c;
+ font-size:12px;
+ font-weight:800;
+}
 
-.builder-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:26px;align-items:start}
-@media(max-width:900px){.builder-grid{grid-template-columns:1fr}}
+/* SUMMARY */
+.results-bar{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:15px;
+ margin:0 0 15px;
+}
+.results-count{
+ color:#78827e;
+ font-size:12px;
+ font-weight:700;
+}
+.reset{
+ border:0;
+ background:transparent;
+ color:#174c3a;
+ font-size:12px;
+ font-weight:800;
+ cursor:pointer;
+}
 
-.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.field label{display:block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:7px;color:#a9c2b7}
-.field input,.field select{width:100%;padding:12px 14px;border-radius:11px;border:1px solid #ffffff30;background:#ffffff10;color:white;box-sizing:border-box;font-family:inherit;font-size:14.5px}
-.field select option{color:#17352b}
-.field input::placeholder{color:#9fb3aa}
-.wide{grid-column:span 2}
+/* HOTEL GRID */
+.hotel-grid{
+ display:grid;
+ grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:18px;
+}
+.hotel-card{
+ background:#fff;
+ border:1px solid #e8e3da;
+ border-radius:24px;
+ overflow:hidden;
+ box-shadow:0 10px 28px rgba(35,47,42,.07);
+ transition:.28s ease;
+ display:flex;
+ flex-direction:column;
+}
+.hotel-card:hover{
+ transform:translateY(-7px);
+ box-shadow:0 22px 45px rgba(35,47,42,.14);
+}
+.hotel-photo{
+ height:220px;
+ position:relative;
+ overflow:hidden;
+ background:#dfe3df;
+}
+.hotel-photo img{
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ display:block;
+ transition:.5s ease;
+}
+.hotel-card:hover .hotel-photo img{transform:scale(1.055)}
+.hotel-badge{
+ position:absolute;
+ left:14px;
+ top:14px;
+ padding:7px 10px;
+ border-radius:999px;
+ background:rgba(255,255,255,.9);
+ color:#174c3a;
+ font-size:10px;
+ font-weight:800;
+ backdrop-filter:blur(8px);
+}
+.hotel-save{
+ position:absolute;
+ right:14px;
+ top:14px;
+ width:34px;
+ height:34px;
+ border:0;
+ border-radius:50%;
+ background:rgba(255,255,255,.9);
+ color:#63192b;
+ cursor:pointer;
+ font-size:16px;
+}
+.hotel-body{
+ padding:18px;
+ display:flex;
+ flex-direction:column;
+ flex:1;
+}
+.hotel-location{
+ color:#8a928e;
+ font-size:10px;
+ font-weight:800;
+ letter-spacing:1px;
+ text-transform:uppercase;
+}
+.hotel-name{
+ color:#17352b;
+ font-family:'Playfair Display',serif;
+ font-size:25px;
+ line-height:1.05;
+ margin:7px 0 8px;
+}
+.hotel-desc{
+ color:#69756f;
+ font-size:12px;
+ line-height:1.55;
+ min-height:38px;
+}
+.hotel-tags{
+ display:flex;
+ flex-wrap:wrap;
+ gap:6px;
+ margin:13px 0 16px;
+}
+.hotel-tags span{
+ background:#f3f1eb;
+ color:#52605a;
+ padding:6px 8px;
+ border-radius:999px;
+ font-size:10px;
+ font-weight:700;
+}
+.hotel-bottom{
+ margin-top:auto;
+ padding-top:15px;
+ border-top:1px solid #eeeae2;
+ display:flex;
+ align-items:end;
+ justify-content:space-between;
+ gap:10px;
+}
+.rating{
+ color:#174c3a;
+ font-size:12px;
+ font-weight:800;
+}
+.rating small{
+ color:#909893;
+ font-weight:600;
+}
+.price{
+ text-align:right;
+}
+.price b{
+ display:block;
+ color:#63192b;
+ font-size:19px;
+}
+.price span{
+ color:#8b938f;
+ font-size:9px;
+}
+.hotel-action{
+ display:flex;
+ gap:8px;
+ margin-top:13px;
+}
+.hotel-action a,.hotel-action button{
+ flex:1;
+ text-align:center;
+ text-decoration:none;
+ border:0;
+ border-radius:11px;
+ padding:10px 8px;
+ font-size:11px;
+ font-weight:800;
+ cursor:pointer;
+}
+.details-btn{
+ background:#ece9df;
+ color:#394941;
+}
+.plan-btn{
+ background:#174c3a;
+ color:#fff;
+}
 
-.form-actions{margin-top:22px}
-.form-actions .hint{display:block;margin-top:10px;font-size:12px;color:#a9c2b7}
+/* BUDGET GUIDE */
+.budget-guide{
+ margin-top:55px;
+ background:#fff;
+ border:1px solid #e6e1d8;
+ border-radius:28px;
+ padding:28px;
+}
+.budget-guide h3{
+ margin:0;
+ color:#63192b;
+ font-family:'Playfair Display',serif;
+ font-size:30px;
+}
+.budget-guide > p{
+ color:#6e7974;
+ font-size:13px;
+ line-height:1.6;
+}
+.tier-grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:12px;
+ margin-top:18px;
+}
+.tier{
+ padding:18px;
+ border-radius:18px;
+ background:#f7f5ef;
+ border:1px solid #e8e3da;
+}
+.tier strong{
+ display:block;
+ color:#174c3a;
+ font-size:12px;
+ text-transform:uppercase;
+ letter-spacing:1px;
+}
+.tier b{
+ display:block;
+ color:#63192b;
+ font-size:22px;
+ margin:7px 0;
+}
+.tier span{
+ color:#68736e;
+ font-size:11px;
+ line-height:1.5;
+}
 
-.live-estimate{margin-top:16px;padding:13px 16px;border-radius:12px;font-size:13px;background:#ffffff10;border:1px solid #ffffff20;color:#e5efe9;display:none}
-.live-estimate.show{display:block}
-.live-estimate b{color:#fff}
-.live-estimate.fits{border-color:#7fd9a0}
-.live-estimate.short{border-color:#f2a99a}
+/* EMPTY */
+.empty{
+ display:none;
+ text-align:center;
+ padding:55px 20px;
+ background:#fff;
+ border:1px solid #e5e0d8;
+ border-radius:22px;
+ color:#66726d;
+}
+.empty h3{
+ margin:0 0 8px;
+ color:#63192b;
+ font-family:'Playfair Display',serif;
+ font-size:28px;
+}
 
-/* ---------- destination snapshot (right column) ---------- */
-.snapshot{background:#ffffff0d;border:1px solid #ffffff22;border-radius:18px;overflow:hidden}
-.snapshot-media{height:150px;background-size:cover;background-position:center}
-.snapshot-body{padding:18px 20px 20px}
-.snapshot-body h3{font-family:'Playfair Display',serif;font-size:19px;margin:0 0 4px;color:#fff}
-.snapshot-body .range{font-size:12.5px;color:#d8f27c;font-weight:700;margin-bottom:10px}
-.snapshot-body p{font-size:13px;color:#c8d8d1;line-height:1.55;margin:0 0 12px}
-.snapshot-body .best{font-size:12px;color:#a9c2b7;margin-bottom:12px}
-.snapshot-tags{display:flex;flex-wrap:wrap;gap:6px}
-.snapshot-tags span{background:#ffffff14;color:#e5efe9;padding:5px 10px;border-radius:999px;font-size:11.5px}
+/* MODAL */
+.modal{
+ display:none;
+ position:fixed;
+ inset:0;
+ background:rgba(8,18,14,.78);
+ backdrop-filter:blur(10px);
+ z-index:1000;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+}
+.modal-box{
+ width:min(760px,100%);
+ max-height:90vh;
+ overflow:auto;
+ background:#fbfaf6;
+ border-radius:28px;
+ position:relative;
+ box-shadow:0 35px 100px rgba(0,0,0,.35);
+}
+.modal-close{
+ position:absolute;
+ top:15px;
+ right:15px;
+ z-index:4;
+ width:38px;
+ height:38px;
+ border:0;
+ border-radius:50%;
+ background:rgba(255,255,255,.92);
+ color:#17352b;
+ font-size:22px;
+ cursor:pointer;
+}
+.modal-image{
+ width:100%;
+ height:300px;
+ object-fit:cover;
+ display:block;
+}
+.modal-content{padding:25px}
+.modal-content h2{
+ color:#63192b;
+ font-family:'Playfair Display',serif;
+ font-size:38px;
+ margin:0 0 6px;
+}
+.modal-content p{
+ color:#65716b;
+ line-height:1.7;
+ font-size:13px;
+}
+.source-note{
+ padding:11px 13px;
+ background:#eef3ee;
+ border-radius:12px;
+ color:#426054 !important;
+ font-size:11px !important;
+}
+.modal-facts{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:10px;
+ margin-top:18px;
+}
+.fact{
+ padding:13px;
+ background:#f1efe8;
+ border-radius:14px;
+}
+.fact small{
+ display:block;
+ color:#8a928d;
+ font-size:9px;
+ font-weight:800;
+ text-transform:uppercase;
+ letter-spacing:1px;
+}
+.fact b{
+ display:block;
+ margin-top:5px;
+ color:#17352b;
+ font-size:12px;
+}
 
-/* ---------- feasibility banner ---------- */
-.feasibility{display:none;margin-top:24px;padding:20px 22px;border-radius:16px;align-items:flex-start;gap:12px}
-.feasibility.show{display:flex}
-.feasibility.ok{background:#eafaf1;border:1px solid #b6e8c9;color:#174c3a}
-.feasibility.blocked{background:#fff0ed;border:1px solid #f3c6c0;color:#8d3e36}
-.feasibility .ic{font-size:20px;line-height:1}
-.feasibility b{display:block;margin-bottom:4px;font-size:14.5px}
-.feasibility span{font-size:13.5px;line-height:1.5}
-
-/* ---------- result ---------- */
-.result{margin-top:26px}
-.result-card{background:white;color:#17352b;border-radius:22px;padding:28px 30px;margin-bottom:16px}
-.result-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px;margin-bottom:6px}
-.result-head h2{font-family:'Playfair Display',serif;font-size:26px;margin:0 0 4px}
-.result-head .sub{color:#69756f;font-size:14px}
-.tier-pill{background:#e7f2ec;color:#174c3a;font-size:12px;font-weight:700;padding:6px 14px;border-radius:999px;white-space:nowrap}
-.cost-strip{display:flex;gap:14px;flex-wrap:wrap;margin-top:16px}
-.cost-box{flex:1;min-width:120px;background:#f7f5ef;border-radius:14px;padding:14px 16px}
-.cost-box .k{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#8b9690;margin-bottom:4px}
-.cost-box .v{font-size:17px;font-weight:700;color:#174c3a}
-
-.day{padding:18px 20px;border:1px solid #eee;border-radius:16px;margin:12px 0;background:#fcfbf7}
-.day-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
-.day-top b{font-size:15.5px}
-.day-cost{font-size:12.5px;background:#e7f2ec;color:#174c3a;padding:4px 10px;border-radius:999px;font-weight:700}
-.slot{font-size:13.5px;color:#4b544f;padding:3px 0}
-.slot b{color:#17352b}
-
-.tags{display:flex;flex-wrap:wrap;gap:8px}
-.tags span{background:#e7f2ec;color:#174c3a;padding:6px 13px;border-radius:999px;font-size:12.5px;font-weight:600}
-
-.budget-rows .row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #eee;font-size:14px;color:#69756f}
-.budget-rows .row span:last-child{color:#17352b;font-weight:700}
-.budget-rows .row.total{border-bottom:none;padding-top:12px;font-size:15.5px}
-.budget-rows .row.total span{color:#174c3a}
-.budget-rows .row .note{display:block;font-size:11.5px;color:#9aa39d;font-weight:400;margin-top:2px}
-
-.enquire-box{text-align:center;background:#f7f5ef}
-.enquire-box p{color:#69756f;font-size:14px;max-width:420px;margin:6px auto 18px}
-
-/* ---------- enquiry modal ---------- */
-.modal{display:none;position:fixed;inset:0;background:#0009;z-index:2000;align-items:center;justify-content:center;padding:20px}
-.modal.show{display:flex}
-.box{background:white;border-radius:24px;padding:30px;max-width:560px;width:100%;max-height:90vh;overflow:auto;position:relative;color:#17352b}
-.close{position:absolute;top:18px;right:18px;border:0;background:#f1f1ee;border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:16px}
-.box h1{font-family:'Playfair Display',serif;font-size:24px;margin:0 0 8px;color:#212b27}
-.box .desc{color:#5c655f;font-size:14.5px;line-height:1.6;margin-bottom:16px}
-.enq input,.enq textarea{width:100%;padding:12px 14px;margin:6px 0;border:1px solid #ddd;border-radius:10px;box-sizing:border-box;font-family:inherit;font-size:14.5px}
-.enq textarea{height:90px}
-.status{font-size:13px;margin-top:10px;min-height:18px}
-.status.ok{color:#1a7a4c}
-.status.err{color:#c0392b}
-.status.sending{color:#69756f}
-
-@media(max-width:560px){.form{grid-template-columns:1fr}.wide{grid-column:auto}.planner{padding:26px}.result-card{padding:22px}}
+/* RESPONSIVE */
+@media(max-width:950px){
+ .navbar{width:150%}
+ .nav-links{gap:17px}
+ .hotels-hero{grid-template-columns:1fr;gap:30px;padding-top:125px}
+ .hero-visual{height:360px}
+ .hotel-controls{grid-template-columns:1fr 1fr}
+ .hotel-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:700px){
+ .navbar{padding:10px 13px;border-radius:18px}
+ .logo{font-size:21px}
+ .logo img{width:36px;height:36px}
+ .nav-links{display:none}
+ .cta{padding:10px 13px;font-size:11px}
+ .hotels-hero{padding:110px 18px 35px}
+ .hero-copy h1{font-size:52px}
+ .hero-copy p{font-size:15px}
+ .section{padding-left:18px;padding-right:18px}
+ .hotel-controls{grid-template-columns:1fr}
+ .hotel-grid{grid-template-columns:1fr}
+ .tier-grid{grid-template-columns:1fr}
+ .modal-facts{grid-template-columns:1fr}
+}
 </style>
 </head>
+
 <body>
 
-<link rel="stylesheet" href="css/navbar.css">
+<!-- =========================================================
+     EXACT TOURCRAFT NAVBAR
+     ========================================================= -->
 <nav class="navbar">
-
     <div class="logo">
         <img src="logo.jpeg" alt="TourCraft Logo">
         <span>TourCraft</span>
@@ -207,419 +641,342 @@ body{margin:0;font-family:'Inter',Arial,sans-serif;background:#f5f4ee;color:#631
 
     <div class="nav-links">
         <a href="index.html">Home</a>
-        <a href="explore.html">Explore</a>
+        <a href="index.html#destinations-section">Explore</a>
         <a href="planner.html">AI Planner</a>
-        <a href="guides.html">Inspirations</a>
+        <a href="guides.html">Accommodation</a>
         <a href="contact.html">Contact</a>
     </div>
 
-    <a href="planner.html" class="cta">
-        Build My Trip ✨
-    </a>
-
+    <a href="planner.html" class="cta">Build My Trip ✨</a>
 </nav>
 
-<div class="page">
-  <div class="planner">
-    <div class="planner-top">
-      <span class="eyebrow">AI Itinerary Builder</span>
-      <h1>Tell TourCraft what you need</h1>
-      <p>Real per-day costs across stay, food, transport and activities — matched honestly to your budget.</p>
+<section class="hotels-hero">
+    <div class="hero-copy">
+        <small>STAY SMART · SPEND BETTER</small>
+        <h1>Hotels that fit<br><span>your budget.</span></h1>
+        <p>
+            From simple stays to premium escapes, discover accommodation options
+            that match your destination, travel style and budget — without letting
+            the hotel eat up the rest of your trip.
+        </p>
+
+        <div class="hero-pills">
+            <span class="hero-pill">₹ Budget-friendly</span>
+            <span class="hero-pill">★ Curated options</span>
+            <span class="hero-pill">⌁ Compare by style</span>
+            <span class="hero-pill">✦ Plan with TourCraft</span>
+        </div>
     </div>
 
-    <div class="builder-grid">
-      <div>
-        <div class="form">
-          <div class="field"><label>Destination</label><select id="destination"></select></div>
-          <div class="field"><label>Travellers</label><input id="people" type="number" value="2" min="1"></div>
-          <div class="field"><label>Days</label><input id="days" type="number" value="5" min="1" max="21"></div>
-          <div class="field"><label>Budget ₹ (total)</label><input id="budget" type="number" value="35000" min="1" step="500"></div>
-          <div class="field"><label>Style</label><select id="style"><option>Smart Budget</option><option>Comfort</option><option>Backpacker</option><option>Premium</option></select></div>
-          <div class="field"><label>Transport</label><select id="transport"><option>Comfortable</option><option>Budget</option><option>Private Cab</option></select></div>
-          <div class="field wide"><label>Interests</label><input id="interests" placeholder="food, mountains, culture, adventure..."></div>
+    <div class="hero-visual">
+        <div class="hero-floating">
+            <b>Good travel starts with a good stay.</b>
+            <span>Choose a hotel tier first, then let TourCraft help you balance accommodation with the rest of your trip.</span>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="hotels-section">
+
+    <div class="section-heading">
+        <span class="kicker">FIND YOUR STAY</span>
+        <h2>Stay <span>your way.</span></h2>
+        <p>
+            The properties below are real hotels, resorts and hostels verified against official hotel/brand
+            pages or official tourism listings. The nightly figure is a TourCraft planning reference,
+            not a live quote — actual rates vary by date, room type, taxes and availability.
+        </p>
+    </div>
+
+    <div class="hotel-controls">
+        <div class="control">
+            <label>Destination</label>
+            <select id="destinationFilter" onchange="filterHotels()">
+                <option value="all">All destinations</option>
+                <option value="Kashmir">Kashmir</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Goa">Goa</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Manali">Manali</option>
+                <option value="Varanasi">Varanasi</option>
+                <option value="Meghalaya">Meghalaya</option>
+                <option value="Andaman">Andaman</option>
+            </select>
         </div>
 
-        <div class="form-actions">
-          <button class="btn" style="background:#dff08c;color:#17352b" onclick="build()">Generate my itinerary ✨</button>
-          <span class="hint">Costs cover stay, food, local transport &amp; activities — excludes flights/train to reach.</span>
+        <div class="control">
+            <label>Budget tier</label>
+            <select id="styleFilter" onchange="filterHotels()">
+                <option value="all">Any budget</option>
+                <option value="budget">Smart Budget · up to ₹3,500</option>
+                <option value="comfort">Comfort · ₹3,501–₹8,000</option>
+                <option value="premium">Premium · above ₹8,000</option>
+            </select>
         </div>
 
-        <div class="live-estimate" id="liveEstimate"></div>
-      </div>
+        <div class="control">
+            <label>Maximum nightly budget</label>
+            <div class="budget-range">
+                <input id="budgetFilter" type="range" min="1000" max="20000" step="500" value="20000" oninput="filterHotels()">
+                <span class="budget-value" id="budgetValue">₹20,000</span>
+            </div>
+        </div>
 
-      <div class="snapshot" id="snapshot"></div>
+        <div class="control">
+            <label>Search</label>
+            <input id="searchFilter" type="text" placeholder="Hotel, city, area..." oninput="filterHotels()">
+        </div>
     </div>
 
-    <div class="feasibility" id="feasibility"></div>
-    <div class="result" id="result"></div>
-  </div>
-</div>
-
-<!-- enquiry modal -->
-<div class="modal" id="mailModal">
-  <div class="box">
-    <button class="close" onclick="hide('mailModal')">×</button>
-    <h1>Send enquiry</h1>
-    <p class="desc">Your full itinerary will be sent straight to our team.</p>
-    <div class="enq">
-      <input id="name" placeholder="Name *">
-      <input id="email" placeholder="Email *">
-      <input id="phone" placeholder="Phone / WhatsApp">
-      <textarea id="message" placeholder="Anything else?"></textarea>
+    <div class="results-bar">
+        <div class="results-count" id="resultsCount">16 verified stays found</div>
+        <button class="reset" onclick="resetFilters()">Reset filters ↺</button>
     </div>
-    <button class="btn" id="sendBtn" onclick="sendMail()">Send Enquiry →</button>
-    <p class="status" id="mailStatus"></p>
-  </div>
+
+    <div class="hotel-grid" id="hotelGrid"></div>
+
+    <div class="empty" id="emptyState">
+        <h3>No stay matches those filters.</h3>
+        <p>Try increasing the nightly budget or choosing another hotel style.</p>
+    </div>
+
+    <div class="budget-guide">
+        <h3>How TourCraft reads your hotel budget</h3>
+        <p>
+            The hotel names below are real properties currently listed by major travel sources and/or
+            local business listings. We use broad budget tiers instead of pretending that a hotel's
+            price is fixed: room rates change with dates, occupancy, season, taxes and offers.
+        </p>
+
+        <p style="font-size:11px;color:#8a928d;margin-top:-4px">*Indicative budget bands only — not live room rates. Always check the property's current rate for your dates.</p>
+
+        <div class="tier-grid">
+            <div class="tier">
+                <strong>Smart Budget</strong>
+                <b>₹1.5k–₹3.5k*</b>
+                <span>Hostels and practical stays. Best when you want to keep accommodation low and spend more on experiences.</span>
+            </div>
+            <div class="tier">
+                <strong>Comfort</strong>
+                <b>₹3.5k–₹8k*</b>
+                <span>Mid-range hotels and boutique stays with stronger facilities and a comfortable base for sightseeing.</span>
+            </div>
+            <div class="tier">
+                <strong>Premium</strong>
+                <b>₹8k+*</b>
+                <span>Premium hotels, resorts and heritage properties where the stay becomes part of the travel experience.</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal" id="hotelModal" onclick="if(event.target===this)closeHotel()">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeHotel()">×</button>
+        <div id="modalContent"></div>
+    </div>
 </div>
 
 <script>
-/* ------------------------------------------------------------------
-   CONFIG
-   - scriptURL: Apps Script Web App used for sending enquiry emails
-   - sheetURL: OPTIONAL. If you deploy the doGet endpoint described in
-     SHEET_SETUP.md, paste its URL here and destination data will be
-     pulled live from your Google Sheet instead of the built-in list
-     below. Leave blank to keep using the built-in data — the page
-     works exactly the same either way.
------------------------------------------------------------------- */
-const CONFIG = {
-  email: 'apurvaaniket8@gmail.com',
-  scriptURL: 'https://script.google.com/macros/s/AKfycbwt_ZOJlV102sLefJ2atd8gepcgojykxpuRb0SnF-Eo1ZUf0WUczsUP8RZFVqrvqYQd/exec',
-  sheetURL: '' // <-- optional: paste your doGet Web App URL here
-};
+const hotels = [
+    /* REAL PROPERTIES VERIFIED ON OFFICIAL HOTEL/BRAND OR TOURISM SOURCES.
+       planningPrice is a TourCraft planning reference used ONLY for filtering.
+       It is not a live room quote. */
+    {id:1,destination:"Kashmir",name:"Zostel Srinagar",location:"Nishat · Srinagar",planningPrice:1800,
+     tags:["Hostel","Near Dal Lake","Backpacker"],image:"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Zostel property in the Nishat area, about a 5-minute walk from Dal Lake, suited to budget-conscious travellers.",
+     note:"Verified on Zostel's official Srinagar property page.",source:"Official Zostel property listing"},
+    {id:2,destination:"Kashmir",name:"Four Points by Sheraton Srinagar",location:"Srinagar · Near Dal Lake",planningPrice:10500,
+     tags:["Hotel","Breakfast","Near Dal Lake"],image:"https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=85",
+     desc:"An established Marriott hotel in Srinagar with modern rooms and convenient access to Dal Lake and city sights.",
+     note:"Verified on Marriott Bonvoy's official Srinagar property page.",source:"Official Marriott property listing"},
 
-/* ------------------------------------------------------------------
-   BUILT-IN DESTINATION DATA (fallback / default)
-   Each destination carries a realistic per-person, per-day total
-   (INR) for four tiers. These totals are then split into stay / food
-   / transport / activities using TIER_SPLIT below, so the budget
-   breakdown you see is computed bottom-up, not a flat guess.
------------------------------------------------------------------- */
-const D = {
-  Kashmir:   { img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStTik5ZwFPG5_DTi9Eflf_FTnS4zerRSRNc_CbGdaMlr9J8p1gKdFTdSQ&amp;s=10', desc:'Snowy mountains, Dal Lake houseboats, valleys and Kashmiri hospitality.', bestTime:'Mar–Jun & Sep–Nov', spots:['Dal Lake','Gulmarg','Pahalgam','Sonamarg','Betaab Valley','Shankaracharya Temple'], tiers:{ backpacker:1800, smartBudget:2800, comfort:4800, premium:9500 } },
-  Kerala:    { img:'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80', desc:'Backwaters, beaches, hill stations, food and unhurried travel.', bestTime:'Sep–Mar', spots:['Alleppey Backwaters','Munnar Tea Hills','Varkala Cliff','Fort Kochi','Thekkady','Kumarakom'], tiers:{ backpacker:1600, smartBudget:2400, comfort:4200, premium:8500 } },
-  Goa:       { img:'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80', desc:'Beaches, Portuguese heritage, cafes and coastal nightlife.', bestTime:'Nov–Feb', spots:['Baga Beach','Anjuna Flea Market','Old Goa Churches','South Goa Beaches','Fort Aguada','Chapora Fort'], tiers:{ backpacker:1400, smartBudget:2100, comfort:3800, premium:8000 } },
-  Rajasthan: { img:'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80', desc:'Forts, palaces, desert landscapes and royal Rajasthani culture.', bestTime:'Oct–Mar', spots:['Amber Fort Jaipur','Mehrangarh Jodhpur','City Palace Udaipur','Jaisalmer Desert Camp','Hawa Mahal','Local Bazaars'], tiers:{ backpacker:1700, smartBudget:2600, comfort:4500, premium:9200 } },
-  Manali:    { img:'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80', desc:'Mountain views, cafes, valleys and easy adventure activities.', bestTime:'Mar–Jun & Oct–Feb', spots:['Solang Valley','Old Manali Cafes','Atal Tunnel','Kasol','Hidimba Temple','Rohtang Pass'], tiers:{ backpacker:1500, smartBudget:2300, comfort:3900, premium:7800 } },
-  Varanasi:  { img:'https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=800&q=80', desc:'Ghats, spirituality, street food and living heritage.', bestTime:'Oct–Mar', spots:['Ganga Aarti','Sarnath','Old City Lanes','Sunrise Boat Ride','Kashi Vishwanath Temple','Local Food Trail'], tiers:{ backpacker:1000, smartBudget:1600, comfort:2800, premium:6000 } },
-  Meghalaya: { img:'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80', desc:'Living root bridges, waterfalls, misty hills and nature.', bestTime:'Oct–May', spots:['Shillong','Cherrapunji Waterfalls','Dawki River','Mawlynnong Village','Living Root Bridges','Elephant Falls'], tiers:{ backpacker:1650, smartBudget:2500, comfort:4300, premium:8200 } },
-  Andaman:   { img:'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80', desc:'Island beaches, clear water and marine experiences.', bestTime:'Oct–May', spots:['Radhanagar Beach','Cellular Jail','Neil Island','Havelock Scuba Diving','Ross Island','North Bay Snorkelling'], tiers:{ backpacker:2200, smartBudget:3400, comfort:5800, premium:12000 } },
-};
+    {id:3,destination:"Kerala",name:"Zostel Alleppey",location:"Alappuzha · Beach Road",planningPrice:1800,
+     tags:["Hostel","Beach","Backwaters"],image:"https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Zostel at Alappuzha Beach, useful for travellers exploring the Kerala backwaters on a lower accommodation budget.",
+     note:"Verified on Zostel's official Alleppey property page.",source:"Official Zostel property listing"},
+    {id:4,destination:"Kerala",name:"Brunton Boatyard",location:"Fort Kochi · Kochi",planningPrice:13000,
+     tags:["Heritage","Waterfront","Luxury"],image:"https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real CGH Earth waterfront heritage hotel in Fort Kochi, built on the site of a historic shipyard.",
+     note:"Verified on CGH Earth's official Brunton Boatyard page.",source:"Official CGH Earth property listing"},
 
-const STYLE_TO_TIER = { 'Backpacker':'backpacker', 'Smart Budget':'smartBudget', 'Comfort':'comfort', 'Premium':'premium' };
-const TIER_ORDER = ['backpacker','smartBudget','comfort','premium'];
-const TIER_LABEL = { backpacker:'Backpacker', smartBudget:'Smart Budget', comfort:'Comfort', premium:'Premium' };
-const TIER_STAY  = { backpacker:'Hostel / budget guesthouse', smartBudget:'Standard 2–3★ hotel', comfort:'4★ hotel, better locations', premium:'5★ resort / boutique stay' };
+    {id:5,destination:"Goa",name:"Zostel Goa (Morjim)",location:"Morjim · North Goa",planningPrice:1900,
+     tags:["Hostel","Beach","Backpacker"],image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Zostel property in Morjim for travellers looking for a lower-cost, social base near Goa's beaches.",
+     note:"Verified on Zostel's official Goa destination page.",source:"Official Zostel property listing"},
+    {id:6,destination:"Goa",name:"The Zuri White Sands, Goa Resort & Casino",location:"Varca · South Goa",planningPrice:11000,
+     tags:["Beach resort","Pool","Luxury"],image:"https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real five-star resort in Varca with direct beach access, a large pool and full resort facilities.",
+     note:"Verified on The Zuri Hotels' official Goa property page.",source:"Official Zuri Hotels property listing"},
 
-/* How each tier's per-day total splits across categories. Ratios
-   shift by tier on purpose — cheaper trips spend proportionally more
-   on food relative to stay; premium trips spend more on stay. */
-const TIER_SPLIT = {
-  backpacker:  { stay:0.35, food:0.30, transport:0.20, activities:0.15 },
-  smartBudget: { stay:0.38, food:0.27, transport:0.20, activities:0.15 },
-  comfort:     { stay:0.42, food:0.24, transport:0.19, activities:0.15 },
-  premium:     { stay:0.48, food:0.20, transport:0.17, activities:0.15 },
-};
+    {id:7,destination:"Rajasthan",name:"Fairfield by Marriott Jaipur",location:"Bani Park · Jaipur",planningPrice:5000,
+     tags:["Hotel","City centre","Breakfast"],image:"https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Marriott hotel in Bani Park, close to Jaipur Railway Station and the city's bazaars.",
+     note:"Verified on Marriott Bonvoy's official Jaipur property page.",source:"Official Marriott property listing"},
+    {id:8,destination:"Rajasthan",name:"Jaipur Marriott Hotel",location:"Jaipur · Near Airport",planningPrice:9500,
+     tags:["5-star","Pool","Luxury"],image:"https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real five-star Marriott hotel in Jaipur with upscale rooms, dining and wellness facilities.",
+     note:"Verified on Marriott Bonvoy's official Jaipur Marriott page.",source:"Official Marriott property listing"},
 
-/* Transport choice only scales the transport slice of the day cost,
-   not the whole trip — closer to how the money actually moves. */
-const TRANSPORT_MULT = { 'Budget':0.75, 'Comfortable':1.0, 'Private Cab':1.6 };
+    {id:9,destination:"Manali",name:"Zostel Manali",location:"Old Manali · Manu Temple Road",planningPrice:1800,
+     tags:["Hostel","Mountain views","Backpacker"],image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Zostel in Old Manali with Himalayan views, a garden cafe and dorm/private-room options.",
+     note:"Verified on Zostel's official Manali property page.",source:"Official Zostel property listing"},
+    {id:10,destination:"Manali",name:"Snow Valley Resorts Manali",location:"Log Hut Area · Manali",planningPrice:5000,
+     tags:["Resort","Mountain views","Family"],image:"https://images.unsplash.com/photo-1517825738774-7de9363ef735?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real resort in Manali's Log Hut Area, surrounded by Himalayan scenery and pine forests.",
+     note:"Verified on Snow Valley Resorts' official Manali property page.",source:"Official Snow Valley Resorts property listing"},
 
-const DAY_TEMPLATES = [
-  { morning:'Arrival, check-in and a slow orientation walk', afternoon:'Explore {a} at an easy pace', evening:'Local dinner and an early rest' },
-  { morning:'Guided visit to {a}', afternoon:'Free time around {b} — cafes, shops or a short walk', evening:'Sunset viewpoint and dinner with a local dish' },
-  { morning:'Full excursion to {a}, including transport', afternoon:'Continue on to {b} for a slower second half', evening:'Relax at the stay, optional evening market' },
-  { morning:'Early start for {a} before the crowds', afternoon:'Hands-on local experience tied to your interests', evening:'Group dinner and a short cultural show if available' },
-  { morning:'Leisure morning — spa, lake or hillside cafe', afternoon:'Last stop at {b}, souvenir shopping', evening:'Farewell dinner and departure prep' },
+    {id:11,destination:"Varanasi",name:"Zostel Varanasi",location:"Dashashwamedh · Varanasi",planningPrice:1600,
+     tags:["Hostel","Near Ghat","Backpacker"],image:"https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Zostel near Dashashwamedh Ghat with dorms, private rooms and a rooftop common area.",
+     note:"Verified on Zostel's official Varanasi property page.",source:"Official Zostel property listing"},
+    {id:12,destination:"Varanasi",name:"Radisson Hotel Varanasi",location:"The Mall · Cantonment",planningPrice:6500,
+     tags:["Hotel","Pool","Family"],image:"https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Radisson hotel in Varanasi's Cantonment area, with access to major city attractions.",
+     note:"Verified on Radisson Hotels' official Varanasi property page.",source:"Official Radisson Hotels property listing"},
+
+    {id:13,destination:"Meghalaya",name:"Zostel Shillong",location:"Golf Links · Shillong",planningPrice:1800,
+     tags:["Hostel","Mountain view","Social"],image:"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Zostel in Shillong with dorms and private rooms, around 2 km from the city centre.",
+     note:"Verified on Zostel's official Shillong property page.",source:"Official Zostel property listing"},
+    {id:14,destination:"Meghalaya",name:"Courtyard by Marriott Shillong",location:"Police Bazar · Shillong",planningPrice:8000,
+     tags:["5-star","Pool","Spa"],image:"https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Marriott hotel on Jail Road in Police Bazar, with modern rooms, pool, spa and fitness facilities.",
+     note:"Verified on Marriott Bonvoy's official Shillong property page.",source:"Official Marriott property listing"},
+
+    {id:15,destination:"Andaman",name:"Zostel Port Blair",location:"Phoenix Bay · Sri Vijaya Puram",planningPrice:1800,
+     tags:["Hostel","Sea views","Backpacker"],image:"https://images.unsplash.com/photo-1540202404-a2f29016b523?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Zostel in Port Blair with dorms and private rooms, suitable as a budget base for island trips.",
+     note:"Verified on Zostel's official Port Blair property page.",source:"Official Zostel property listing"},
+    {id:16,destination:"Andaman",name:"Taj Exotica Resort & Spa, Andamans",location:"Radhanagar Beach · Swaraj Dweep",planningPrice:18000,
+     tags:["5-star","Beach resort","Villas"],image:"https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Taj luxury resort on Swaraj Dweep with beachfront villas, spa and pool facilities.",
+     note:"Verified on Taj Hotels' official property page and the Andaman & Nicobar Tourism accommodation directory.",source:"Official Taj Hotels + Andaman Tourism listing"}
 ];
 
-let plan = '';
-
-function money(x){ return '₹' + Math.round(x).toLocaleString('en-IN'); }
-
-/* Bottom-up per-day-per-person cost, split into real categories.
-   Only the transport slice is affected by transport choice. */
-function componentsForTier(dest, tierKey, transportChoice){
-  const total = dest.tiers[tierKey];
-  const split = TIER_SPLIT[tierKey];
-  const stay = total * split.stay;
-  const food = total * split.food;
-  const activities = total * split.activities;
-  const transport = total * split.transport * TRANSPORT_MULT[transportChoice];
-  return { stay, food, transport, activities, perDay: stay + food + transport + activities };
+function getTier(price){
+    if(price <= 3500) return {key:"budget",label:"Smart Budget"};
+    if(price <= 8000) return {key:"comfort",label:"Comfort"};
+    return {key:"premium",label:"Premium"};
 }
 
-function costForTier(dest, tierKey, transportChoice, days, people){
-  return Math.round(componentsForTier(dest, tierKey, transportChoice).perDay * days * people);
-}
-
-/* ------------------------------------------------------------------
-   OPTIONAL: load destination data from a Google Sheet via Apps
-   Script doGet (see SHEET_SETUP.md). Falls back silently to the
-   built-in D object above if sheetURL is blank or the fetch fails.
------------------------------------------------------------------- */
-async function loadDestinationsFromSheet(){
-  if (!CONFIG.sheetURL) return;
-  try{
-    const res = await fetch(CONFIG.sheetURL);
-    const rows = await res.json();
-    if (!Array.isArray(rows) || !rows.length) return;
-    rows.forEach(r => {
-      D[r.name] = {
-        img: r.img, desc: r.desc, bestTime: r.bestTime,
-        spots: (r.spots || '').split(',').map(s => s.trim()).filter(Boolean),
-        tiers: { backpacker:+r.backpacker, smartBudget:+r.smartBudget, comfort:+r.comfort, premium:+r.premium }
-      };
-    });
-  }catch(err){
-    console.warn('Could not load destinations from sheet, using built-in data.', err);
-  }
-}
-
-function populateDestinationSelect(){
-  const sel = document.getElementById('destination');
-  sel.innerHTML = Object.keys(D).map(n => `<option>${n}</option>`).join('');
-  renderSnapshot(sel.value);
-}
-
-function renderSnapshot(n){
-  const dest = D[n];
-  const snap = document.getElementById('snapshot');
-  if (!dest) { snap.innerHTML = ''; return; }
-  const t = dest.tiers;
-  snap.innerHTML = `
-    <div class="snapshot-media" style="background-image:url('${dest.img}')"></div>
-    <div class="snapshot-body">
-      <h3>${n}</h3>
-      <div class="range">${money(t.backpacker)} – ${money(t.premium)} / person / day</div>
-      <p>${dest.desc}</p>
-      <div class="best">Best time to visit: ${dest.bestTime}</div>
-      <div class="snapshot-tags">${dest.spots.map(s => `<span>${s}</span>`).join('')}</div>
-    </div>`;
-}
-
-/* Live, lightweight estimate shown as the traveller fills the form —
-   before they click Generate. Uses their exact selected style, no
-   auto-adjustment (that only happens on full generation). */
-function liveEstimate(){
-  const n = document.getElementById('destination').value;
-  const dest = D[n];
-  if (!dest) return;
-  const p = Math.max(1, +document.getElementById('people').value || 1);
-  const d = Math.max(1, +document.getElementById('days').value || 1);
-  const b = Math.max(0, +document.getElementById('budget').value || 0);
-  const styleChoice = document.getElementById('style').value;
-  const transportChoice = document.getElementById('transport').value;
-  const tierKey = STYLE_TO_TIER[styleChoice];
-
-  const cost = costForTier(dest, tierKey, transportChoice, d, p);
-  const el = document.getElementById('liveEstimate');
-  el.classList.add('show');
-  if (cost <= b) {
-    el.className = 'live-estimate show fits';
-    el.innerHTML = `At <b>${TIER_LABEL[tierKey]}</b> style, estimated cost is <b>${money(cost)}</b> — fits your ${money(b)} budget.`;
-  } else {
-    el.className = 'live-estimate show short';
-    el.innerHTML = `At <b>${TIER_LABEL[tierKey]}</b> style, estimated cost is <b>${money(cost)}</b> — that's ${money(cost-b)} over your ${money(b)} budget. We'll suggest the best fit when you generate.`;
-  }
-}
-
-function show(id){ document.getElementById(id).classList.add('show'); }
-function hide(id){ document.getElementById(id).classList.remove('show'); }
-
-/* ------------------------------------------------------------------
-   Core planning logic
-   1. Compute the true minimum (Backpacker tier + Budget transport).
-   2. If the entered budget can't cover even that, say so clearly.
-   3. Otherwise, try to honour the traveller's chosen style. If it's
-      unaffordable, automatically step down to the best tier that
-      fits the budget and explain the adjustment.
------------------------------------------------------------------- */
-function build(){
-  const n = document.getElementById('destination').value;
-  const dest = D[n];
-  const p = Math.max(1, +document.getElementById('people').value || 1);
-  const d = Math.max(1, +document.getElementById('days').value || 1);
-  const b = Math.max(0, +document.getElementById('budget').value || 0);
-  const styleChoice = document.getElementById('style').value;
-  const transportChoice = document.getElementById('transport').value;
-  const interests = document.getElementById('interests').value.trim() || 'local food, culture and scenic experiences';
-
-  const feasibility = document.getElementById('feasibility');
-  const result = document.getElementById('result');
-
-  const minFloor = costForTier(dest, 'backpacker', 'Budget', d, p);
-
-  if (b < minFloor) {
-    plan = '';
-    result.innerHTML = '';
-    feasibility.className = 'feasibility show blocked';
-    feasibility.innerHTML = `<span class="ic">⚠️</span><div><b>This trip isn't realistically possible within ${money(b)}.</b>
-      <span>For ${p} traveller(s) over ${d} day(s) in ${n}, a realistic floor — Backpacker style with Budget transport — comes to about <b>${money(minFloor)}</b>.
-      Try raising your budget, reducing the number of days, or switching to Budget transport.</span></div>`;
-    feasibility.scrollIntoView({behavior:'smooth', block:'center'});
-    return;
-  }
-
-  const requestedTierKey = STYLE_TO_TIER[styleChoice];
-  const requestedCost = costForTier(dest, requestedTierKey, transportChoice, d, p);
-
-  let finalTierKey = requestedTierKey;
-  let adjustedNote = '';
-
-  if (requestedCost > b) {
-    let picked = 'backpacker';
-    for (const key of TIER_ORDER) {
-      if (costForTier(dest, key, transportChoice, d, p) <= b) picked = key;
-    }
-    finalTierKey = picked;
-    adjustedNote = `Your selected ${TIER_LABEL[requestedTierKey]} style would cost ${money(requestedCost)}, above your ${money(b)} budget.
-      We've matched you to <b>${TIER_LABEL[finalTierKey]}</b> tier instead, which fits comfortably.`;
-  }
-
-  const comp = componentsForTier(dest, finalTierKey, transportChoice);
-  const total = Math.min(costForTier(dest, finalTierKey, transportChoice, d, p), b);
-  const remaining = Math.max(0, b - total);
-
-  feasibility.className = 'feasibility show ok';
-  feasibility.innerHTML = adjustedNote
-    ? `<span class="ic">🔧</span><div><b>Trip is possible — tier adjusted for your budget</b><span>${adjustedNote}</span></div>`
-    : `<span class="ic">✅</span><div><b>Great — this trip fits your budget</b><span>Matched to the <b>${TIER_LABEL[finalTierKey]}</b> tier: ${TIER_STAY[finalTierKey]}.</span></div>`;
-
-  const breakdown = [
-    ['Accommodation', comp.stay * d * p],
-    ['Food & Dining', comp.food * d * p],
-    ['Local Transport', comp.transport * d * p],
-    ['Activities & Entry Fees', comp.activities * d * p],
-  ];
-
-  let daysHtml = '';
-  let planText = `Destination: ${n}\nTravellers: ${p}\nDuration: ${d} days\nBudget: ${money(b)}\nStyle requested: ${styleChoice}${adjustedNote ? ' (adjusted to ' + TIER_LABEL[finalTierKey] + ')' : ''}\nTransport: ${transportChoice}\nInterests: ${interests}\nEstimated total cost: ${money(total)}\nStay type: ${TIER_STAY[finalTierKey]}\n\n`;
-
-  for (let x = 1; x <= d; x++){
-    const tmpl = DAY_TEMPLATES[(x-1) % DAY_TEMPLATES.length];
-    const a = dest.spots[(x-1) % dest.spots.length];
-    const bSpot = dest.spots[x % dest.spots.length];
-    const morning = tmpl.morning.replace('{a}', a).replace('{b}', bSpot);
-    const afternoon = tmpl.afternoon.replace('{a}', a).replace('{b}', bSpot) + ` — around ${interests}.`;
-    const evening = tmpl.evening.replace('{a}', a).replace('{b}', bSpot);
-    daysHtml += `<div class="day">
-      <div class="day-top"><b>Day ${x}${x===1?' — Arrival':x===d?' — Departure':''}</b><span class="day-cost">${money(comp.perDay)} / person</span></div>
-      <div class="slot"><b>Morning —</b> ${morning}</div>
-      <div class="slot"><b>Afternoon —</b> ${afternoon}</div>
-      <div class="slot"><b>Evening —</b> ${evening}</div>
-    </div>`;
-    planText += `Day ${x}: Morning - ${morning} | Afternoon - ${afternoon} | Evening - ${evening}\n`;
-  }
-
-  plan = planText;
-
-  result.innerHTML = `
-    <div class="result-card">
-      <div class="result-head">
-        <div><h2>${n} — ${d} day${d>1?'s':''}</h2><div class="sub">${p} traveller(s) · ${transportChoice} transport · ${interests}</div></div>
-        <span class="tier-pill">${TIER_LABEL[finalTierKey]} tier</span>
-      </div>
-      <div class="cost-strip">
-        <div class="cost-box"><div class="k">Estimated Cost</div><div class="v">${money(total)}</div></div>
-        <div class="cost-box"><div class="k">Per Day / Person</div><div class="v">${money(comp.perDay)}</div></div>
-        <div class="cost-box"><div class="k">Remaining Budget</div><div class="v">${money(remaining)}</div></div>
-      </div>
-    </div>
-
-    <div class="result-card">
-      <h3 style="margin:0 0 14px;font-family:'Playfair Display',serif;font-size:19px;">Day-by-Day Plan</h3>
-      ${daysHtml}
-    </div>
-
-    <div class="result-card">
-      <h3 style="margin:0 0 14px;font-family:'Playfair Display',serif;font-size:19px;">Stay &amp; Highlights</h3>
-      <p style="color:#69756f;font-size:14px;margin:0 0 14px;"><b style="color:#17352b;">Accommodation:</b> ${TIER_STAY[finalTierKey]}</p>
-      <div class="tags">${dest.spots.map(s => `<span>${s}</span>`).join('')}</div>
-    </div>
-
-    <div class="result-card">
-      <h3 style="margin:0 0 14px;font-family:'Playfair Display',serif;font-size:19px;">Budget Breakdown</h3>
-      <div class="budget-rows">
-        ${breakdown.map(([label,val]) => `<div class="row"><span>${label}</span><span>${money(val)}</span></div>`).join('')}
-        <div class="row total"><span>Total (${d} days, ${p} traveller${p>1?'s':''})<span class="note">Sum of the categories above, not a flat estimate</span></span><span>${money(total)}</span></div>
-      </div>
-    </div>
-
-    <div class="result-card enquire-box">
-      <h3 style="margin:0 0 6px;font-family:'Playfair Display',serif;font-size:19px;">Like this trip?</h3>
-      <p>Send this itinerary to our team and we'll refine it with you and confirm availability.</p>
-      <button class="btn" onclick="show('mailModal')">I like this trip — send an enquiry 📩</button>
-    </div>
-  `;
-  result.scrollIntoView({behavior:'smooth', block:'nearest'});
-}
-
-/* ------------------------------------------------------------------
-   sendMail() — POSTs the enquiry to the Apps Script Web App so it
-   lands directly in CONFIG.email. Falls back to a mailto: draft if
-   scriptURL is ever empty.
------------------------------------------------------------------- */
-async function sendMail(){
-  const n = document.getElementById('name').value.trim();
-  const e = document.getElementById('email').value.trim();
-  const statusEl = document.getElementById('mailStatus');
-  const btn = document.getElementById('sendBtn');
-
-  if(!n || !e){ statusEl.textContent = 'Please enter name and email.'; statusEl.className = 'status err'; return; }
-  if(!plan){ statusEl.textContent = 'Generate an itinerary first, then send your enquiry.'; statusEl.className = 'status err'; return; }
-
-  const payload = {
-    name:n, email:e,
-    phone: document.getElementById('phone').value.trim(),
-    message: document.getElementById('message').value.trim(),
-    destination: document.getElementById('destination').value,
-    plan, timestamp: new Date().toLocaleString()
-  };
-
-  if(!CONFIG.scriptURL){
-    const subject = `TourCraft Enquiry — ${payload.destination}`;
-    const body = `Hello TourCraft Team,%0D%0A%0D%0AI am interested in this itinerary.%0D%0A%0D%0AName: ${n}%0D%0AEmail: ${e}%0D%0APhone: ${payload.phone}%0D%0A%0D%0A${plan}%0D%0A%0D%0AAdditional message: ${payload.message}`;
-    location.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent(subject)}&body=${body}`;
-    statusEl.textContent = 'Script not connected — opening your email app instead.';
-    statusEl.className = 'status err';
-    return;
-  }
-
-  btn.disabled = true;
-  statusEl.textContent = 'Sending your enquiry…';
-  statusEl.className = 'status sending';
-
-  try{
-    await fetch(CONFIG.scriptURL, {
-      method:'POST', mode:'no-cors',
-      headers:{'Content-Type':'text/plain;charset=utf-8'},
-      body: JSON.stringify(payload)
-    });
-    statusEl.textContent = 'Enquiry sent — our team will follow up shortly at ' + e + '.';
-    statusEl.className = 'status ok';
-  }catch(err){
-    statusEl.textContent = 'Something went wrong sending your enquiry. Please try again.';
-    statusEl.className = 'status err';
-  }finally{
-    btn.disabled = false;
-  }
-}
-
-/* ---------- wire up live updates ---------- */
-['people','days','budget','style','transport'].forEach(id => {
-  document.getElementById(id).addEventListener('input', liveEstimate);
-});
-document.getElementById('destination').addEventListener('change', (e) => {
-  renderSnapshot(e.target.value);
-  liveEstimate();
+hotels.forEach(h=>{
+    const tier=getTier(h.planningPrice);
+    h.style=tier.key;
+    h.tier=tier.label;
 });
 
-(async function start(){
-  await loadDestinationsFromSheet();
-  populateDestinationSelect();
-  liveEstimate();
-})();
+function money(n){
+    return "₹"+Math.round(n).toLocaleString("en-IN");
+}
+
+function hotelCard(h){
+    return `
+    <article class="hotel-card">
+        <div class="hotel-photo">
+            <img src="${h.image}" alt="Illustrative hotel image for ${h.name}" loading="lazy">
+            <span class="hotel-badge">✓ Verified property</span>
+            <button class="hotel-save" onclick="this.textContent=this.textContent==='♡'?'♥':'♡'" aria-label="Save hotel">♡</button>
+        </div>
+        <div class="hotel-body">
+            <div class="hotel-location">${h.location}</div>
+            <div class="hotel-name">${h.name}</div>
+            <div class="hotel-desc">${h.desc}</div>
+            <div class="hotel-tags">${h.tags.map(t=>`<span>${t}</span>`).join("")}</div>
+            <div class="hotel-bottom">
+                <div class="rating">✓ Verified <small>· real property</small></div>
+                <div class="price">
+                    <b>${money(h.planningPrice)}</b>
+                    <span>planning ref. / night*</span>
+                </div>
+            </div>
+            <div class="hotel-action">
+                <button class="details-btn" onclick="openHotel(${h.id})">View details</button>
+                <button class="plan-btn" onclick="planHotel('${h.destination}')">Plan stay →</button>
+            </div>
+        </div>
+    </article>`;
+}
+
+function renderHotels(list){
+    const grid=document.getElementById("hotelGrid");
+    const empty=document.getElementById("emptyState");
+    grid.innerHTML=list.map(hotelCard).join("");
+    empty.style.display=list.length?"none":"block";
+    document.getElementById("resultsCount").textContent=
+        `${list.length} ${list.length===1?"stay":"stays"} found`;
+}
+
+function filterHotels(){
+    const destination=document.getElementById("destinationFilter").value;
+    const style=document.getElementById("styleFilter").value;
+    const budget=Number(document.getElementById("budgetFilter").value);
+    const search=document.getElementById("searchFilter").value.trim().toLowerCase();
+
+    document.getElementById("budgetValue").textContent=money(budget);
+
+    const filtered=hotels.filter(h=>{
+        const destinationOK=destination==="all" || h.destination===destination;
+        const styleOK=style==="all" || h.style===style;
+        const budgetOK=h.planningPrice<=budget;
+        const searchOK=!search ||
+            `${h.name} ${h.destination} ${h.location} ${h.tier} ${h.tags.join(" ")}`
+            .toLowerCase().includes(search);
+        return destinationOK && styleOK && budgetOK && searchOK;
+    });
+
+    renderHotels(filtered);
+}
+
+function resetFilters(){
+    document.getElementById("destinationFilter").value="all";
+    document.getElementById("styleFilter").value="all";
+    document.getElementById("budgetFilter").value=20000;
+    document.getElementById("searchFilter").value="";
+    filterHotels();
+}
+
+function openHotel(id){
+    const h=hotels.find(x=>x.id===id);
+    document.getElementById("modalContent").innerHTML=`
+        <img class="modal-image" src="${h.image}" alt="Illustrative image for ${h.name}">
+        <div class="modal-content">
+            <div class="hotel-location">${h.location}</div>
+            <h2>${h.name}</h2>
+            <p>${h.desc}</p>
+            <p><b>Budget fit:</b> ${h.tier} · ${money(h.planningPrice)} planning reference per night.</p>
+            <p><b>TourCraft verification:</b> ${h.note}</p>
+            <p class="source-note"><b>Verification source:</b> ${h.source}</p>
+            <div class="modal-facts">
+                <div class="fact"><small>Destination</small><b>${h.destination}</b></div>
+                <div class="fact"><small>Budget tier</small><b>${h.tier}</b></div>
+                <div class="fact"><small>Property status</small><b>Verified real property</b></div>
+            </div>
+            <div class="hotel-action" style="margin-top:20px">
+                <button class="plan-btn" onclick="planHotel('${h.destination}')">Use in my trip →</button>
+                <button class="details-btn" onclick="closeHotel()">Close</button>
+            </div>
+        </div>`;
+    document.getElementById("hotelModal").style.display="flex";
+    document.body.style.overflow="hidden";
+}
+
+function closeHotel(){
+    document.getElementById("hotelModal").style.display="none";
+    document.body.style.overflow="";
+}
+
+function planHotel(destination){
+    window.location.href="planner.html?destination="+encodeURIComponent(destination);
+}
+
+document.addEventListener("keydown",e=>{
+    if(e.key==="Escape")closeHotel();
+});
+
+filterHotels();
 </script>
+
 </body>
 </html>

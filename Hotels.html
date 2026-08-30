@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hotels | TourCraft </title>
+<title>TourCraft — Hotels</title>
 <link rel="icon" type="image/x-icon" href="logo.jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +28,7 @@ button,input,select{font:inherit}
  top:16px;
  left:50%;
  transform:translateX(-50%);
- width:min(1480px,95%);
+ width:min(1380px,95%);
  display:flex;
  justify-content:space-between;
  align-items:center;
@@ -568,6 +568,13 @@ button,input,select{font:inherit}
  line-height:1.7;
  font-size:13px;
 }
+.source-note{
+ padding:11px 13px;
+ background:#eef3ee;
+ border-radius:12px;
+ color:#426054 !important;
+ font-size:11px !important;
+}
 .modal-facts{
  display:grid;
  grid-template-columns:repeat(3,1fr);
@@ -596,7 +603,7 @@ button,input,select{font:inherit}
 
 /* RESPONSIVE */
 @media(max-width:950px){
- .navbar{width:94%}
+ .navbar{width:150%}
  .nav-links{gap:17px}
  .hotels-hero{grid-template-columns:1fr;gap:30px;padding-top:125px}
  .hero-visual{height:360px}
@@ -636,7 +643,7 @@ button,input,select{font:inherit}
         <a href="index.html">Home</a>
         <a href="index.html#destinations-section">Explore</a>
         <a href="planner.html">AI Planner</a>
-        <a href="Hotels.html">Accommodation</a>
+        <a href="guides.html">Accommodation</a>
         <a href="contact.html">Contact</a>
     </div>
 
@@ -675,9 +682,9 @@ button,input,select{font:inherit}
         <span class="kicker">FIND YOUR STAY</span>
         <h2>Stay <span>your way.</span></h2>
         <p>
-            Use the filters to narrow down stays by destination, budget and hotel style.
-            Prices shown here are indicative per room/night and can change with dates,
-            season, occupancy and offers.
+            The properties below are real hotels, resorts and hostels verified against official hotel/brand
+            pages or official tourism listings. The nightly figure is a TourCraft planning reference,
+            not a live quote — actual rates vary by date, room type, taxes and availability.
         </p>
     </div>
 
@@ -698,31 +705,31 @@ button,input,select{font:inherit}
         </div>
 
         <div class="control">
-            <label>Hotel style</label>
+            <label>Budget tier</label>
             <select id="styleFilter" onchange="filterHotels()">
-                <option value="all">Any style</option>
-                <option value="budget">Smart Budget</option>
-                <option value="comfort">Comfort</option>
-                <option value="premium">Premium</option>
+                <option value="all">Any budget</option>
+                <option value="budget">Smart Budget · up to ₹3,500</option>
+                <option value="comfort">Comfort · ₹3,501–₹8,000</option>
+                <option value="premium">Premium · above ₹8,000</option>
             </select>
         </div>
 
         <div class="control">
             <label>Maximum nightly budget</label>
             <div class="budget-range">
-                <input id="budgetFilter" type="range" min="1000" max="15000" step="500" value="15000" oninput="filterHotels()">
-                <span class="budget-value" id="budgetValue">₹15,000</span>
+                <input id="budgetFilter" type="range" min="1000" max="20000" step="500" value="20000" oninput="filterHotels()">
+                <span class="budget-value" id="budgetValue">₹20,000</span>
             </div>
         </div>
 
         <div class="control">
             <label>Search</label>
-            <input id="searchFilter" type="text" placeholder="Hotel, city, stay..." oninput="filterHotels()">
+            <input id="searchFilter" type="text" placeholder="Hotel, city, area..." oninput="filterHotels()">
         </div>
     </div>
 
     <div class="results-bar">
-        <div class="results-count" id="resultsCount">12 stays found</div>
+        <div class="results-count" id="resultsCount">16 verified stays found</div>
         <button class="reset" onclick="resetFilters()">Reset filters ↺</button>
     </div>
 
@@ -736,25 +743,28 @@ button,input,select{font:inherit}
     <div class="budget-guide">
         <h3>How TourCraft reads your hotel budget</h3>
         <p>
-            Accommodation should support the trip, not consume it. These tiers are designed
-            to make it easier to decide how much of your total travel budget to allocate to a stay.
+            The hotel names below are real properties currently listed by major travel sources and/or
+            local business listings. We use broad budget tiers instead of pretending that a hotel's
+            price is fixed: room rates change with dates, occupancy, season, taxes and offers.
         </p>
+
+        <p style="font-size:11px;color:#8a928d;margin-top:-4px">*Indicative budget bands only — not live room rates. Always check the property's current rate for your dates.</p>
 
         <div class="tier-grid">
             <div class="tier">
                 <strong>Smart Budget</strong>
-                <b>₹1k–₹3.5k</b>
-                <span>Clean private rooms, hostels, guesthouses and practical locations. Best when experiences matter more than luxury.</span>
+                <b>₹1.5k–₹3.5k*</b>
+                <span>Hostels and practical stays. Best when you want to keep accommodation low and spend more on experiences.</span>
             </div>
             <div class="tier">
                 <strong>Comfort</strong>
-                <b>₹3.5k–₹8k</b>
-                <span>Comfortable 3-star and boutique stays with better rooms, facilities and a little more breathing room.</span>
+                <b>₹3.5k–₹8k*</b>
+                <span>Mid-range hotels and boutique stays with stronger facilities and a comfortable base for sightseeing.</span>
             </div>
             <div class="tier">
                 <strong>Premium</strong>
-                <b>₹8k+</b>
-                <span>Upscale hotels, resorts and heritage properties for travellers who want the stay itself to be part of the experience.</span>
+                <b>₹8k+*</b>
+                <span>Premium hotels, resorts and heritage properties where the stay becomes part of the travel experience.</span>
             </div>
         </div>
     </div>
@@ -769,127 +779,93 @@ button,input,select{font:inherit}
 
 <script>
 const hotels = [
-    {
-        id:1,destination:"Kashmir",style:"budget",tier:"Smart Budget",
-        name:"Dal Lake Guesthouse Stay",
-        location:"Srinagar · Dal Lake",
-        price:2200,rating:"4.2",reviews:"guest-rated",
-        image:"https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1000&q=85",
-        tags:["Lake access","Wi-Fi","Value"],
-        desc:"A practical base for exploring Srinagar, with easy access to Dal Lake and local sightseeing.",
-        note:"Great for travellers who want to spend more on Kashmir experiences than accommodation."
-    },
-    {
-        id:2,destination:"Kashmir",style:"comfort",tier:"Comfort",
-        name:"Valley View Boutique Stay",
-        location:"Srinagar · Boulevard",
-        price:5600,rating:"4.4",reviews:"guest-rated",
-        image:"https://images.unsplash.com/photo-1601918774946-25832a4be0d6?auto=format&fit=crop&w=1000&q=85",
-        tags:["Mountain views","Breakfast","Boutique"],
-        desc:"A more relaxed stay for couples and families looking for comfort after sightseeing days.",
-        note:"Srinagar mid-range accommodation commonly falls around the ₹4,000–₹8,500 range depending on property and season."
-    },
-    {
-        id:3,destination:"Kerala",style:"premium",tier:"Premium",
-        name:"Backwater Resort Escape",
-        location:"Alappuzha · Backwaters",
-        price:10500,rating:"4.6",reviews:"guest-rated",
-        image:"https://images.unsplash.com/photo-1602301180706-0c1d4d6e6f0f?auto=format&fit=crop&w=1000&q=85",
-        tags:["Backwaters","Pool","Resort"],
-        desc:"A stay designed to make the accommodation itself part of the Kerala experience.",
-        note:"Best suited to travellers who want to slow down and spend meaningful time at the property."
-    },
-    {
-        id:4,destination:"Goa",style:"budget",tier:"Smart Budget",
-        name:"Rendezvous Beach Resort",
-        location:"Panjim · Goa",
-        price:2616,rating:"3.7",reviews:"829 ratings",
-        image:"https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=1000&q=85",
-        tags:["Beach access","Pool","Couple friendly"],
-        desc:"A value-oriented resort option for travellers who want Goa accommodation without going fully premium.",
-        note:"MakeMyTrip recently displayed this property around ₹2,616/night before taxes on a sample search; live prices vary."
-    },
-    {
-        id:5,destination:"Goa",style:"premium",tier:"Premium",
-        name:"The Zuri White Sands Goa",
-        location:"Varca · South Goa",
-        price:10523,rating:"4.5",reviews:"guest-rated",
-        image:"https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=85",
-        tags:["Beach resort","Pool","Upscale"],
-        desc:"A resort-style option for travellers who want the hotel to be a major part of the holiday.",
-        note:"HotelsCombined recently listed this property around ₹10,523/night; actual rates vary by date."
-    },
-    {
-        id:6,destination:"Rajasthan",style:"comfort",tier:"Comfort",
-        name:"Heritage Haveli Stay",
-        location:"Jaipur · Old City",
-        price:5200,rating:"4.4",reviews:"guest-rated",
-        image:"https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1000&q=85",
-        tags:["Heritage","Breakfast","Central"],
-        desc:"A heritage-inspired stay for travellers who want Rajasthan's architecture and atmosphere close by.",
-        note:"A strong middle ground between basic accommodation and palace-level pricing."
-    },
-    {
-        id:7,destination:"Manali",style:"budget",tier:"Smart Budget",
-        name:"Hotel Pine Grove",
-        location:"Hadimba Temple Road · Manali",
-        price:1260,rating:"3.9",reviews:"688 ratings",
-        image:"https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=1000&q=85",
-        tags:["Mountain views","Value","Couple friendly"],
-        desc:"A practical Manali stay near Hadimba Temple with a strong value proposition.",
-        note:"MakeMyTrip recently showed a discounted sample rate around ₹510 plus taxes; displayed prices change frequently."
-    },
-    {
-        id:8,destination:"Manali",style:"budget",tier:"Smart Budget",
-        name:"Zostel Old Manali",
-        location:"Old Manali · Himachal Pradesh",
-        price:1252,rating:"4.1",reviews:"336 ratings",
-        image:"https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1000&q=85",
-        tags:["Hostel","Social","Old Manali"],
-        desc:"A social and budget-friendly choice for solo travellers and younger groups.",
-        note:"MakeMyTrip recently displayed a sample rate around ₹1,252 plus taxes."
-    },
-    {
-        id:9,destination:"Varanasi",style:"budget",tier:"Smart Budget",
-        name:"The Hotel Atlantis Suites",
-        location:"Sigra Road · Varanasi",
-        price:2500,rating:"4.1",reviews:"guest-rated",
-        image:"https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1000&q=85",
-        tags:["Wi-Fi","City access","Value"],
-        desc:"A practical city stay for travellers balancing ghats, temples, food and a Sarnath visit.",
-        note:"Booking.com currently lists this property among popular cheap hotels in Varanasi."
-    },
-    {
-        id:10,destination:"Varanasi",style:"comfort",tier:"Comfort",
-        name:"Ghat-side Boutique Stay",
-        location:"Assi / Godowlia · Varanasi",
-        price:4800,rating:"4.4",reviews:"guest-rated",
-        image:"https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=1000&q=85",
-        tags:["Heritage","Central","Breakfast"],
-        desc:"A comfortable base for travellers who want the atmosphere of Varanasi close to the main heritage areas.",
-        note:"Choose location carefully: staying closer to the ghats can save local travel time but may mean tighter access."
-    },
-    {
-        id:11,destination:"Meghalaya",style:"comfort",tier:"Comfort",
-        name:"Shillong Hillside Stay",
-        location:"Shillong · Meghalaya",
-        price:4800,rating:"4.3",reviews:"guest-rated",
-        image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85",
-        tags:["Hills","Homestay","Road-trip base"],
-        desc:"A comfortable base for day trips towards Sohra, waterfalls and the living-root-bridge region.",
-        note:"A practical choice when most of your budget is going towards a hired car and sightseeing."
-    },
-    {
-        id:12,destination:"Andaman",style:"premium",tier:"Premium",
-        name:"Island Beach Resort",
-        location:"Swaraj Dweep · Andaman",
-        price:9500,rating:"4.5",reviews:"guest-rated",
-        image:"https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1000&q=85",
-        tags:["Beach","Island","Pool"],
-        desc:"A resort-style island stay for travellers who want beach time, water activities and downtime.",
-        note:"Andaman accommodation is typically more expensive than many mainland destinations, especially in peak season."
-    }
+    /* REAL PROPERTIES VERIFIED ON OFFICIAL HOTEL/BRAND OR TOURISM SOURCES.
+       planningPrice is a TourCraft planning reference used ONLY for filtering.
+       It is not a live room quote. */
+    {id:1,destination:"Kashmir",name:"Zostel Srinagar",location:"Nishat · Srinagar",planningPrice:1800,
+     tags:["Hostel","Near Dal Lake","Backpacker"],image:"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Zostel property in the Nishat area, about a 5-minute walk from Dal Lake, suited to budget-conscious travellers.",
+     note:"Verified on Zostel's official Srinagar property page.",source:"Official Zostel property listing"},
+    {id:2,destination:"Kashmir",name:"Four Points by Sheraton Srinagar",location:"Srinagar · Near Dal Lake",planningPrice:10500,
+     tags:["Hotel","Breakfast","Near Dal Lake"],image:"https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=85",
+     desc:"An established Marriott hotel in Srinagar with modern rooms and convenient access to Dal Lake and city sights.",
+     note:"Verified on Marriott Bonvoy's official Srinagar property page.",source:"Official Marriott property listing"},
+
+    {id:3,destination:"Kerala",name:"Zostel Alleppey",location:"Alappuzha · Beach Road",planningPrice:1800,
+     tags:["Hostel","Beach","Backwaters"],image:"https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Zostel at Alappuzha Beach, useful for travellers exploring the Kerala backwaters on a lower accommodation budget.",
+     note:"Verified on Zostel's official Alleppey property page.",source:"Official Zostel property listing"},
+    {id:4,destination:"Kerala",name:"Brunton Boatyard",location:"Fort Kochi · Kochi",planningPrice:13000,
+     tags:["Heritage","Waterfront","Luxury"],image:"https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real CGH Earth waterfront heritage hotel in Fort Kochi, built on the site of a historic shipyard.",
+     note:"Verified on CGH Earth's official Brunton Boatyard page.",source:"Official CGH Earth property listing"},
+
+    {id:5,destination:"Goa",name:"Zostel Goa (Morjim)",location:"Morjim · North Goa",planningPrice:1900,
+     tags:["Hostel","Beach","Backpacker"],image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Zostel property in Morjim for travellers looking for a lower-cost, social base near Goa's beaches.",
+     note:"Verified on Zostel's official Goa destination page.",source:"Official Zostel property listing"},
+    {id:6,destination:"Goa",name:"The Zuri White Sands, Goa Resort & Casino",location:"Varca · South Goa",planningPrice:11000,
+     tags:["Beach resort","Pool","Luxury"],image:"https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real five-star resort in Varca with direct beach access, a large pool and full resort facilities.",
+     note:"Verified on The Zuri Hotels' official Goa property page.",source:"Official Zuri Hotels property listing"},
+
+    {id:7,destination:"Rajasthan",name:"Fairfield by Marriott Jaipur",location:"Bani Park · Jaipur",planningPrice:5000,
+     tags:["Hotel","City centre","Breakfast"],image:"https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Marriott hotel in Bani Park, close to Jaipur Railway Station and the city's bazaars.",
+     note:"Verified on Marriott Bonvoy's official Jaipur property page.",source:"Official Marriott property listing"},
+    {id:8,destination:"Rajasthan",name:"Jaipur Marriott Hotel",location:"Jaipur · Near Airport",planningPrice:9500,
+     tags:["5-star","Pool","Luxury"],image:"https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real five-star Marriott hotel in Jaipur with upscale rooms, dining and wellness facilities.",
+     note:"Verified on Marriott Bonvoy's official Jaipur Marriott page.",source:"Official Marriott property listing"},
+
+    {id:9,destination:"Manali",name:"Zostel Manali",location:"Old Manali · Manu Temple Road",planningPrice:1800,
+     tags:["Hostel","Mountain views","Backpacker"],image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Zostel in Old Manali with Himalayan views, a garden cafe and dorm/private-room options.",
+     note:"Verified on Zostel's official Manali property page.",source:"Official Zostel property listing"},
+    {id:10,destination:"Manali",name:"Snow Valley Resorts Manali",location:"Log Hut Area · Manali",planningPrice:5000,
+     tags:["Resort","Mountain views","Family"],image:"https://images.unsplash.com/photo-1517825738774-7de9363ef735?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real resort in Manali's Log Hut Area, surrounded by Himalayan scenery and pine forests.",
+     note:"Verified on Snow Valley Resorts' official Manali property page.",source:"Official Snow Valley Resorts property listing"},
+
+    {id:11,destination:"Varanasi",name:"Zostel Varanasi",location:"Dashashwamedh · Varanasi",planningPrice:1600,
+     tags:["Hostel","Near Ghat","Backpacker"],image:"https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Zostel near Dashashwamedh Ghat with dorms, private rooms and a rooftop common area.",
+     note:"Verified on Zostel's official Varanasi property page.",source:"Official Zostel property listing"},
+    {id:12,destination:"Varanasi",name:"Radisson Hotel Varanasi",location:"The Mall · Cantonment",planningPrice:6500,
+     tags:["Hotel","Pool","Family"],image:"https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Radisson hotel in Varanasi's Cantonment area, with access to major city attractions.",
+     note:"Verified on Radisson Hotels' official Varanasi property page.",source:"Official Radisson Hotels property listing"},
+
+    {id:13,destination:"Meghalaya",name:"Zostel Shillong",location:"Golf Links · Shillong",planningPrice:1800,
+     tags:["Hostel","Mountain view","Social"],image:"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Zostel in Shillong with dorms and private rooms, around 2 km from the city centre.",
+     note:"Verified on Zostel's official Shillong property page.",source:"Official Zostel property listing"},
+    {id:14,destination:"Meghalaya",name:"Courtyard by Marriott Shillong",location:"Police Bazar · Shillong",planningPrice:8000,
+     tags:["5-star","Pool","Spa"],image:"https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Marriott hotel on Jail Road in Police Bazar, with modern rooms, pool, spa and fitness facilities.",
+     note:"Verified on Marriott Bonvoy's official Shillong property page.",source:"Official Marriott property listing"},
+
+    {id:15,destination:"Andaman",name:"Zostel Port Blair",location:"Phoenix Bay · Sri Vijaya Puram",planningPrice:1800,
+     tags:["Hostel","Sea views","Backpacker"],image:"https://images.unsplash.com/photo-1540202404-a2f29016b523?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Zostel in Port Blair with dorms and private rooms, suitable as a budget base for island trips.",
+     note:"Verified on Zostel's official Port Blair property page.",source:"Official Zostel property listing"},
+    {id:16,destination:"Andaman",name:"Taj Exotica Resort & Spa, Andamans",location:"Radhanagar Beach · Swaraj Dweep",planningPrice:18000,
+     tags:["5-star","Beach resort","Villas"],image:"https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1000&q=85",
+     desc:"A real Taj luxury resort on Swaraj Dweep with beachfront villas, spa and pool facilities.",
+     note:"Verified on Taj Hotels' official property page and the Andaman & Nicobar Tourism accommodation directory.",source:"Official Taj Hotels + Andaman Tourism listing"}
 ];
+
+function getTier(price){
+    if(price <= 3500) return {key:"budget",label:"Smart Budget"};
+    if(price <= 8000) return {key:"comfort",label:"Comfort"};
+    return {key:"premium",label:"Premium"};
+}
+
+hotels.forEach(h=>{
+    const tier=getTier(h.planningPrice);
+    h.style=tier.key;
+    h.tier=tier.label;
+});
 
 function money(n){
     return "₹"+Math.round(n).toLocaleString("en-IN");
@@ -899,27 +875,22 @@ function hotelCard(h){
     return `
     <article class="hotel-card">
         <div class="hotel-photo">
-            <img src="${h.image}" alt="${h.name}" loading="lazy" referrerpolicy="no-referrer">
-            <span class="hotel-badge">${h.tier}</span>
+            <img src="${h.image}" alt="Illustrative hotel image for ${h.name}" loading="lazy">
+            <span class="hotel-badge">✓ Verified property</span>
             <button class="hotel-save" onclick="this.textContent=this.textContent==='♡'?'♥':'♡'" aria-label="Save hotel">♡</button>
         </div>
         <div class="hotel-body">
             <div class="hotel-location">${h.location}</div>
             <div class="hotel-name">${h.name}</div>
             <div class="hotel-desc">${h.desc}</div>
-
-            <div class="hotel-tags">
-                ${h.tags.map(t=>`<span>${t}</span>`).join("")}
-            </div>
-
+            <div class="hotel-tags">${h.tags.map(t=>`<span>${t}</span>`).join("")}</div>
             <div class="hotel-bottom">
-                <div class="rating">★ ${h.rating} <small>· ${h.reviews}</small></div>
+                <div class="rating">✓ Verified <small>· real property</small></div>
                 <div class="price">
-                    <b>${money(h.price)}</b>
-                    <span>per room / night*</span>
+                    <b>${money(h.planningPrice)}</b>
+                    <span>planning ref. / night*</span>
                 </div>
             </div>
-
             <div class="hotel-action">
                 <button class="details-btn" onclick="openHotel(${h.id})">View details</button>
                 <button class="plan-btn" onclick="planHotel('${h.destination}')">Plan stay →</button>
@@ -948,11 +919,10 @@ function filterHotels(){
     const filtered=hotels.filter(h=>{
         const destinationOK=destination==="all" || h.destination===destination;
         const styleOK=style==="all" || h.style===style;
-        const budgetOK=h.price<=budget;
+        const budgetOK=h.planningPrice<=budget;
         const searchOK=!search ||
             `${h.name} ${h.destination} ${h.location} ${h.tier} ${h.tags.join(" ")}`
             .toLowerCase().includes(search);
-
         return destinationOK && styleOK && budgetOK && searchOK;
     });
 
@@ -962,7 +932,7 @@ function filterHotels(){
 function resetFilters(){
     document.getElementById("destinationFilter").value="all";
     document.getElementById("styleFilter").value="all";
-    document.getElementById("budgetFilter").value=15000;
+    document.getElementById("budgetFilter").value=20000;
     document.getElementById("searchFilter").value="";
     filterHotels();
 }
@@ -970,19 +940,19 @@ function resetFilters(){
 function openHotel(id){
     const h=hotels.find(x=>x.id===id);
     document.getElementById("modalContent").innerHTML=`
-        <img class="modal-image" src="${h.image}" alt="${h.name}" referrerpolicy="no-referrer">
+        <img class="modal-image" src="${h.image}" alt="Illustrative image for ${h.name}">
         <div class="modal-content">
             <div class="hotel-location">${h.location}</div>
             <h2>${h.name}</h2>
             <p>${h.desc}</p>
-            <p><b>TourCraft note:</b> ${h.note}</p>
-
+            <p><b>Budget fit:</b> ${h.tier} · ${money(h.planningPrice)} planning reference per night.</p>
+            <p><b>TourCraft verification:</b> ${h.note}</p>
+            <p class="source-note"><b>Verification source:</b> ${h.source}</p>
             <div class="modal-facts">
-                <div class="fact"><small>Style</small><b>${h.tier}</b></div>
-                <div class="fact"><small>Indicative price</small><b>${money(h.price)} / night</b></div>
-                <div class="fact"><small>Guest score</small><b>★ ${h.rating}</b></div>
+                <div class="fact"><small>Destination</small><b>${h.destination}</b></div>
+                <div class="fact"><small>Budget tier</small><b>${h.tier}</b></div>
+                <div class="fact"><small>Property status</small><b>Verified real property</b></div>
             </div>
-
             <div class="hotel-action" style="margin-top:20px">
                 <button class="plan-btn" onclick="planHotel('${h.destination}')">Use in my trip →</button>
                 <button class="details-btn" onclick="closeHotel()">Close</button>
@@ -1005,7 +975,7 @@ document.addEventListener("keydown",e=>{
     if(e.key==="Escape")closeHotel();
 });
 
-renderHotels(hotels);
+filterHotels();
 </script>
 
 </body>

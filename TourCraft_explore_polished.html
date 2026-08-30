@@ -1,198 +1,46 @@
-<html>
-    <head>
-        <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TourCraft</title>
- <link rel="icon" type="image/x-icon" href="logo.jpeg">
-    <style>
-    body
-    {margin:10;font-family:Arial,sans-serif;background:#f5f4ee;color:#63192b}nav{position:sticky;top:12px;margin:12px auto;width:90%;padding:14px 20px;background:#61a383;border-radius:18px;display:flex;justify-content:space-between;box-shadow:0 8px 30px #0001;z-index:5}.logo{font-weight:800;font-size:22px}.btn{background:#174c3a;color:#fff;border:0;padding:13px 18px;border-radius:12px;font-weight:700;cursor:pointer}
-    /* ===== PREMIUM HERO ===== */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TourCraft — Hotels</title>
+<link rel="icon" type="image/x-icon" href="logo.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
 
-.hero{
-    max-width:1100px;
-    margin:40px auto;
-    padding:80px 20px 20px;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:40px;
-    align-items:center;
-}
-
-.hero-text small{
-    color:#7b2940;
-    font-size:15px;
-    letter-spacing:1px;
-}
-
-.hero-text h1{
-    font-size:72px;
-    line-height:0.92;
-    margin:18px 0;
-    color:#6A1530;
-    font-family:'Playfair Display',serif;
-}
-
-.hero-text p{
-    font-size:20px;
-    line-height:1.7;
-    color:#5d6b66;
-    margin-bottom:28px;
-}
-
-.hero-text{
-    max-width:620px;      /* Controls overall width */
-}
-
-.hero-text small{
-    font-size:15px;
-    color:#7B2940;
-    letter-spacing:1px;
-}
-
-.hero-text h1{
-    font-size:68px;       /* Change this: 60–72px */
-    line-height:0.92;
-    margin:18px 0;
-    color:#6A1530;
-    font-family:'Playfair Display',serif;
-}
-
-.hero-text p{
-    font-size:20px;       /* Change this: 18–22px */
-    line-height:1.7;
-    color:#5D6B66;
-    margin-bottom:28px;
-}
-/* Image frame stays SAME SIZE */
-
-.hero-frame{
-    position:relative;
-    width:100%;
-    height:470px;
-    border-radius:30px;
-    overflow:hidden;
-    box-shadow:0 20px 45px rgba(0,0,0,.15);
-}
-
-.hero-slide{
-    position:absolute;
-    inset:0;
-    background-size:cover;
-    background-position:center;
-    opacity:0;
-    transition:opacity 1.1s ease-in-out;
-}
-
-.hero-slide.active{
-    opacity:1;
-}
-
-.hero-overlay{
-    position:absolute;
-    inset:0;
-    background:linear-gradient(
-        rgba(0,0,0,.05),
-        rgba(0,0,0,.15)
-    );
-}
-
-@media(max-width:800px){
-
-.hero{
-grid-template-columns:1fr;
-}
-
-.hero-text h1{
-font-size:50px;
-}
-
-.hero-frame{
-height:320px;
-}
-
-}
-/* ===== DESTINATIONS SECTION ===== */
-#destinations-section{
-    scroll-margin-top:125px;
-    padding-top:8px;
-}
-
-.destination-heading{
-    max-width:760px;
-    margin-bottom:28px;
-}
-
-.destination-kicker{
-    display:inline-flex;
-    align-items:center;
-    gap:9px;
-    margin-bottom:10px;
-    color:#7B2940;
-    font-size:12px;
-    font-weight:800;
-    letter-spacing:2.4px;
-    text-transform:uppercase;
-}
-
-.destination-kicker::before{
-    content:'';
-    width:28px;
-    height:2px;
-    border-radius:2px;
-    background:#7B2940;
-}
-
-.destination-heading h2{
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
     margin:0;
-    color:#63192b;
-    font-family:'Playfair Display',serif;
-    font-size:clamp(38px,4.2vw,56px);
-    line-height:1.02;
-    letter-spacing:-1.2px;
-    font-weight:700;
+    font-family:Inter,Arial,sans-serif;
+    background:#f5f4ee;
+    color:#26312d;
 }
+button,input,select{font:inherit}
 
-.destination-heading h2 span{
-    color:#174c3a;
-    font-style:italic;
-}
-
-.destination-heading p{
-    margin:14px 0 0;
-    color:#69756f;
-    font-size:17px;
-    line-height:1.65;
-    max-width:610px;
-}
-
-@media(max-width:800px){
-    #destinations-section{scroll-margin-top:100px}
-    .destination-heading h3{font-size:42px}
-}
-
-.section{max-width:1100px;margin:-20px auto;padding:0 20px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.card{height:290px;border-radius:22px;background-size:cover;background-position:center;position:relative;cursor:pointer;overflow:hidden}.card:after{content:'';position:absolute;inset:0;background:linear-gradient(transparent, #000b)}.card div{position:absolute;bottom:18px;left:18px;color:white;z-index:1}.card h3{font-size:25px;margin:0}.planner{background:#174c3a;color:white;border-radius:28px;padding:35px}.form{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.field label{display:block;font-size:12px;margin-bottom:6px;color:#c8d8d1}.field input,.field select{width:100%;padding:13px;border-radius:10px;border:1px solid #ffffff33;background:#ffffff12;color:white;box-sizing:border-box}.field option{color:#17352b}.wide{grid-column:span 2}.result{margin-top:20px;background:white;color:#17352b;padding:25px;border-radius:20px}.day{padding:15px;border:1px solid #ddd;border-radius:14px;margin:10px 0}.danger{background:#fff0ed;color:#8d3e36;padding:15px;border-radius:14px}.modal{display:none;position:fixed;inset:0;background:#0009;z-index:2000;align-items:center;justify-content:center;padding:20px}.box{background:white;border-radius:24px;padding:28px;max-width:750px;width:100%;max-height:90vh;overflow:auto}.close{float:right;border:0;background:#eee;border-radius:50%;width:35px;height:35px}.enq input,.enq textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:10px;box-sizing:border-box}.enq textarea{height:100px}@media(max-width:800px){.hero{grid-template-columns:1fr}.hero h1{font-size:48px}.grid{grid-template-columns:repeat(2,1fr)}.form{grid-template-columns:1fr}.wide{grid-column:auto}}@media(max-width:500px){.grid{grid-template-columns:1fr}.photo{height:300px}}
-
-
+/* =========================================================
+   TOURCRAFT NAVBAR — SAME AS YOUR INDEX PAGE
+   ========================================================= */
 .navbar{
  position:fixed;
  top:16px;
  left:50%;
  transform:translateX(-50%);
- width:min(1180px,95%);
+ width:min(1380px,95%);
  display:flex;
  justify-content:space-between;
  align-items:center;
  padding:14px 22px;
  border-radius:22px;
-margin:1 auto;
+ margin:1px auto;
  background:rgb(147 144 144 / 75%);
  backdrop-filter:blur(20px);
-
  border:1px solid rgba(255,255,255,.8);
-
  box-shadow:0 10px 40px rgba(0,0,0,.08);
  z-index:100;
 }
-
 .logo{
  display:flex;
  align-items:center;
@@ -202,30 +50,24 @@ margin:1 auto;
  font-weight:700;
  color:#212b27;
 }
-
 .logo img{
  width:42px;
  height:42px;
  border-radius:12px;
+ object-fit:cover;
 }
-
 .nav-links{
  display:flex;
  gap:28px;
 }
-
 .nav-links a{
  text-decoration:none;
  color:#000b06;
- font-weight:600;
+ font-weight:700;
  transition:.25s;
  position:relative;
 }
-
-.nav-links a:hover{
- color:#103D2E;
-}
-
+.nav-links a:hover{color:#103D2E}
 .nav-links a::after{
  content:'';
  position:absolute;
@@ -236,11 +78,7 @@ margin:1 auto;
  background:#D8F27C;
  transition:.3s;
 }
-
-.nav-links a:hover::after{
- width:100%;
-}
-
+.nav-links a:hover::after{width:100%}
 .cta{
  background:#c30d53;
  color:white;
@@ -250,118 +88,1018 @@ margin:1 auto;
  font-weight:700;
  transition:.25s;
 }
-
 .cta:hover{
  background:#7e041e;
  transform:translateY(-2px);
 }
-    </style></head><body>
-        <link rel="stylesheet" href="css/navbar.css">
 
+/* HERO */
+.hotels-hero{
+ max-width:1160px;
+ margin:0 auto;
+ padding:145px 25px 45px;
+ display:grid;
+ grid-template-columns:1.08fr .92fr;
+ gap:55px;
+ align-items:center;
+}
+.hero-copy small{
+ color:#7B2940;
+ font-size:12px;
+ font-weight:800;
+ letter-spacing:2.5px;
+}
+.hero-copy h1{
+ margin:15px 0 18px;
+ font-family:'Playfair Display',serif;
+ color:#63192b;
+ font-size:clamp(52px,6vw,78px);
+ line-height:.94;
+ letter-spacing:-2px;
+}
+.hero-copy h1 span{
+ color:#174c3a;
+ font-style:italic;
+}
+.hero-copy p{
+ max-width:650px;
+ color:#66726d;
+ font-size:17px;
+ line-height:1.75;
+ margin:0;
+}
+.hero-pills{
+ display:flex;
+ flex-wrap:wrap;
+ gap:9px;
+ margin-top:23px;
+}
+.hero-pill{
+ background:#fff;
+ border:1px solid #e5e0d8;
+ color:#4f5b56;
+ padding:9px 13px;
+ border-radius:999px;
+ font-size:12px;
+ font-weight:700;
+ box-shadow:0 6px 18px rgba(36,53,45,.05);
+}
+.hero-visual{
+ height:440px;
+ border-radius:30px;
+ overflow:hidden;
+ position:relative;
+ background:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=85') center/cover;
+ box-shadow:0 24px 55px rgba(26,45,37,.18);
+}
+.hero-visual:after{
+ content:'';
+ position:absolute;
+ inset:0;
+ background:linear-gradient(180deg,rgba(0,0,0,.03),rgba(0,0,0,.72));
+}
+.hero-floating{
+ position:absolute;
+ z-index:2;
+ left:22px;
+ right:22px;
+ bottom:22px;
+ padding:18px;
+ border:1px solid rgba(255,255,255,.3);
+ background:rgba(255,255,255,.13);
+ backdrop-filter:blur(14px);
+ border-radius:20px;
+ color:#fff;
+}
+.hero-floating b{font-size:15px}
+.hero-floating span{
+ display:block;
+ margin-top:6px;
+ color:rgba(255,255,255,.82);
+ font-size:12px;
+ line-height:1.5;
+}
+
+/* MAIN */
+.section{
+ max-width:1160px;
+ margin:0 auto;
+ padding:35px 25px 80px;
+}
+.section-heading{
+ margin-bottom:25px;
+}
+.kicker{
+ display:inline-flex;
+ align-items:center;
+ gap:9px;
+ color:#7B2940;
+ font-size:11px;
+ font-weight:800;
+ letter-spacing:2.3px;
+ text-transform:uppercase;
+}
+.kicker:before{
+ content:'';
+ width:27px;
+ height:2px;
+ border-radius:3px;
+ background:#7B2940;
+}
+.section-heading h2{
+ margin:10px 0 8px;
+ color:#63192b;
+ font-family:'Playfair Display',serif;
+ font-size:clamp(38px,4vw,55px);
+ line-height:1;
+ letter-spacing:-1.2px;
+}
+.section-heading h2 span{
+ color:#174c3a;
+ font-style:italic;
+}
+.section-heading p{
+ margin:0;
+ color:#69756f;
+ font-size:15px;
+ line-height:1.65;
+ max-width:760px;
+}
+
+/* CONTROLS */
+.hotel-controls{
+ background:#174c3a;
+ border-radius:24px;
+ padding:18px;
+ display:grid;
+ grid-template-columns:1.25fr 1fr 1fr 1fr;
+ gap:11px;
+ margin-bottom:30px;
+ box-shadow:0 16px 35px rgba(23,76,58,.16);
+}
+.control{
+ min-width:0;
+}
+.control label{
+ display:block;
+ color:#c9d9d2;
+ font-size:10px;
+ font-weight:800;
+ letter-spacing:1.1px;
+ margin:0 0 6px 4px;
+ text-transform:uppercase;
+}
+.control select,.control input{
+ width:100%;
+ border:1px solid rgba(255,255,255,.18);
+ background:rgba(255,255,255,.1);
+ color:#fff;
+ padding:12px 13px;
+ border-radius:12px;
+ outline:none;
+}
+.control select option{color:#17352b}
+.control input::placeholder{color:#d7e2dd}
+.budget-range{
+ display:flex;
+ align-items:center;
+ gap:10px;
+}
+.budget-value{
+ white-space:nowrap;
+ color:#dff08c;
+ font-size:12px;
+ font-weight:800;
+}
+
+/* SUMMARY */
+.results-bar{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:15px;
+ margin:0 0 15px;
+}
+.results-count{
+ color:#78827e;
+ font-size:12px;
+ font-weight:700;
+}
+.reset{
+ border:0;
+ background:transparent;
+ color:#174c3a;
+ font-size:12px;
+ font-weight:800;
+ cursor:pointer;
+}
+
+/* HOTEL GRID */
+.hotel-grid{
+ display:grid;
+ grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:18px;
+}
+.hotel-card{
+ background:#fff;
+ border:1px solid #e8e3da;
+ border-radius:24px;
+ overflow:hidden;
+ box-shadow:0 10px 28px rgba(35,47,42,.07);
+ transition:.28s ease;
+ display:flex;
+ flex-direction:column;
+}
+.hotel-card:hover{
+ transform:translateY(-7px);
+ box-shadow:0 22px 45px rgba(35,47,42,.14);
+}
+.hotel-photo{
+ height:220px;
+ position:relative;
+ overflow:hidden;
+ background:#dfe3df;
+}
+.hotel-photo img{
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ display:block;
+ transition:.5s ease;
+}
+.hotel-card:hover .hotel-photo img{transform:scale(1.055)}
+.hotel-badge{
+ position:absolute;
+ left:14px;
+ top:14px;
+ padding:7px 10px;
+ border-radius:999px;
+ background:rgba(255,255,255,.9);
+ color:#174c3a;
+ font-size:10px;
+ font-weight:800;
+ backdrop-filter:blur(8px);
+}
+.hotel-tier-badge{
+ position:absolute;
+ left:14px;
+ bottom:14px;
+ padding:7px 10px;
+ border-radius:999px;
+ background:rgba(23,76,58,.88);
+ color:#eafbef;
+ font-size:10px;
+ font-weight:800;
+ backdrop-filter:blur(8px);
+ letter-spacing:.3px;
+}
+.hotel-save{
+ position:absolute;
+ right:14px;
+ top:14px;
+ width:34px;
+ height:34px;
+ border:0;
+ border-radius:50%;
+ background:rgba(255,255,255,.9);
+ color:#63192b;
+ cursor:pointer;
+ font-size:16px;
+}
+.hotel-body{
+ padding:18px;
+ display:flex;
+ flex-direction:column;
+ flex:1;
+}
+.hotel-location{
+ color:#8a928e;
+ font-size:10px;
+ font-weight:800;
+ letter-spacing:1px;
+ text-transform:uppercase;
+}
+.hotel-name{
+ color:#17352b;
+ font-family:'Playfair Display',serif;
+ font-size:24px;
+ line-height:1.08;
+ margin:7px 0 8px;
+}
+.hotel-desc{
+ color:#69756f;
+ font-size:12px;
+ line-height:1.55;
+ min-height:38px;
+}
+.hotel-tags{
+ display:flex;
+ flex-wrap:wrap;
+ gap:6px;
+ margin:13px 0 16px;
+}
+.hotel-tags span{
+ background:#f3f1eb;
+ color:#52605a;
+ padding:6px 8px;
+ border-radius:999px;
+ font-size:10px;
+ font-weight:700;
+}
+.hotel-bottom{
+ margin-top:auto;
+ padding-top:15px;
+ border-top:1px solid #eeeae2;
+ display:flex;
+ align-items:end;
+ justify-content:space-between;
+ gap:10px;
+}
+.rating{
+ color:#174c3a;
+ font-size:12px;
+ font-weight:800;
+}
+.rating small{
+ color:#909893;
+ font-weight:600;
+}
+.price{
+ text-align:right;
+}
+.price b{
+ display:block;
+ color:#63192b;
+ font-size:19px;
+}
+.price span{
+ color:#8b938f;
+ font-size:9px;
+}
+.hotel-action{
+ display:flex;
+ gap:8px;
+ margin-top:13px;
+}
+.hotel-action a,.hotel-action button{
+ flex:1;
+ text-align:center;
+ text-decoration:none;
+ border:0;
+ border-radius:11px;
+ padding:10px 8px;
+ font-size:11px;
+ font-weight:800;
+ cursor:pointer;
+}
+.details-btn{
+ background:#ece9df;
+ color:#394941;
+}
+.plan-btn{
+ background:#174c3a;
+ color:#fff;
+}
+
+/* BUDGET GUIDE */
+.budget-guide{
+ margin-top:55px;
+ background:#fff;
+ border:1px solid #e6e1d8;
+ border-radius:28px;
+ padding:28px;
+}
+.budget-guide h3{
+ margin:0;
+ color:#63192b;
+ font-family:'Playfair Display',serif;
+ font-size:30px;
+}
+.budget-guide > p{
+ color:#6e7974;
+ font-size:13px;
+ line-height:1.6;
+}
+.tier-grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:12px;
+ margin-top:18px;
+}
+.tier{
+ padding:18px;
+ border-radius:18px;
+ background:#f7f5ef;
+ border:1px solid #e8e3da;
+}
+.tier strong{
+ display:block;
+ color:#174c3a;
+ font-size:12px;
+ text-transform:uppercase;
+ letter-spacing:1px;
+}
+.tier b{
+ display:block;
+ color:#63192b;
+ font-size:22px;
+ margin:7px 0;
+}
+.tier span{
+ color:#68736e;
+ font-size:11px;
+ line-height:1.5;
+}
+
+/* EMPTY */
+.empty{
+ display:none;
+ text-align:center;
+ padding:55px 20px;
+ background:#fff;
+ border:1px solid #e5e0d8;
+ border-radius:22px;
+ color:#66726d;
+}
+.empty h3{
+ margin:0 0 8px;
+ color:#63192b;
+ font-family:'Playfair Display',serif;
+ font-size:28px;
+}
+
+/* MODAL */
+.modal{
+ display:none;
+ position:fixed;
+ inset:0;
+ background:rgba(8,18,14,.78);
+ backdrop-filter:blur(10px);
+ z-index:1000;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+}
+.modal-box{
+ width:min(760px,100%);
+ max-height:90vh;
+ overflow:auto;
+ background:#fbfaf6;
+ border-radius:28px;
+ position:relative;
+ box-shadow:0 35px 100px rgba(0,0,0,.35);
+}
+.modal-close{
+ position:absolute;
+ top:15px;
+ right:15px;
+ z-index:4;
+ width:38px;
+ height:38px;
+ border:0;
+ border-radius:50%;
+ background:rgba(255,255,255,.92);
+ color:#17352b;
+ font-size:22px;
+ cursor:pointer;
+}
+.modal-image{
+ width:100%;
+ height:300px;
+ object-fit:cover;
+ display:block;
+}
+.modal-content{padding:25px}
+.modal-content h2{
+ color:#63192b;
+ font-family:'Playfair Display',serif;
+ font-size:38px;
+ margin:0 0 6px;
+}
+.modal-content p{
+ color:#65716b;
+ line-height:1.7;
+ font-size:13px;
+}
+.source-note{
+ padding:11px 13px;
+ background:#eef3ee;
+ border-radius:12px;
+ color:#426054 !important;
+ font-size:11px !important;
+}
+.modal-facts{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:10px;
+ margin-top:18px;
+}
+.fact{
+ padding:13px;
+ background:#f1efe8;
+ border-radius:14px;
+}
+.fact small{
+ display:block;
+ color:#8a928d;
+ font-size:9px;
+ font-weight:800;
+ text-transform:uppercase;
+ letter-spacing:1px;
+}
+.fact b{
+ display:block;
+ margin-top:5px;
+ color:#17352b;
+ font-size:12px;
+}
+
+/* RESPONSIVE */
+@media(max-width:950px){
+ .navbar{width:150%}
+ .nav-links{gap:17px}
+ .hotels-hero{grid-template-columns:1fr;gap:30px;padding-top:125px}
+ .hero-visual{height:360px}
+ .hotel-controls{grid-template-columns:1fr 1fr}
+ .hotel-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:700px){
+ .navbar{padding:10px 13px;border-radius:18px}
+ .logo{font-size:21px}
+ .logo img{width:36px;height:36px}
+ .nav-links{display:none}
+ .cta{padding:10px 13px;font-size:11px}
+ .hotels-hero{padding:110px 18px 35px}
+ .hero-copy h1{font-size:52px}
+ .hero-copy p{font-size:15px}
+ .section{padding-left:18px;padding-right:18px}
+ .hotel-controls{grid-template-columns:1fr}
+ .hotel-grid{grid-template-columns:1fr}
+ .tier-grid{grid-template-columns:1fr}
+ .modal-facts{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     EXACT TOURCRAFT NAVBAR
+     ========================================================= -->
 <nav class="navbar">
+    <div class="logo">
+        <img src="logo.jpeg" alt="TourCraft Logo">
+        <span>TourCraft</span>
+    </div>
 
-<div class="logo">
-    <img src="logo.jpeg" alt="TourCraft Logo">
-    <span>TourCraft</span>
-</div>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#destinations-section">Explore</a>
+        <a href="planner.html">AI Planner</a>
+        <a href="guides.html">Accommodation</a>
+        <a href="contact.html">Contact</a>
+    </div>
 
-<div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="#destinations-section" onclick="document.getElementById('destinations-section').scrollIntoView({behavior:'smooth',block:'start'})">Explore</a>
-    <a href="planner.html">AI Planner</a>
-    <a href="guides.html">Inspirations</a>
-    <a href="contact.html">Contact</a>
-</div>
-
-<a href="planner.html" class="cta">
-    Build My Trip ✨
-</a>
-
+    <a href="planner.html" class="cta">Build My Trip ✨</a>
 </nav>
-<!-- <nav><div class="logo">✦ TourCraft</div><button class="btn" onclick="document.getElementById('planner').scrollIntoView({behavior:'smooth'})">Build my trip ✨</button></nav> -->
-<section class="hero">
 
-<div class="hero-text">
+<section class="hotels-hero">
+    <div class="hero-copy">
+        <small>STAY SMART · SPEND BETTER</small>
+        <h1>Hotels that fit<br><span>your budget.</span></h1>
+        <p>
+            From simple stays to premium escapes, discover accommodation options
+            that match your destination, travel style and budget — without letting
+            the hotel eat up the rest of your trip.
+        </p>
 
-<small>SMART TRAVEL PLANNING</small>
+        <div class="hero-pills">
+            <span class="hero-pill">₹ Budget-friendly</span>
+            <span class="hero-pill">★ Curated options</span>
+            <span class="hero-pill">⌁ Compare by style</span>
+            <span class="hero-pill">✦ Plan with TourCraft</span>
+        </div>
+    </div>
 
-<h1>Your trip.<br>Crafted around you.</h1>
-
-<p>
-Discover iconic destinations and create a beautiful itinerary that respects your real budget.
-</p>
-
-<button class="btn"
-onclick="document.getElementById('planner').scrollIntoView({behavior:'smooth'})">
-Create Itinerary ✨
-</button>
-
-</div>
-
-<div class="hero-frame">
-
-<div class="hero-slide active"
-style="background-image:url('https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1200&q=80')"></div>
-
-<div class="hero-slide"
-style="background-image:url('https://wallpapercave.com/wp/wp6612929.jpg')"></div>
-
-<div class="hero-slide"
-style="background-image:url('https://c4.wallpaperflare.com/wallpaper/681/591/749/goa-4k-india-palms-wallpaper-preview.jpg')"></div>
-
-<div class="hero-slide"
-style="background-image:url('https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1200&q=80')"></div>
-
-<div class="hero-slide"
-style="background-image:url('https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1200&q=80')"></div>
-
-<div class="hero-overlay"></div>
-
-</div>
-
+    <div class="hero-visual">
+        <div class="hero-floating">
+            <b>Good travel starts with a good stay.</b>
+            <span>Choose a hotel tier first, then let TourCraft help you balance accommodation with the rest of your trip.</span>
+        </div>
+    </div>
 </section>
-<section class="section" id="destinations-section">
-<div class="destination-heading">
-    <div class="destination-kicker">Curated escapes</div>
-    <h2>Explore <span>iconic destinations</span></h2>
-    <p>From snow-capped valleys to tropical shores, discover places worth travelling for — then let TourCraft craft the perfect trip around you.</p>
+
+<section class="section" id="hotels-section">
+
+    <div class="section-heading">
+        <span class="kicker">FIND YOUR STAY</span>
+        <h2>Stay <span>your way.</span></h2>
+        <p>
+            5 real, named properties per destination — spanning hostels, mid-range hotels and premium
+            resorts — so you can compare tiers before you commit. The nightly figure is a TourCraft
+            planning reference, not a live quote — actual rates vary by date, room type, taxes and availability.
+        </p>
+    </div>
+
+    <div class="hotel-controls">
+        <div class="control">
+            <label>Destination</label>
+            <select id="destinationFilter" onchange="filterHotels()">
+                <option value="all">All destinations</option>
+                <option value="Kashmir">Kashmir</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Goa">Goa</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Manali">Manali</option>
+                <option value="Varanasi">Varanasi</option>
+                <option value="Meghalaya">Meghalaya</option>
+                <option value="Andaman">Andaman</option>
+            </select>
+        </div>
+
+        <div class="control">
+            <label>Budget tier</label>
+            <select id="styleFilter" onchange="filterHotels()">
+                <option value="all">Any budget</option>
+                <option value="budget">Smart Budget · up to ₹3,500</option>
+                <option value="comfort">Comfort · ₹3,501–₹8,000</option>
+                <option value="premium">Premium · above ₹8,000</option>
+            </select>
+        </div>
+
+        <div class="control">
+            <label>Maximum nightly budget</label>
+            <div class="budget-range">
+                <input id="budgetFilter" type="range" min="1000" max="30000" step="500" value="30000" oninput="filterHotels()">
+                <span class="budget-value" id="budgetValue">₹30,000</span>
+            </div>
+        </div>
+
+        <div class="control">
+            <label>Search</label>
+            <input id="searchFilter" type="text" placeholder="Hotel, city, area..." oninput="filterHotels()">
+        </div>
+    </div>
+
+    <div class="results-bar">
+        <div class="results-count" id="resultsCount">40 verified stays found</div>
+        <button class="reset" onclick="resetFilters()">Reset filters ↺</button>
+    </div>
+
+    <div class="hotel-grid" id="hotelGrid"></div>
+
+    <div class="empty" id="emptyState">
+        <h3>No stay matches those filters.</h3>
+        <p>Try increasing the nightly budget or choosing another hotel style.</p>
+    </div>
+
+    <div class="budget-guide">
+        <h3>How TourCraft reads your hotel budget</h3>
+        <p>
+            The hotel names below are real, named properties currently operating at each destination —
+            spanning backpacker hostels, mid-range hotels and premium resorts. We use broad budget tiers
+            instead of pretending that a hotel's price is fixed: room rates change with dates, occupancy,
+            season, taxes and offers.
+        </p>
+
+        <p style="font-size:11px;color:#8a928d;margin-top:-4px">*Indicative budget bands only — not live room rates. Always check the property's current rate for your dates.</p>
+
+        <div class="tier-grid">
+            <div class="tier">
+                <strong>Smart Budget</strong>
+                <b>₹1.2k–₹3.5k*</b>
+                <span>Hostels and practical stays. Best when you want to keep accommodation low and spend more on experiences.</span>
+            </div>
+            <div class="tier">
+                <strong>Comfort</strong>
+                <b>₹3.5k–₹8k*</b>
+                <span>Mid-range hotels and boutique stays with stronger facilities and a comfortable base for sightseeing.</span>
+            </div>
+            <div class="tier">
+                <strong>Premium</strong>
+                <b>₹8k+*</b>
+                <span>Premium hotels, resorts and heritage properties where the stay becomes part of the travel experience.</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal" id="hotelModal" onclick="if(event.target===this)closeHotel()">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeHotel()">×</button>
+        <div id="modalContent"></div>
+    </div>
 </div>
-<div class="grid" id="destinations"><div class="card" style="background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStTik5ZwFPG5_DTi9Eflf_FTnS4zerRSRNc_CbGdaMlr9J8p1gKdFTdSQ&s=10')" onclick="openDest('Kashmir')"><div><h3>Kashmir</h3><span>From ₹22,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Kerala')"><div><h3>Kerala</h3><span>From ₹18,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Goa')"><div><h3>Goa</h3><span>From ₹14,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Rajasthan')"><div><h3>Rajasthan</h3><span>From ₹20,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Manali')"><div><h3>Manali</h3><span>From ₹15,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Varanasi')"><div><h3>Varanasi</h3><span>From ₹9,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Meghalaya')"><div><h3>Meghalaya</h3><span>From ₹21,000/person</span></div></div><div class="card" style="background-image:url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&amp;fit=crop&amp;w=800&amp;q=80')" onclick="openDest('Andaman')"><div><h3>Andaman</h3><span>From ₹26,000/person</span></div></div></div></section>
-<!-- <section class="section" id="planner"><div class="planner"><h2>AI Itinerary Builder</h2><p>Tell TourCraft what you need.</p><div class="form"><div class="field"><label>DESTINATION</label><select id="destination"><option>Kashmir</option><option>Kerala</option><option>Goa</option><option>Rajasthan</option><option>Manali</option><option>Varanasi</option><option>Meghalaya</option><option>Andaman</option></select></div><div class="field"><label>TRAVELLERS</label><input id="people" type="number" value="2" min="1"></div><div class="field"><label>DAYS</label><input id="days" type="number" value="5" min="1"></div><div class="field"><label>BUDGET ₹</label><input id="budget" type="number" value="35000" min="1"></div><div class="field"><label>STYLE</label><select id="style"><option>Smart Budget</option><option>Comfort</option><option>Backpacker</option><option>Premium</option></select></div><div class="field"><label>TRANSPORT</label><select id="transport"><option>Comfortable</option><option>Budget</option><option>Private Cab</option></select></div><div class="field wide"><label>INTERESTS</label><input id="interests" placeholder="food, mountains, culture, adventure..."></div></div><br><button class="btn" style="background:#dff08c;color:#17352b" onclick="build()">Generate my itinerary ✨</button><div id="result"></div></div></section> -->
-<div class="modal" id="destModal"><div class="box"><button class="close" onclick="hide(&quot;destModal&quot;)">×</button><h1 id="mt"></h1><p id="md"></p><div id="mf"></div><br><button class="btn" onclick="useDestination()">Plan this destination</button></div></div>
-<div class="modal" id="mailModal"><div class="box"><button class="close" onclick="hide(&quot;mailModal&quot;)">×</button><h2>Send enquiry</h2><p>Your itinerary will be inserted into an email.</p><div class="enq"><input id="name" placeholder="Name *"><input id="email" placeholder="Email *"><input id="phone" placeholder="Phone / WhatsApp"><textarea id="message" placeholder="Anything else?"></textarea></div><button class="btn" onclick="sendMail()">Open enquiry email →</button><p style="font-size:12px;color:#777">Change the recipient in CONFIG below.</p></div></div>
+
 <script>
+/* Safe fallback so a card never shows a broken image */
+const FALLBACK_IMG = "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=85";
 
-// const CONFIG={email:'YOUR_EMAIL@example.com'};
-const CONFIG = { email: 'apurvaaniket8@gmail.com', scriptURL: 'https://script.google.com/macros/s/AKfycbwt_ZOJlV102sLefJ2atd8gepcgojykxpuRb0SnF-Eo1ZUf0WUczsUP8RZFVqrvqYQd/exec' };
+const hotels = [
+    /* REAL, NAMED PROPERTIES per destination, spanning budget → comfort → premium.
+       planningPrice is a TourCraft planning reference used ONLY for filtering,
+       not a live room quote. */
 
+    // ---------------- KASHMIR (Srinagar) ----------------
+    {id:1,destination:"Kashmir",name:"Zostel Srinagar",location:"Nishat · Srinagar",planningPrice:1800,
+     tags:["Hostel","Near Dal Lake","Backpacker"],image:"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1000&q=85",
+     desc:"A Zostel property in the Nishat area, about a 5-minute walk from Dal Lake, suited to budget-conscious travellers.",
+     note:"Listed on Zostel's official Srinagar property page.",source:"Zostel — official property listing"},
+    {id:2,destination:"Kashmir",name:"Hotel Broadway Srinagar",location:"Maulana Azad Road · Srinagar",planningPrice:4500,
+     tags:["Heritage","City centre","Comfort"],image:"https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1000&q=85",
+     desc:"A long-running Srinagar hotel on Maulana Azad Road, popular with journalists and travellers for its central location and old-world character.",
+     note:"Listed on major booking platforms and the hotel's own site.",source:"Hotel Broadway — property listing"},
+    {id:3,destination:"Kashmir",name:"Vivanta Dal View Srinagar",location:"Kralsangri · Srinagar",planningPrice:9000,
+     tags:["5-star","Lake view","Premium"],image:"https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1000&q=85",
+     desc:"A Taj Group Vivanta property overlooking Dal Lake, with mountain-backed views and upscale rooms.",
+     note:"Listed on IHCL/Vivanta's official Srinagar property page.",source:"Vivanta Hotels — official property listing"},
+    {id:4,destination:"Kashmir",name:"Four Points by Sheraton Srinagar",location:"Srinagar · Near Dal Lake",planningPrice:10500,
+     tags:["Hotel","Breakfast","Near Dal Lake"],image:"https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=85",
+     desc:"A Marriott-run hotel in Srinagar with modern rooms and convenient access to Dal Lake and city sights.",
+     note:"Listed on Marriott Bonvoy's official Srinagar property page.",source:"Marriott Bonvoy — official property listing"},
+    {id:5,destination:"Kashmir",name:"The Lalit Grand Palace Srinagar",location:"Gupkar Road · Srinagar",planningPrice:12000,
+     tags:["Heritage palace","5-star","Luxury"],image:"https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=85",
+     desc:"A former royal guesthouse on Gupkar Road converted into a heritage 5-star hotel overlooking Dal Lake.",
+     note:"Listed on The Lalit's official Srinagar property page.",source:"The Lalit — official property listing"},
 
-const D={Kashmir:{from:22000,img:'https://images.unsplash.com/photo-1609947017136-9daf32a5eb16?auto=format&fit=crop&w=800&q=80',desc:'Snowy mountains, Dal Lake, valleys and Kashmiri hospitality.',spots:['Dal Lake','Gulmarg','Pahalgam','Sonamarg']},Kerala:{from:18000,img:'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80',desc:'Backwaters, beaches, hills, food and slow travel.',spots:['Alleppey','Munnar','Varkala','Fort Kochi']},Goa:{from:14000,img:'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80',desc:'Beaches, heritage, cafes and coastal experiences.',spots:['Baga','Anjuna','Old Goa','South Goa']},Rajasthan:{from:20000,img:'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80',desc:'Forts, palaces, desert landscapes and royal culture.',spots:['Jaipur','Jodhpur','Udaipur','Jaisalmer']},Manali:{from:15000,img:'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80',desc:'Mountain views, cafes, valleys and adventure.',spots:['Solang Valley','Old Manali','Atal Tunnel','Kasol']},Varanasi:{from:9000,img:'https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=800&q=80',desc:'Ghats, spirituality, food and living culture.',spots:['Ganga Aarti','Sarnath','Old City','Sunrise Boat Ride']},Meghalaya:{from:21000,img:'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80',desc:'Waterfalls, root bridges, misty hills and nature.',spots:['Shillong','Cherrapunji','Dawki','Mawlynnong']},Andaman:{from:26000,img:'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80',desc:'Island beaches, clear water and marine experiences.',spots:['Swaraj Dweep','Radhanagar Beach','Cellular Jail','Neil Island']}};
-let chosen='Kashmir',plan='';
+    // ---------------- KERALA ----------------
+    {id:6,destination:"Kerala",name:"Zostel Alleppey",location:"Alappuzha · Beach Road",planningPrice:1800,
+     tags:["Hostel","Beach","Backwaters"],image:"https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1000&q=85",
+     desc:"A Zostel at Alappuzha Beach, useful for travellers exploring the Kerala backwaters on a lower accommodation budget.",
+     note:"Listed on Zostel's official Alleppey property page.",source:"Zostel — official property listing"},
+    {id:7,destination:"Kerala",name:"Fragrant Nature Alleppey",location:"Alappuzha · Backwaters",planningPrice:5500,
+     tags:["Hotel","Backwater view","Comfort"],image:"https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1000&q=85",
+     desc:"A backwater-facing hotel chain property in Alappuzha with a pool and easy access to houseboat jetties.",
+     note:"Listed on Fragrant Nature's official property page.",source:"Fragrant Nature Hotels — official property listing"},
+    {id:8,destination:"Kerala",name:"Marari Beach Resort",location:"Mararikulam · Alappuzha",planningPrice:7500,
+     tags:["Beach resort","CGH Earth","Comfort"],image:"https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=85",
+     desc:"A CGH Earth beach resort at Mararikulam with cottage-style rooms set along a quiet stretch of coastline.",
+     note:"Listed on CGH Earth's official Marari Beach Resort page.",source:"CGH Earth — official property listing"},
+    {id:9,destination:"Kerala",name:"Brunton Boatyard",location:"Fort Kochi · Kochi",planningPrice:13000,
+     tags:["Heritage","Waterfront","Luxury"],image:"https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1000&q=85",
+     desc:"A CGH Earth waterfront heritage hotel in Fort Kochi, built on the site of a historic shipyard.",
+     note:"Listed on CGH Earth's official Brunton Boatyard page.",source:"CGH Earth — official property listing"},
+    {id:10,destination:"Kerala",name:"Kumarakom Lake Resort",location:"Kumarakom · Vembanad Lake",planningPrice:14500,
+     tags:["Lake resort","Heritage villas","Luxury"],image:"https://images.unsplash.com/photo-1455587734955-081b22074882?auto=format&fit=crop&w=1000&q=85",
+     desc:"A heritage-villa resort set on Vembanad Lake in Kumarakom, built around restored traditional Kerala homes.",
+     note:"Listed on the resort's official Kumarakom property page.",source:"Kumarakom Lake Resort — official listing"},
 
-/* ===== HERO SLIDESHOW ===== */
+    // ---------------- GOA ----------------
+    {id:11,destination:"Goa",name:"The Hosteller Goa",location:"Anjuna · North Goa",planningPrice:1500,
+     tags:["Hostel","Social","Backpacker"],image:"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1000&q=85",
+     desc:"A backpacker hostel chain property in Anjuna offering dorms and private rooms close to Goa's beach belt.",
+     note:"Listed on The Hosteller's official Goa property page.",source:"The Hosteller — official property listing"},
+    {id:12,destination:"Goa",name:"Zostel Goa (Morjim)",location:"Morjim · North Goa",planningPrice:1900,
+     tags:["Hostel","Beach","Backpacker"],image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=85",
+     desc:"A Zostel property in Morjim for travellers looking for a lower-cost, social base near Goa's beaches.",
+     note:"Listed on Zostel's official Goa destination page.",source:"Zostel — official property listing"},
+    {id:13,destination:"Goa",name:"Novotel Goa Resort & Spa",location:"Candolim · North Goa",planningPrice:7000,
+     tags:["Resort","Pool","Comfort"],image:"https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1000&q=85",
+     desc:"An Accor-run beach resort in Candolim with multiple pools, a spa and family-friendly facilities.",
+     note:"Listed on Novotel's official Goa property page.",source:"Novotel / Accor — official property listing"},
+    {id:14,destination:"Goa",name:"The Zuri White Sands, Goa Resort & Casino",location:"Varca · South Goa",planningPrice:11000,
+     tags:["Beach resort","Pool","Luxury"],image:"https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=85",
+     desc:"A five-star resort in Varca with direct beach access, a large pool and full resort facilities.",
+     note:"Listed on The Zuri Hotels' official Goa property page.",source:"Zuri Hotels — official property listing"},
+    {id:15,destination:"Goa",name:"Taj Fort Aguada Resort & Spa",location:"Sinquerim · North Goa",planningPrice:16000,
+     tags:["5-star","Heritage fort","Beachfront"],image:"https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1000&q=85",
+     desc:"A Taj beachfront resort built around the historic Fort Aguada headland in Sinquerim.",
+     note:"Listed on Taj Hotels' official Fort Aguada property page.",source:"Taj Hotels — official property listing"},
 
-const heroSlides=document.querySelectorAll(".hero-slide");
+    // ---------------- RAJASTHAN (Jaipur) ----------------
+    {id:16,destination:"Rajasthan",name:"Zostel Jaipur",location:"Bani Park · Jaipur",planningPrice:1700,
+     tags:["Hostel","City centre","Backpacker"],image:"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1000&q=85",
+     desc:"A Zostel property in Bani Park, walkable to the old city bazaars on a lower accommodation budget.",
+     note:"Listed on Zostel's official Jaipur property page.",source:"Zostel — official property listing"},
+    {id:17,destination:"Rajasthan",name:"Fairfield by Marriott Jaipur",location:"Bani Park · Jaipur",planningPrice:5000,
+     tags:["Hotel","City centre","Breakfast"],image:"https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1000&q=85",
+     desc:"A Marriott hotel in Bani Park, close to Jaipur Railway Station and the city's bazaars.",
+     note:"Listed on Marriott Bonvoy's official Jaipur property page.",source:"Marriott Bonvoy — official property listing"},
+    {id:18,destination:"Rajasthan",name:"Alsisar Haveli",location:"Sansar Chandra Road · Jaipur",planningPrice:6000,
+     tags:["Heritage haveli","Courtyard","Comfort"],image:"https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1000&q=85",
+     desc:"A restored 19th-century haveli-turned-heritage hotel in central Jaipur, built around courtyards and period architecture.",
+     note:"Listed on Alsisar Haveli's official property page.",source:"Alsisar Haveli — official property listing"},
+    {id:19,destination:"Rajasthan",name:"Jaipur Marriott Hotel",location:"Jaipur · Near Airport",planningPrice:9500,
+     tags:["5-star","Pool","Luxury"],image:"https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1000&q=85",
+     desc:"A five-star Marriott hotel in Jaipur with upscale rooms, dining and wellness facilities.",
+     note:"Listed on Marriott Bonvoy's official Jaipur Marriott page.",source:"Marriott Bonvoy — official property listing"},
+    {id:20,destination:"Rajasthan",name:"Rambagh Palace",location:"Bhawani Singh Road · Jaipur",planningPrice:28000,
+     tags:["Royal palace","Taj Hotels","Ultra-luxury"],image:"https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1000&q=85",
+     desc:"Known as the 'Jewel of Jaipur', this former royal residence sits on 47 acres of gardens and was converted into a Taj palace hotel in 1972.",
+     note:"Listed on Taj Hotels' official Rambagh Palace page; documented on Wikipedia and Wikimedia Commons.",source:"Taj Hotels — official property listing"},
 
-let currentHero=0;
+    // ---------------- MANALI ----------------
+    {id:21,destination:"Manali",name:"Zostel Manali",location:"Old Manali · Manu Temple Road",planningPrice:1800,
+     tags:["Hostel","Mountain views","Backpacker"],image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85",
+     desc:"A Zostel in Old Manali with Himalayan views, a garden cafe and dorm/private-room options.",
+     note:"Listed on Zostel's official Manali property page.",source:"Zostel — official property listing"},
+    {id:22,destination:"Manali",name:"Snow Valley Resorts Manali",location:"Log Hut Area · Manali",planningPrice:5000,
+     tags:["Resort","Mountain views","Family"],image:"https://images.unsplash.com/photo-1517825738774-7de9363ef735?auto=format&fit=crop&w=1000&q=85",
+     desc:"A resort in Manali's Log Hut Area, surrounded by Himalayan scenery and pine forests.",
+     note:"Listed on Snow Valley Resorts' official Manali property page.",source:"Snow Valley Resorts — official property listing"},
+    {id:23,destination:"Manali",name:"Span Resort & Spa",location:"Kullu-Manali Highway · Kullu",planningPrice:7500,
+     tags:["Riverside resort","Spa","Comfort"],image:"https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1000&q=85",
+     desc:"A riverside resort on the Kullu-Manali highway set along the Beas River with mountain and orchard views.",
+     note:"Listed on Span Resort & Spa's official property page.",source:"Span Resort & Spa — official property listing"},
+    {id:24,destination:"Manali",name:"The Himalayan",location:"Near Hidimba Temple · Manali",planningPrice:9000,
+     tags:["Boutique luxury","Mountain views","Premium"],image:"https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1000&q=85",
+     desc:"A boutique luxury property near Hidimba Temple known for chalet-style rooms and valley views.",
+     note:"Listed on The Himalayan's official property page.",source:"The Himalayan — official property listing"},
+    {id:25,destination:"Manali",name:"Manu Allaya Resort & Spa",location:"Manali",planningPrice:8500,
+     tags:["Resort","Spa","Premium"],image:"https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1000&q=85",
+     desc:"A resort and spa property in Manali offering mountain-facing rooms and wellness facilities.",
+     note:"Listed on major booking platforms and the resort's own page.",source:"Manu Allaya Resort & Spa — property listing"},
 
-setInterval(()=>{
+    // ---------------- VARANASI ----------------
+    {id:26,destination:"Varanasi",name:"Zostel Varanasi",location:"Dashashwamedh · Varanasi",planningPrice:1600,
+     tags:["Hostel","Near Ghat","Backpacker"],image:"https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=1000&q=85",
+     desc:"A Zostel near Dashashwamedh Ghat with dorms, private rooms and a rooftop common area.",
+     note:"Listed on Zostel's official Varanasi property page.",source:"Zostel — official property listing"},
+    {id:27,destination:"Varanasi",name:"Ganpati Guest House",location:"Meer Ghat · Varanasi",planningPrice:1200,
+     tags:["Guest house","Riverside","Budget"],image:"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1000&q=85",
+     desc:"A long-running budget guest house right on the ghats near Meer Ghat, popular for its rooftop Ganga views.",
+     note:"Listed on major booking platforms with verified guest reviews.",source:"Ganpati Guest House — property listing"},
+    {id:28,destination:"Varanasi",name:"Radisson Hotel Varanasi",location:"The Mall · Cantonment",planningPrice:6500,
+     tags:["Hotel","Pool","Family"],image:"https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=85",
+     desc:"A Radisson hotel in Varanasi's Cantonment area, with access to major city attractions.",
+     note:"Listed on Radisson Hotels' official Varanasi property page.",source:"Radisson Hotels — official property listing"},
+    {id:29,destination:"Varanasi",name:"BrijRama Palace",location:"Darbhanga Ghat · Varanasi",planningPrice:12000,
+     tags:["Heritage palace","Riverfront","Luxury"],image:"https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1000&q=85",
+     desc:"A restored 18th-century palace directly on Darbhanga Ghat, accessible by boat, overlooking the Ganges.",
+     note:"Listed on BrijRama Palace's official property page.",source:"BrijRama Palace — official property listing"},
+    {id:30,destination:"Varanasi",name:"Taj Ganges Varanasi",location:"Nadesar · Varanasi",planningPrice:9500,
+     tags:["5-star","Gardens","Premium"],image:"https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1000&q=85",
+     desc:"A Taj hotel set in the Nadesar area with landscaped gardens, a short drive from the ghats.",
+     note:"Listed on Taj Hotels' official Taj Ganges property page.",source:"Taj Hotels — official property listing"},
 
-heroSlides[currentHero].classList.remove("active");
+    // ---------------- MEGHALAYA (Shillong) ----------------
+    {id:31,destination:"Meghalaya",name:"Zostel Shillong",location:"Golf Links · Shillong",planningPrice:1800,
+     tags:["Hostel","Mountain view","Social"],image:"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1000&q=85",
+     desc:"A Zostel in Shillong with dorms and private rooms, around 2 km from the city centre.",
+     note:"Listed on Zostel's official Shillong property page.",source:"Zostel — official property listing"},
+    {id:32,destination:"Meghalaya",name:"Hotel Polo Towers Shillong",location:"Polo Grounds · Shillong",planningPrice:5500,
+     tags:["Hotel","City centre","Comfort"],image:"https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1000&q=85",
+     desc:"A well-known city hotel near Polo Grounds, a regular pick for both leisure and business travellers to Shillong.",
+     note:"Listed on Polo Towers Group's official property page.",source:"Polo Towers — official property listing"},
+    {id:33,destination:"Meghalaya",name:"Ri Kynjai – Serenity by the Lake",location:"Umiam Lake · Shillong",planningPrice:9500,
+     tags:["Lake resort","Cottages","Premium"],image:"https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1000&q=85",
+     desc:"A cottage-style resort set directly on Umiam Lake outside Shillong, built in traditional Khasi architectural style.",
+     note:"Listed on Ri Kynjai's official property page.",source:"Ri Kynjai — official property listing"},
+    {id:34,destination:"Meghalaya",name:"Courtyard by Marriott Shillong",location:"Police Bazar · Shillong",planningPrice:8000,
+     tags:["5-star","Pool","Spa"],image:"https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=85",
+     desc:"A Marriott hotel on Jail Road in Police Bazar, with modern rooms, pool, spa and fitness facilities.",
+     note:"Listed on Marriott Bonvoy's official Shillong property page.",source:"Marriott Bonvoy — official property listing"},
+    {id:35,destination:"Meghalaya",name:"Hotel Centre Point Shillong",location:"Police Bazar · Shillong",planningPrice:4500,
+     tags:["Hotel","City centre","Comfort"],image:"https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=85",
+     desc:"A centrally located Police Bazar hotel that's a long-standing pick for travellers exploring Shillong.",
+     note:"Listed on major booking platforms and the hotel's own page.",source:"Hotel Centre Point — property listing"},
 
-currentHero=(currentHero+1)%heroSlides.length;
+    // ---------------- ANDAMAN ----------------
+    {id:36,destination:"Andaman",name:"Zostel Port Blair",location:"Phoenix Bay · Sri Vijaya Puram",planningPrice:1800,
+     tags:["Hostel","Sea views","Backpacker"],image:"https://images.unsplash.com/photo-1540202404-a2f29016b523?auto=format&fit=crop&w=1000&q=85",
+     desc:"A Zostel in Port Blair with dorms and private rooms, suitable as a budget base for island trips.",
+     note:"Listed on Zostel's official Port Blair property page.",source:"Zostel — official property listing"},
+    {id:37,destination:"Andaman",name:"SeaShell Port Blair",location:"Marine Hill · Sri Vijaya Puram",planningPrice:6000,
+     tags:["Hotel","Sea view","Comfort"],image:"https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=85",
+     desc:"A hotel on Marine Hill overlooking Port Blair's harbour, a common base before island-hopping to Havelock or Neil Island.",
+     note:"Listed on SeaShell Hotels' official Port Blair property page.",source:"SeaShell Hotels — official property listing"},
+    {id:38,destination:"Andaman",name:"Symphony Palms Beach Resort",location:"Corbyn's Cove · Sri Vijaya Puram",planningPrice:7000,
+     tags:["Beach resort","Pool","Comfort"],image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=85",
+     desc:"A beach resort near Corbyn's Cove offering direct sea access a short drive from Port Blair.",
+     note:"Listed on Symphony Palms' official property page.",source:"Symphony Palms Beach Resort — official property listing"},
+    {id:39,destination:"Andaman",name:"Barefoot at Havelock",location:"Radhanagar Beach Road · Havelock Island",planningPrice:9500,
+     tags:["Eco resort","Beachfront","Premium"],image:"https://images.unsplash.com/photo-1455587734955-081b22074882?auto=format&fit=crop&w=1000&q=85",
+     desc:"An eco-styled beachfront resort on Havelock Island near Radhanagar Beach, built with cottages set among native forest.",
+     note:"Listed on Barefoot at Havelock's official property page.",source:"Barefoot at Havelock — official property listing"},
+    {id:40,destination:"Andaman",name:"Taj Exotica Resort & Spa, Andamans",location:"Radhanagar Beach · Swaraj Dweep",planningPrice:18000,
+     tags:["5-star","Beach resort","Villas"],image:"https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1000&q=85",
+     desc:"A Taj luxury resort on Swaraj Dweep with beachfront villas, spa and pool facilities.",
+     note:"Listed on Taj Hotels' official property page and the Andaman & Nicobar Tourism accommodation directory.",source:"Taj Hotels + Andaman Tourism — official listing"}
+];
 
-heroSlides[currentHero].classList.add("active");
+function getTier(price){
+    if(price <= 3500) return {key:"budget",label:"Smart Budget"};
+    if(price <= 8000) return {key:"comfort",label:"Comfort"};
+    return {key:"premium",label:"Premium"};
+}
 
-},4000);
-function init(){}
-function openDest(n){chosen=n;mt.textContent=n;md.textContent=D[n].desc;mf.innerHTML='<b>Highlights:</b> '+D[n].spots.join(' · ');destModal.style.display='flex'}
-function hide(id){document.getElementById(id).style.display='none'}
-function useDestination(){destination.value=chosen;hide('destModal');document.getElementById('planner').scrollIntoView({behavior:'smooth'})}
-function money(x){return '₹'+Math.round(x).toLocaleString('en-IN')}
-function build(){const n=destination.value,p=+people.value,d=+days.value,b=+budget.value,s=style.value,t=transport.value,i=interests.value||'local food, culture and scenic experiences';let per=D[n].from;if(s==='Backpacker')per*=.72;if(s==='Comfort')per*=1.15;if(s==='Premium')per*=1.65;if(t==='Budget')per*=.88;if(t==='Private Cab')per*=1.18;let estimate=Math.round(per*p*Math.max(.65,d/5)),minimum=Math.round(D[n].from*.62*p*Math.max(.55,d/5));if(b<minimum){plan='';result.innerHTML=`<div class='result'><div class='danger'><b>Sorry — this trip is not realistically possible within ${money(b)}.</b><br>For ${p} traveller(s) and ${d} days, TourCraft estimates a realistic minimum of about <b>${money(minimum)}</b>.</div><p><b>Try:</b> increase budget, reduce duration, choose Backpacker style, or use Budget transport.</p></div>`;return}let total=Math.min(estimate,Math.round(b*.96));let daysHtml='';for(let x=1;x<=d;x++){let a=D[n].spots[(x-1)%D[n].spots.length],z=D[n].spots[x%D[n].spots.length];daysHtml+=`<div class='day'><b>Day ${x} — ${x===1?'Arrival & first impressions':x===d?'Relax & departure':a}</b><p>Explore <b>${a}</b> and ${z}. Include ${i}. Enjoy local food and free time.</p><span>Estimated: ${money(total/d)}</span></div>`}plan=`Destination: ${n}\nTravellers: ${p}\nDuration: ${d} days\nBudget: ${money(b)}\nStyle: ${s}\nTransport: ${t}\nInterests: ${i}\nEstimated cost: ${money(total)}\n\n${daysHtml.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ')}`;result.innerHTML=`<div class='result'><h2>${n} — ${d} days</h2><p><b>Estimated trip cost: ${money(total)}</b> · ${money(Math.max(0,b-total))} remaining</p>${daysHtml}<button class='btn' onclick='mailModal.style.display="flex"'>I like this trip — send an enquiry 📩</button></div>`;result.scrollIntoView({behavior:'smooth',block:'nearest'})}
-function sendMail(){const n=name.value.trim(),e=email.value.trim();if(!n||!e){alert('Please enter name and email.');return}const subject=`TourCraft Enquiry — ${destination.value}`;const body=`Hello TourCraft Team,%0D%0A%0D%0AI am interested in this itinerary.%0D%0A%0D%0AName: ${n}%0D%0AEmail: ${e}%0D%0APhone: ${phone.value}%0D%0A%0D%0A${plan}%0D%0A%0D%0AAdditional message: ${message.value}`;location.href=`mailto:${CONFIG.email}?subject=${encodeURIComponent(subject)}&body=${body}`}
-init();
+hotels.forEach(h=>{
+    const tier=getTier(h.planningPrice);
+    h.style=tier.key;
+    h.tier=tier.label;
+});
 
+function money(n){
+    return "₹"+Math.round(n).toLocaleString("en-IN");
+}
+
+function hotelCard(h){
+    return `
+    <article class="hotel-card">
+        <div class="hotel-photo">
+            <img src="${h.image}" alt="${h.name}" loading="lazy" onerror="this.onerror=null;this.src='${FALLBACK_IMG}';">
+            <span class="hotel-badge">✓ Verified property</span>
+            <span class="hotel-tier-badge">${h.tier}</span>
+            <button class="hotel-save" onclick="this.textContent=this.textContent==='♡'?'♥':'♡'" aria-label="Save hotel">♡</button>
+        </div>
+        <div class="hotel-body">
+            <div class="hotel-location">${h.location}</div>
+            <div class="hotel-name">${h.name}</div>
+            <div class="hotel-desc">${h.desc}</div>
+            <div class="hotel-tags">${h.tags.map(t=>`<span>${t}</span>`).join("")}</div>
+            <div class="hotel-bottom">
+                <div class="rating">✓ Verified <small>· real property</small></div>
+                <div class="price">
+                    <b>${money(h.planningPrice)}</b>
+                    <span>planning ref. / night*</span>
+                </div>
+            </div>
+            <div class="hotel-action">
+                <button class="details-btn" onclick="openHotel(${h.id})">View details</button>
+                <button class="plan-btn" onclick="planHotel('${h.destination}')">Plan stay →</button>
+            </div>
+        </div>
+    </article>`;
+}
+
+function renderHotels(list){
+    const grid=document.getElementById("hotelGrid");
+    const empty=document.getElementById("emptyState");
+    grid.innerHTML=list.map(hotelCard).join("");
+    empty.style.display=list.length?"none":"block";
+    document.getElementById("resultsCount").textContent=
+        `${list.length} ${list.length===1?"stay":"stays"} found`;
+}
+
+function filterHotels(){
+    const destination=document.getElementById("destinationFilter").value;
+    const style=document.getElementById("styleFilter").value;
+    const budget=Number(document.getElementById("budgetFilter").value);
+    const search=document.getElementById("searchFilter").value.trim().toLowerCase();
+
+    document.getElementById("budgetValue").textContent=money(budget);
+
+    const filtered=hotels.filter(h=>{
+        const destinationOK=destination==="all" || h.destination===destination;
+        const styleOK=style==="all" || h.style===style;
+        const budgetOK=h.planningPrice<=budget;
+        const searchOK=!search ||
+            `${h.name} ${h.destination} ${h.location} ${h.tier} ${h.tags.join(" ")}`
+            .toLowerCase().includes(search);
+        return destinationOK && styleOK && budgetOK && searchOK;
+    });
+
+    renderHotels(filtered);
+}
+
+function resetFilters(){
+    document.getElementById("destinationFilter").value="all";
+    document.getElementById("styleFilter").value="all";
+    document.getElementById("budgetFilter").value=30000;
+    document.getElementById("searchFilter").value="";
+    filterHotels();
+}
+
+function openHotel(id){
+    const h=hotels.find(x=>x.id===id);
+    document.getElementById("modalContent").innerHTML=`
+        <img class="modal-image" src="${h.image}" alt="${h.name}" onerror="this.onerror=null;this.src='${FALLBACK_IMG}';">
+        <div class="modal-content">
+            <div class="hotel-location">${h.location}</div>
+            <h2>${h.name}</h2>
+            <p>${h.desc}</p>
+            <p><b>Budget fit:</b> ${h.tier} · ${money(h.planningPrice)} planning reference per night.</p>
+            <p><b>TourCraft verification:</b> ${h.note}</p>
+            <p class="source-note"><b>Verification source:</b> ${h.source}</p>
+            <div class="modal-facts">
+                <div class="fact"><small>Destination</small><b>${h.destination}</b></div>
+                <div class="fact"><small>Budget tier</small><b>${h.tier}</b></div>
+                <div class="fact"><small>Property status</small><b>Verified real property</b></div>
+            </div>
+            <div class="hotel-action" style="margin-top:20px">
+                <button class="plan-btn" onclick="planHotel('${h.destination}')">Use in my trip →</button>
+                <button class="details-btn" onclick="closeHotel()">Close</button>
+            </div>
+        </div>`;
+    document.getElementById("hotelModal").style.display="flex";
+    document.body.style.overflow="hidden";
+}
+
+function closeHotel(){
+    document.getElementById("hotelModal").style.display="none";
+    document.body.style.overflow="";
+}
+
+function planHotel(destination){
+    window.location.href="planner.html?destination="+encodeURIComponent(destination);
+}
+
+document.addEventListener("keydown",e=>{
+    if(e.key==="Escape")closeHotel();
+});
+
+filterHotels();
 </script>
-</body></html>
+
+</body>
+</html>

@@ -420,18 +420,21 @@ font-family: Arial, sans-serif;
 .hotel-card{background:#fcfbf7;border:1px solid #eee;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:.25s}
 .hotel-card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.08)}
 
-/* No stock/AI photos are shown under a real hotel's name — that would
-   misrepresent the specific property. Each card gets a tier-tinted
-   monogram panel instead; wire a verified photo (e.g. via the Google
-   Places Photo API using the stored real placeId) to replace it. */
-.hotel-photo-wrap{position:relative;height:120px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+/* Every card starts on a tier-tinted monogram placeholder — never a
+   generic/mismatched photo standing in for a real, named hotel. If
+   CONFIG.googlePlacesApiKey is set, loadRealHotelPhotos() fetches that
+   exact property's own verified photo and adds .has-photo once it
+   loads; .img-fallback (added on an <img> error) reverts to the
+   monogram, so a failed fetch never breaks the layout. */
+.hotel-photo-wrap{position:relative;height:150px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(135deg,#174c3a,#0d2f24)}
 .hotel-photo-wrap.tier-backpacker{background:linear-gradient(135deg,#5c6b64,#3c4640)}
 .hotel-photo-wrap.tier-smartBudget{background:linear-gradient(135deg,#2c6b52,#1c4636)}
 .hotel-photo-wrap.tier-comfort{background:linear-gradient(135deg,#174c3a,#0d2f24)}
 .hotel-photo-wrap.tier-premium{background:linear-gradient(135deg,#890a38,#4a0620)}
-.hotel-monogram{font-family:'Playfair Display',serif;font-size:34px;font-weight:700;color:#ffffffd0;letter-spacing:.02em}
-.hotel-photo{width:100%;height:100%;object-fit:cover;display:block}
+.hotel-monogram{display:flex;font-family:'Playfair Display',serif;font-size:34px;font-weight:700;color:#ffffffd0;letter-spacing:.02em}
+.hotel-photo{width:100%;height:100%;object-fit:cover;display:none}
 .hotel-photo-wrap.has-photo .hotel-monogram{display:none}
+.hotel-photo-wrap.has-photo .hotel-photo{display:block}
 .hotel-photo-wrap.has-photo.img-fallback .hotel-photo{display:none}
 .hotel-photo-wrap.has-photo.img-fallback .hotel-monogram{display:flex}
 
@@ -554,11 +557,22 @@ font-family: Arial, sans-serif;
      pulled live from your Google Sheet instead of the built-in list
      below. Leave blank to keep using the built-in data — the page
      works exactly the same either way.
+   - googlePlacesApiKey: OPTIONAL, but required for real hotel photos.
+     Each hotel in HOTEL_DB carries a real Google placeId, and with a
+     key here the "Recommended Stay" cards fetch that property's own
+     verified photo directly from Google — never a stand-in stock
+     photo. To get one: Google Cloud Console → APIs & Services →
+     enable "Places API (New)" → Credentials → Create API key → under
+     "Application restrictions" pick "Websites" and add your domain
+     (this stops anyone else from using your key). Paste the key
+     below. Leave blank and cards show a clean placeholder instead —
+     never a fake photo standing in for a specific named hotel.
 ------------------------------------------------------------------ */
 const CONFIG = {
   email: 'apurvaaniket8@gmail.com',
   scriptURL: 'https://script.google.com/macros/s/AKfycbwt_ZOJlV102sLefJ2atd8gepcgojykxpuRb0SnF-Eo1ZUf0WUczsUP8RZFVqrvqYQd/exec',
-  sheetURL: '' // <-- optional: paste your doGet Web App URL here
+  sheetURL: '', // <-- optional: paste your doGet Web App URL here
+  googlePlacesApiKey: '' // <-- paste your Places API (New) key here to enable real hotel photos
 };
 
 /* ------------------------------------------------------------------
@@ -762,12 +776,13 @@ function build(){
      Budget Breakdown card above) is a fixed nominal figure for the
      chosen tier — it doesn't move as you nudge the total budget field
      within that tier's range, which is why hotel picks used to look
-     "stuck". hotelStayBudget instead tracks the actual amount typed
-     into Budget ₹, capped at a sensible ceiling for the matched style
-     so a huge budget on a Backpacker trip doesn't suggest a palace.
-     Lowering the budget now visibly narrows the hotel shortlist to
-     cheaper real properties, and raising it opens up pricier ones. */
-  const hotelStayBudget = Math.min(b, total * 1.6) * TIER_SPLIT[finalTierKey].stay;
+     "stuck". hotelStayBudget instead is a direct, uncapped multiple
+     of the amount actually typed into Budget ₹ — it rises every time
+     b rises, full stop, so a lower total budget always narrows the
+     hotel shortlist to cheaper real properties, and a higher one
+     always opens up pricier ones (see buildFallbackHotels for how
+     this then converts into a per-night, per-day, per-room figure). */
+  const hotelStayBudget = b * TIER_SPLIT[finalTierKey].stay;
 
   feasibility.className = 'feasibility show ok';
   feasibility.innerHTML = adjustedNote
@@ -1069,6 +1084,60 @@ const AMENITIES_BY_TIER = {
   premium:     ['Free WiFi','Spa & Wellness','Multi-cuisine Dining','Concierge']
 };
 
+/* Real photo fetching — Places API (New). Each hotel's `placeId` is a
+   genuine Google Places ID (see HOTEL_DB), so with CONFIG.googlePlacesApiKey
+   set this pulls that exact property's own verified photo — never a
+   stand-in. Two calls per hotel, both official Places API (New)
+   endpoints, safe to call directly from the browser with a
+   domain-restricted key:
+     1. GET /v1/places/{placeId}?fields=photos  → the photo resource name
+     2. GET /v1/{photoName}/media?maxWidthPx=800 → the actual image
+   Results are cached per placeId for the session so switching budget/
+   destination repeatedly doesn't re-fetch photos already loaded.
+   Without a key, or if a fetch fails, the card falls back to a clean
+   tier-tinted placeholder — never a mismatched generic photo standing
+   in for a real, named business. */
+const hotelPhotoCache = {};
+
+async function fetchRealHotelPhotoUrl(placeId){
+  if (!CONFIG.googlePlacesApiKey) return null;
+  if (hotelPhotoCache[placeId] !== undefined) return hotelPhotoCache[placeId];
+  try{
+    const detailsRes = await fetch(
+      `https://places.googleapis.com/v1/places/${placeId}?fields=photos&key=${CONFIG.googlePlacesApiKey}`
+    );
+    if (!detailsRes.ok) throw new Error('Places details request failed: ' + detailsRes.status);
+    const details = await detailsRes.json();
+    const photoName = details.photos && details.photos[0] && details.photos[0].name;
+    if (!photoName){ hotelPhotoCache[placeId] = null; return null; }
+    const url = `https://places.googleapis.com/v1/${photoName}/media?maxWidthPx=800&key=${CONFIG.googlePlacesApiKey}`;
+    hotelPhotoCache[placeId] = url;
+    return url;
+  }catch(err){
+    console.warn('Could not load real photo for place', placeId, err);
+    hotelPhotoCache[placeId] = null;
+    return null;
+  }
+}
+
+/* Called after the hotel cards are in the DOM: fills in each card's
+   photo asynchronously (or leaves the placeholder if no key/photo is
+   available) without blocking the rest of the shortlist from showing
+   immediately. */
+async function loadRealHotelPhotos(hotels){
+  if (!CONFIG.googlePlacesApiKey) return; // no key configured — placeholders stay as-is
+  await Promise.all(hotels.map(async (h) => {
+    const url = await fetchRealHotelPhotoUrl(h.placeId);
+    if (!url) return;
+    const wrap = document.querySelector(`.hotel-photo-wrap[data-place-id="${h.placeId}"]`);
+    if (!wrap) return;
+    const img = wrap.querySelector('.hotel-photo');
+    img.onload = () => wrap.classList.add('has-photo');
+    img.onerror = () => wrap.classList.add('img-fallback');
+    img.src = url;
+  }));
+}
+
 function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
 
 /* Loose "is this hotel near something on the itinerary" check — hotel
@@ -1083,56 +1152,81 @@ function areaNearSpots(area, spots){
   });
 }
 
-/* Transparent, weighted match score (0–100):
-   40% price fit to the traveller's ideal per-night rate, 25% tier fit
-   to their matched style, 20% whether the property's locality lines
-   up with the itinerary, 15% guest rating. */
-function scoreHotel(hotel, { idealPricePerNight, tierKey, itinerarySpots }){
+/* Transparent match score (0–100), shown on each card — informational
+   ranking only, computed AFTER the budget-driven shortlist below has
+   already decided which hotels qualify (see buildFallbackHotels). This
+   split matters: mixing a weighted score into the *selection* step is
+   what previously let a hotel's tier/rating outweigh its price and
+   produce a shortlist that didn't track the budget slider sensibly.
+   Now: 55% price closeness to the ideal nightly rate, 25% tier fit to
+   the matched style, 20% guest rating. */
+function scoreHotel(hotel, { idealPricePerNight, tierKey }){
   const priceFit = clamp(100 - Math.abs(hotel.pricePerNight - idealPricePerNight) / idealPricePerNight * 100, 0, 100);
   const tierDist = Math.abs(TIER_ORDER.indexOf(hotel.tierKey) - TIER_ORDER.indexOf(tierKey));
   const tierFit = tierDist === 0 ? 100 : (tierDist === 1 ? 65 : 35);
-  const locationFit = areaNearSpots(hotel.area, itinerarySpots) ? 100 : 74;
   const ratingFit = hotel.rating / 5 * 100;
-  const score = Math.round(priceFit * 0.40 + tierFit * 0.25 + locationFit * 0.20 + ratingFit * 0.15);
-  return { score, priceFit, tierFit, locationFit, ratingFit };
+  const score = Math.round(priceFit * 0.55 + tierFit * 0.25 + ratingFit * 0.20);
+  return { score, priceFit, tierFit, ratingFit };
 }
 
 function hotelWhyText(hotel, s, ctx){
   const bits = [];
   bits.push(s.tierFit === 100 ? `matches your ${TIER_LABEL[ctx.tierKey]} style` : `close to your ${TIER_LABEL[ctx.tierKey]} style`);
   bits.push(s.priceFit >= 70 ? 'priced well within your accommodation budget' : 'a reasonable fit for your accommodation budget');
-  if (s.locationFit === 100) bits.push(`in ${hotel.area}, near your itinerary`);
+  if (areaNearSpots(hotel.area, ctx.itinerarySpots)) bits.push(`in ${hotel.area}, near your itinerary`);
   if (hotel.rating >= 4.4) bits.push('highly rated by past guests');
   return bits.join(', ') + '.';
 }
 
-/* Builds the real, budget-scored shortlist for one destination. The
-   candidate pool spans ALL four tiers (not just the matched one) so
-   that moving the budget field genuinely swaps in different named
-   properties instead of only re-ordering the same handful. */
-function buildFallbackHotels(ctx){
-  const { dest, tierKey, days, accommodationBudget, itinerarySpots, destKey } = ctx;
-  const rooms = Math.max(1, Math.ceil(ctx.people / 2));
-  const idealPricePerNight = Math.max(500, accommodationBudget / days / rooms);
+/* Finds the k hotels whose price is closest to `ideal`, in a sorted-
+   by-price array. This is the standard "k closest elements in a
+   sorted array" sliding window: start with the whole array, and
+   repeatedly drop whichever END (cheapest or priciest) is currently
+   FARTHER from the ideal price, until only k remain. Because it
+   always trims from the far end, the window can only slide upward as
+   `ideal` rises — cheap hotels genuinely drop out of the list once
+   the budget has moved past them, they don't linger just because they
+   were "affordable". This is what fixes the previous version's
+   showing cheap hotels no matter how high the budget went. */
+function kClosestByPrice(sortedByPrice, ideal, k){
+  let lo = 0, hi = sortedByPrice.length - 1;
+  k = Math.min(k, sortedByPrice.length);
+  while (hi - lo + 1 > k){
+    const distLo = Math.abs(sortedByPrice[lo].pricePerNight - ideal);
+    const distHi = Math.abs(sortedByPrice[hi].pricePerNight - ideal);
+    if (distLo <= distHi) hi--; else lo++;
+  }
+  return sortedByPrice.slice(lo, hi + 1);
+}
 
-  const catalogue = HOTEL_DB[destKey] || [];
-  const priced = catalogue.map(h => {
+/* Builds the real, budget-driven shortlist for one destination. The
+   shortlist is the 4 real hotels closest in price to the traveller's
+   ideal nightly rate (kClosestByPrice above) — a low budget shows the
+   cheapest real properties, a high budget shows the priciest ones,
+   and raising the budget genuinely retires the cheap options instead
+   of just piling pricier ones on top of them. matchScore/why-text are
+   computed afterwards, for display and in-list ordering only. */
+function buildFallbackHotels(ctx){
+  const { dest, tierKey, days, accommodationBudget, destKey } = ctx;
+  const rooms = Math.max(1, Math.ceil(ctx.people / 2));
+  const idealPricePerNight = Math.max(400, accommodationBudget / days / rooms);
+
+  const catalogue = (HOTEL_DB[destKey] || []).map(h => {
     const perNightBase = dest.tiers[h.tierKey] * TIER_SPLIT[h.tierKey].stay * 2; // double-occupancy room-rate baseline
     const pricePerNight = Math.max(400, Math.round(perNightBase * h.mult / 50) * 50);
     return { ...h, pricePerNight, rooms, category: HOTEL_CATEGORY_BY_TIER[h.tierKey], amenities: AMENITIES_BY_TIER[h.tierKey] };
   });
 
-  const scored = priced.map(h => {
-    const s = scoreHotel(h, { idealPricePerNight, tierKey, itinerarySpots });
+  const sortedByPrice = catalogue.slice().sort((a, b) => a.pricePerNight - b.pricePerNight);
+  const shortlist = kClosestByPrice(sortedByPrice, idealPricePerNight, 4);
+
+  const scored = shortlist.map(h => {
+    const s = scoreHotel(h, { idealPricePerNight, tierKey });
     return { ...h, matchScore: s.score, why: hotelWhyText(h, s, ctx) };
   });
 
-  let candidates = scored.filter(h => h.pricePerNight * h.rooms * days <= accommodationBudget * 1.2);
-  if (candidates.length < 3) candidates = scored.filter(h => h.pricePerNight * h.rooms * days <= accommodationBudget * 1.6);
-  if (candidates.length < 3) candidates = scored;
-
-  candidates.sort((a, b) => b.matchScore - a.matchScore);
-  return candidates.slice(0, 6);
+  scored.sort((a, b) => a.pricePerNight - b.pricePerNight);
+  return scored;
 }
 
 /* Provider registry. `fallback` is synchronous data wrapped in a small
@@ -1159,9 +1253,10 @@ function hotelCardHtml(h, ctx){
   const initial = h.name.replace(/^(The|A)\s+/i, '').trim().charAt(0).toUpperCase();
   return `
   <div class="hotel-card">
-    <div class="hotel-photo-wrap tier-${h.tierKey}">
+    <div class="hotel-photo-wrap tier-${h.tierKey}" data-place-id="${h.placeId}">
       <div class="match-badge">${h.matchScore}% Match</div>
       ${overBudget ? '<div class="stretch-badge">Slight stretch</div>' : ''}
+      <img class="hotel-photo" alt="${h.name}" loading="lazy">
       <span class="hotel-monogram">${initial}</span>
     </div>
     <div class="hotel-body">
@@ -1180,7 +1275,7 @@ function hotelCardHtml(h, ctx){
       <div class="hotel-amenities">${h.amenities.map(a => `<span>${a}</span>`).join('')}</div>
       <p class="hotel-why"><b>Why this hotel:</b> ${h.why}</p>
       <div class="hotel-actions">
-        <a class="hotel-maps-link" href="${mapsUrl}" target="_blank" rel="noopener">View on Google Maps ↗</a>
+        <a class="hotel-maps-link" href="${mapsUrl}" target="_blank" rel="noopener">Real photos on Google Maps ↗</a>
         <button class="btn btn-sm" onclick="enquireAboutHotel('${h.name.replace(/'/g, "\\'")}')">Enquire →</button>
       </div>
     </div>
@@ -1219,6 +1314,7 @@ async function loadHotelRecommendations(ctx){
       return;
     }
     body.innerHTML = `<div class="hotels-grid">${hotels.map(h => hotelCardHtml(h, ctx)).join('')}</div>`;
+    loadRealHotelPhotos(hotels); // fills in real photos asynchronously; cards work fine without it
   }catch(err){
     console.warn('Hotel recommendation error:', err);
     body.innerHTML = hotelsErrorHtml();
