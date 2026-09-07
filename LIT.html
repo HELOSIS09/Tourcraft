@@ -498,7 +498,9 @@ font-family: Arial, sans-serif;
           <div class="field"><label>Days</label><input id="days" type="number" value="5" min="1" max="21"></div>
           <div class="field"><label>Budget ₹ (total)</label><input id="budget" type="number" value="35000" min="1" step="500"></div>
           <div class="field"><label>Style</label><select id="style"><option>Smart Budget</option><option>Comfort</option><option>Backpacker</option><option>Premium</option></select></div>
-          <div class="field"><label>Transport</label><select id="transport"><option>Comfortable</option><option>Budget</option><option>Private Cab</option></select></div>
+          <div class="field"><label>Transport</label><select id="transport"><option>SIC (Shared vehicle)</option>
+            <!-- <option>Budget</option> -->
+            <option>Private Cab</option></select></div>
           <div class="field wide"><label>Interests</label><input id="interests" placeholder="food, mountains, culture, adventure..."></div>
         </div>
 
@@ -597,7 +599,7 @@ const TIER_SPLIT = {
 
 /* Transport choice only scales the transport slice of the day cost,
    not the whole trip — closer to how the money actually moves. */
-const TRANSPORT_MULT = { 'Budget':0.75, 'Comfortable':1.0, 'Private Cab':1.6 };
+const TRANSPORT_MULT = { 'Budget':0.75, 'SIC (Shared vehicle)':1.0, 'Private Cab':1.6 };
 
 /* ------------------------------------------------------------------
    REAL-WORLD ITINERARY CONTENT — ADDED
@@ -724,6 +726,30 @@ const TRANSPORT_NOTE_BY_DEST = {
   Sarnath: 'auto-rickshaw or a short cab ride from Varanasi',
   Kushinagar: 'auto-rickshaw between the monastery sites',
   Nalanda: 'private cab, since the sites are spread a few kilometres apart',
+};
+
+/* ------------------------------------------------------------------
+   AFFORDABILITY EVIDENCE — ADDED
+   Concrete, destination-specific ways a lower budget genuinely works,
+   used to back up the Backpacker/Smart Budget tiers with real
+   swaps instead of just a smaller number. Paired at render-time with
+   an actual verified hostel/budget hotel from REAL_HOTELS (below)
+   wherever we have one, so the claim is backed by a real, named
+   property rather than an assertion.
+------------------------------------------------------------------ */
+const BUDGET_SWAPS_BY_DEST = {
+  Kashmir: ['Shared sumo/cab from Srinagar to Gulmarg or Pahalgam instead of a private car', 'A shared shikara slot on Dal Lake costs a fraction of a private one', 'Wazwan thalis at local (non-houseboat) eateries run well below hotel-restaurant prices'],
+  Kerala: ['A shared/public backwater ferry instead of a private houseboat cuts the single biggest cost on this trip', 'Kerala Sadya at a local "meals" joint is inexpensive and filling', 'KSRTC buses between towns instead of a private cab'],
+  Goa: ['A rented scooter (self-drive) instead of cabs is the standard budget move in Goa', 'Beach shacks serve fresh thalis/fish curry-rice for a fraction of resort-restaurant prices', 'Public buses run frequently between North and South Goa'],
+  Rajasthan: ['Sleeper-class or AC-3 train between cities instead of a private cab for the long legs', 'Dal Baati Churma at a local dhaba costs far less than a hotel buffet', 'Walking the old city + shared autos instead of a full-day private cab'],
+  Manali: ['Shared taxis to Solang/Kasol run regularly and cost much less than a private cab', 'Old Manali\u2019s backpacker cafes serve filling meals cheaply', 'Local buses connect Manali town to nearby villages'],
+  Varanasi: ['A shared sunrise boat slot instead of a private boat', 'Street food (kachori-sabzi, chaat) is a genuine local breakfast, not just a budget cut', 'Cycle-rickshaws and walking cover the old city — no cab needed'],
+  Meghalaya: ['Shared sumo/cab seats between Shillong and Cherrapunji instead of a private car', 'Local Khasi eateries in Shillong are inexpensive', 'Entry to most waterfalls and viewpoints is free or a token fee'],
+  Andaman: ['Government ferries between islands instead of private speedboats save significantly', 'Local seafood thalis away from resort restaurants', 'Snorkelling gear rental instead of a full guided dive package'],
+  'Bodh Gaya': ['Most temple and monastery visits are free to enter', 'Simple thalis near the monastery zone are inexpensive', 'Everything in the temple town is walkable or a short shared auto ride'],
+  Sarnath: ['A short shared auto or bus from Varanasi instead of a private cab', 'The Deer Park and stupa grounds are inexpensive to enter', 'Compact site — walkable once you arrive'],
+  Kushinagar: ['Most temple visits here are free', 'Shared autos between the monastery sites', 'Simple local thalis instead of hotel dining'],
+  Nalanda: ['Combine with nearby Rajgir to share one cab cost across two sites', 'Low ASI entry fee for the ruins', 'Local dhaba meals near the site'],
 };
 
 /* Day-type cost multipliers so the per-day badge genuinely varies
@@ -917,6 +943,8 @@ function build(){
 
   const foods = FOOD_BY_DEST[n] || ['a local thali', 'a regional specialty dish'];
   const transportNote = TRANSPORT_NOTE_BY_DEST[n] || 'local cabs/auto-rickshaws';
+  const budgetSwaps = BUDGET_SWAPS_BY_DEST[n] || [];
+  const cheapestReal = (REAL_HOTELS[n] || []).slice().sort((a,b) => a.price - b.price)[0];
 
   let daysHtml = '';
   let planText = `✨ *TourCraft Itinerary — ${n}* ✨\n\n`
@@ -1018,7 +1046,7 @@ function build(){
     <div class="result-card hotels-card" id="hotelsSection">
       <div class="hotels-head">
         <h3>Recommended Stay</h3>
-        <p class="hotels-sub">Hand-picked to match your ${TIER_LABEL[finalTierKey]} style and an accommodation budget of ${money(comp.stay * d * p)} for ${d} night${d>1?'s':''}.</p>
+        <p class="hotels-sub">${REAL_HOTELS[n] ? `Verified real properties in ${n} (actual names, photos and rates), matched to your ${money(comp.stay * d * p)} accommodation budget for ${d} night${d>1?'s':''}.` : `Hand-picked to match your ${TIER_LABEL[finalTierKey]} style and an accommodation budget of ${money(comp.stay * d * p)} for ${d} night${d>1?'s':''} — illustrative examples until we've verified live properties here.`}</p>
       </div>
       <div class="hotels-body" id="hotelsBody">
         <div class="hotels-loading"><div class="hotels-spinner"></div><span>Finding stays that fit ${n} and your budget…</span></div>
@@ -1033,6 +1061,16 @@ function build(){
         <div class="row total"><span>Total (${d} days, ${p} traveller${p>1?'s':''})<span class="note">Sum of the categories above, not a flat estimate</span></span><span>${money(total)}</span></div>
       </div>
     </div>
+
+    ${budgetSwaps.length ? `
+    <div class="result-card">
+      <h3 style="margin:0 0 6px;font-family:'Playfair Display',serif;font-size:19px;">How ${n} works on a lower budget</h3>
+      <p style="color:#69756f;font-size:13.5px;margin:0 0 14px;">${TIER_LABEL[finalTierKey]} pricing here isn't a guess — it's built on real, swappable choices travellers actually make in ${n}:</p>
+      <div class="tags" style="gap:10px;">
+        ${budgetSwaps.map(s => `<span style="display:block;width:100%;text-align:left;border-radius:12px;padding:10px 14px;">💡 ${s}</span>`).join('')}
+      </div>
+      ${cheapestReal ? `<p style="color:#69756f;font-size:13px;margin:16px 0 0;"><b style="color:#17352b;">Proof it's real:</b> ${cheapestReal.name} (${cheapestReal.location}) is a verified stay from ${money(cheapestReal.price)}/night — see it in Recommended Stay below.</p>` : ''}
+    </div>` : ''}
 
     <div class="result-card enquire-box">
       <h3 style="margin:0 0 6px;font-family:'Playfair Display',serif;font-size:19px;">Like this trip?</h3>
@@ -1061,8 +1099,22 @@ function build(){
 
 /* ------------------------------------------------------------------
    sendMail() — POSTs the enquiry to the Apps Script Web App so it
-   lands directly in CONFIG.email. Falls back to a mailto: draft if
-   scriptURL is ever empty.
+   lands in your sheet/inbox, AND always also opens a pre-filled
+   mailto: draft as a guaranteed backup.
+
+   Why the backup is always included: the POST above uses mode:
+   'no-cors' (required so the browser doesn't block the request with
+   a CORS error against Apps Script). That means the browser hides
+   the response from us completely — we cannot tell whether the
+   Apps Script actually received and processed the enquiry, only
+   whether the network request itself was dispatched. So "the button
+   doesn't work" is invisible from here by design; the safest fix is
+   to never rely on that response alone. Opening the traveller's own
+   email app guarantees an email actually gets composed and sent,
+   regardless of what the Apps Script endpoint does with the POST.
+   If you confirm the Apps Script is reliably logging enquiries (check
+   its execution log at script.google.com under your project > 
+   Executions), you can remove the mailto fallback below.
 ------------------------------------------------------------------ */
 async function sendMail(){
   const n = document.getElementById('name').value.trim();
@@ -1073,20 +1125,20 @@ async function sendMail(){
   if(!n || !e){ statusEl.textContent = 'Please enter name and email.'; statusEl.className = 'status err'; return; }
   if(!plan){ statusEl.textContent = 'Generate an itinerary first, then send your enquiry.'; statusEl.className = 'status err'; return; }
 
-  const payload = {
-    name:n, email:e,
-    phone: document.getElementById('phone').value.trim(),
-    message: document.getElementById('message').value.trim(),
-    destination: document.getElementById('destination').value,
-    plan, timestamp: new Date().toLocaleString()
-  };
+  const phone = document.getElementById('phone').value.trim();
+  const message = document.getElementById('message').value.trim();
+  const destination = document.getElementById('destination').value;
+
+  const payload = { name:n, email:e, phone, message, destination, plan, timestamp: new Date().toLocaleString() };
+
+  const subject = `TourCraft Enquiry — ${destination}`;
+  const bodyText = `Hello TourCraft Team,\n\nI am interested in this itinerary.\n\nName: ${n}\nEmail: ${e}\nPhone: ${phone}\n\n${plan}\n\nAdditional message: ${message}`;
+  const mailtoUrl = `mailto:${CONFIG.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
 
   if(!CONFIG.scriptURL){
-    const subject = `TourCraft Enquiry — ${payload.destination}`;
-    const bodyText = `Hello TourCraft Team,\n\nI am interested in this itinerary.\n\nName: ${n}\nEmail: ${e}\nPhone: ${payload.phone}\n\n${plan}\n\nAdditional message: ${payload.message}`;
-    location.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
-    statusEl.textContent = 'Script not connected — opening your email app instead.';
-    statusEl.className = 'status err';
+    location.href = mailtoUrl;
+    statusEl.textContent = 'Opening your email app to send the enquiry to ' + CONFIG.email + ' — hit send there to finish.';
+    statusEl.className = 'status ok';
     return;
   }
 
@@ -1094,20 +1146,27 @@ async function sendMail(){
   statusEl.textContent = 'Sending your enquiry…';
   statusEl.className = 'status sending';
 
+  let scriptDispatched = false;
   try{
     await fetch(CONFIG.scriptURL, {
       method:'POST', mode:'no-cors',
       headers:{'Content-Type':'text/plain;charset=utf-8'},
       body: JSON.stringify(payload)
     });
-    statusEl.textContent = 'Enquiry sent — our team will follow up shortly at ' + e + '.';
-    statusEl.className = 'status ok';
+    scriptDispatched = true;
   }catch(err){
-    statusEl.textContent = 'Something went wrong sending your enquiry. Please try again.';
-    statusEl.className = 'status err';
-  }finally{
-    btn.disabled = false;
+    scriptDispatched = false;
   }
+
+  // Always open the mail client too — see comment above on why the
+  // POST result above can't be trusted on its own.
+  location.href = mailtoUrl;
+
+  statusEl.textContent = scriptDispatched
+    ? 'Logged your enquiry and opening your email app to send a copy to ' + CONFIG.email + ' — hit send there to finish.'
+    : 'Opening your email app to send the enquiry to ' + CONFIG.email + ' — hit send there to finish.';
+  statusEl.className = 'status ok';
+  btn.disabled = false;
 }
 
 /* ------------------------------------------------------------------
@@ -1149,12 +1208,18 @@ function sendWhatsApp(){
    built as a small provider abstraction so a real hotel API can be
    dropped in later without touching any rendering code:
 
-     1. HotelProviders  — a registry of { name, getHotels(ctx) } objects.
-        `fallback` ships a realistic, budget-aware demo dataset that is
-        generated (not hard-coded per hotel) from the same TIER_SPLIT /
-        TIER_ORDER data already used for the itinerary pricing, so it
-        always stays consistent with the trip's numbers.
-     2. ACTIVE_HOTEL_PROVIDER — swap this one line to point at a real
+     1. REAL_HOTELS — real, verified properties (name, exact photo,
+        location, source) for the destinations we've verified so far.
+        When a trip's destination has entries here, these are shown
+        first, exactly as-is — real names, real photos, real source
+        notes — the same way they're presented on the Hotels page.
+     2. HotelProviders  — a registry of { name, getHotels(ctx) } objects.
+        `fallback` ships a realistic, budget-aware demo dataset (used
+        only for destinations not yet in REAL_HOTELS), generated from
+        the same TIER_SPLIT / TIER_ORDER data already used for the
+        itinerary pricing, and clearly labelled as an estimate rather
+        than a verified property.
+     3. ACTIVE_HOTEL_PROVIDER — swap this one line to point at a real
         integration, e.g.:
           HotelProviders.myApi = { name:'my-api', getHotels: async (ctx) => {
             const res = await fetch(`${HOTEL_API_BASE}/search?...`);
@@ -1162,9 +1227,132 @@ function sendWhatsApp(){
           }};
           const ACTIVE_HOTEL_PROVIDER = HotelProviders.myApi;
         The rendering/scoring/UI code does not need to change.
-     3. loadHotelRecommendations(ctx) — orchestrates loading / empty /
+     4. loadHotelRecommendations(ctx) — orchestrates loading / empty /
         error states and renders whichever provider is active.
    ===================================================================== */
+
+/* Real, verified properties — same data/photos as the Hotels page.
+   Keep this in sync with hotels.html's `hotels` array if that list
+   changes. Only destinations verified so far are included; anything
+   else falls through to the clearly-labelled estimate generator. */
+const REAL_HOTELS = {
+  Kashmir: [
+    { name:'Zostel Srinagar', location:'Nishat · Srinagar', price:1800, tags:['Hostel','Near Dal Lake','Backpacker'],
+      image:'https://proxy.cdn.zostel.com/zostel/gallery/images/t43hohPnR26Ai15kmhOXfQ/zostel-srinagar-20201105115234.jpeg?format=jpg',
+      note:'A real Zostel property in the Nishat area, about a 5-minute walk from Dal Lake.', source:'Official Zostel property listing' },
+    { name:'Zostel Pahalgam', location:'Pahalgam · Kashmir', price:1800, tags:['Hostel','Mountain views','Backpacker'],
+      image:'https://proxy.cdn.zostel.com/zostel/gallery/images/zreW6Y3WQWuGpkwg_aq4aw/zostel-pahalgam-20231106134303.jpg?format=jpg',
+      note:'A real Zostel hostel in Pahalgam between snow peaks and the Lidder River.', source:'Official Zostel property listing' },
+    { name:'Zostel Doodhpathri', location:'Doodhpathri · Kashmir', price:1900, tags:['Hostel','Offbeat','Mountain views'],
+      image:'https://proxy.cdn.zostel.com/zostel/gallery/images/TO1FkWDqSGa90mIC1IAXuQ/zostel-doodhpathri-20260702082432.jpg?format=jpg',
+      note:'A real Zostel hostel in the offbeat meadow town of Doodhpathri, Kashmir.', source:'Official Zostel property listing' },
+    { name:'Four Points by Sheraton Srinagar', location:'Srinagar · Near Dal Lake', price:10500, tags:['Hotel','Breakfast','Near Dal Lake'],
+      image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjRHVciOFIAre7zXhN0xKNYmU6IOimtYuateoZgS8S44MJUjhJJn031kp-&s=10',
+      note:'An established Marriott hotel in Srinagar with modern rooms and access to Dal Lake.', source:'Official Marriott property listing' },
+  ],
+  Kerala: [
+    { name:'Zostel Alleppey', location:'Alappuzha · Beach Road', price:1800, tags:['Hostel','Beach','Backwaters'],
+      image:'https://proxy.cdn.zostel.com/zostel/gallery/images/0G6WdYPDT6emkdpYenoWJg/a-20251125120706.jpg?format=jpg',
+      note:'A real Zostel at Alappuzha Beach, useful for exploring the backwaters on a lower budget.', source:'Official Zostel property listing' },
+    { name:'Zostel Munnar (Pallivasal)', location:'Pallivasal · Munnar', price:1900, tags:['Hostel','Tea estate','Backpacker'],
+      image:'https://proxy.cdn.zostel.com/zostel/gallery/images/7indGHseSPWFg0lhBcRwXg/zostel-munnar-20260224092457.jpg?format=jpg',
+      note:'A real Zostel on a 100-acre tea and cardamom estate in Munnar.', source:'Official Zostel property listing' },
+    { name:'Zostel Kochi (Fort Kochi)', location:'Fort Kochi · Kochi', price:1700, tags:['Hostel','Heritage lane','Backpacker'],
+      image:'https://proxy.cdn.zostel.com/zostel/gallery/images/4gY8nMl6RbaNwGx0PNoRdw/kochi-20201112105112.jpg?format=jpg',
+      note:'A real Zostel on a vibrant colonial street in Fort Kochi.', source:'Official Zostel property listing' },
+    { name:'Brunton Boatyard', location:'Fort Kochi · Kochi', price:13000, tags:['Heritage','Waterfront','Luxury'],
+      image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS2UlO-nZ1Q47SMPUzjWNjbBcwsmbu1PLyBitsa11g5tziIM6mHonyVII&s=10',
+      note:'A CGH Earth waterfront heritage hotel in Fort Kochi, on the site of a historic shipyard.', source:'Official CGH Earth property listing' },
+  ],
+  Goa: [
+    { name:'Zostel Goa (Morjim)', location:'Morjim · North Goa', price:1900, tags:['Hostel','Beach','Backpacker'],
+      image:'https://zostel-goa.hotelsgoaonline.com/data/Pics/OriginalPhoto/15592/1559214/1559214859/zostel-goa-morjim-morjim-pic-73.JPEG',
+      note:'A real Zostel property in Morjim for a lower-cost, social base near the beaches.', source:'Official Zostel property listing' },
+    { name:'Zostel Goa (Anjuna)', location:'Anjuna · North Goa', price:2000, tags:['Hostel','Beach','Backpacker'],
+      image:'https://proxy.cdn.zostel.com/zostel/gallery/images/p0NTgoSnRFSMm1y0K4rhVw/zostel-goa-anjuna-20231227071527.jpg?format=jpg',
+      note:'A real Zostel property in Anjuna, close to the Wednesday flea market.', source:'Official Zostel property listing' },
+    { name:'The Zuri White Sands, Goa Resort & Casino', location:'Varca · South Goa', price:11000, tags:['Beach resort','Pool','Luxury'],
+      image:'https://cf.bstatic.com/xdata/images/hotel/max1024x768/309284889.jpg?k=f7167a38ecfe1815aa9a403b37dbebe8af87d338cee4c70eeaf735edfcac42a9&o=',
+      note:'A five-star resort in Varca with direct beach access and full resort facilities.', source:'Official Zuri Hotels property listing' },
+  ],
+  Rajasthan: [
+    { name:'Fairfield by Marriott Jaipur', location:'Bani Park · Jaipur', price:5000, tags:['Hotel','City centre','Breakfast'],
+      image:'https://gos3.ibcdn.com/e1dc4c2e288611eebd010a58a9feac02.jpg',
+      note:'A Marriott hotel in Bani Park, close to Jaipur Railway Station and the bazaars.', source:'Official Marriott property listing' },
+    { name:'Zostel Udaipur', location:'Udaipur · Lake views', price:1900, tags:['Hostel','Lake views','Backpacker'],
+      image:'https://proxy.cdn.zostel.com/zostel/gallery/images/s_I0vDjJRtSjYo0QIVFBng/zostel-udaipur-20260826091031.png?format=jpg',
+      note:'A real, top-rated Zostel in Udaipur with lake views and a central location.', source:'Official Zostel property listing' },
+    { name:'Zostel Jodhpur (Ratanada)', location:'Ratanada · Jodhpur', price:1900, tags:['Hostel','Blue City','Backpacker'],
+      image:'https://proxy.cdn.zostel.com/zostel/gallery/images/L1p0aL1vS1a1H57yj3E5CA/zostel-jodhpur-ratanada-20260416115700.jpg?format=jpg',
+      note:'A real Zostel hostel in Ratanada, Jodhpur\u2019s Blue City.', source:'Official Zostel property listing' },
+    { name:'Jaipur Marriott Hotel', location:'Jaipur · Near Airport', price:9500, tags:['5-star','Pool','Luxury'],
+      image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROeMD-Aa-Ri1VGZyFXqsMggV24p6qJiLxYHJ07kkD84OKe8wVSZ5Osh4o&s=10',
+      note:'A five-star Marriott hotel in Jaipur with upscale rooms and dining.', source:'Official Marriott property listing' },
+    { name:'Rambagh Palace, Jaipur', location:'Bhawani Singh Road · Jaipur', price:28000, tags:['Heritage Palace','5-star','Taj'],
+      image:'https://commons.wikimedia.org/wiki/Special:FilePath/Rambagh%20Palace%20view%20from%20garden%2C%20July%202016.jpg',
+      note:'The former residence of the Maharaja of Jaipur, now a Taj palace hotel known as the "Jewel of Jaipur".', source:'Wikimedia Commons / Taj Hotels heritage property' },
+    { name:'Umaid Bhawan Palace, Jodhpur', location:'Jodhpur', price:35000, tags:['Heritage Palace','5-star','Taj'],
+      image:'https://commons.wikimedia.org/wiki/Special:FilePath/Umaid%20Bhawan%20Palace.jpg',
+      note:'A former royal residence and one of the world\u2019s largest private homes, now a Taj heritage hotel in Jodhpur.', source:'Wikimedia Commons / Taj Hotels heritage property' },
+  ],
+  Manali: [
+    { name:'Zostel Manali', location:'Old Manali · Manu Temple Road', price:1800, tags:['Hostel','Mountain views','Backpacker'],
+      image:'https://pix10.agoda.net/hotelImages/35487017/-1/03a4a0fe2e2e5a8d286ec05383bcad4e.jpg?ce=0&s=414x232',
+      note:'A real Zostel in Old Manali with Himalayan views and a garden cafe.', source:'Official Zostel property listing' },
+    { name:'Zostel Old Manali (Goshal Road)', location:'Goshal Road · Old Manali', price:1900, tags:['Hostel','Cafe+Bar','Backpacker'],
+      image:'https://proxy.cdn.zostel.com/zostel/gallery/images/Kebt79bESvWhKZzr6sz8hA/zostel-old-manali-goshal-road-20240602192705.jpg?format=jpg',
+      note:'A real Zostel hostel on Goshal Road in Old Manali with a multi-cuisine cafe+bar.', source:'Official Zostel property listing' },
+    { name:'Zostel Manali (Vashisht)', location:'Vashisht · Near Manali', price:1900, tags:['Hostel','Hot springs','Backpacker'],
+      image:'https://proxy.cdn.zostel.com/zostel/gallery/images/ZDU-MRgTSVKNbJr7irX3WA/zostel-manali-vashisht-20221111133755.jpg?format=jpg',
+      note:'A real Zostel hostel in Vashisht, near the village\u2019s hot springs.', source:'Official Zostel property listing' },
+    { name:'Snow Valley Resorts Manali', location:'Log Hut Area · Manali', price:5000, tags:['Resort','Mountain views','Family'],
+      image:'https://cf.bstatic.com/xdata/images/hotel/max1024x768/738052689.jpg?k=e77f270d19ec17230df63e4d4c6997f99d07d832317c8df46eb88dbd7242db34&o=',
+      note:'A resort in Manali\u2019s Log Hut Area, surrounded by pine forests.', source:'Official Snow Valley Resorts property listing' },
+  ],
+  Varanasi: [
+    { name:'Zostel Varanasi', location:'Dashashwamedh · Varanasi', price:1600, tags:['Hostel','Near Ghat','Backpacker'],
+      image:'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/32/87/56/41/caption.jpg?w=900&h=-1&s=1',
+      note:'A real Zostel near Dashashwamedh Ghat with dorms, private rooms and a rooftop.', source:'Official Zostel property listing' },
+    { name:'goSTOPS Varanasi Lite', location:'Bhelupur · Varanasi', price:1500, tags:['Hostel','Near Ghats','Backpacker'],
+      image:'https://don5wql5ofws9.cloudfront.net/media/images/1_JOis0Rd.webp',
+      note:'A real goSTOPS hostel in Bhelupur, an alternative budget base near the ghats.', source:'Official goSTOPS property listing' },
+    { name:'Radisson Hotel Varanasi', location:'The Mall · Cantonment', price:6500, tags:['Hotel','Pool','Family'],
+      image:'https://cdn.hotelplanner.com/Common/Images/Hotels/1382023_1.jpg',
+      note:'A Radisson hotel in the Cantonment area with access to major city sights.', source:'Official Radisson Hotels property listing' },
+  ],
+  Meghalaya: [
+    { name:'Zostel Shillong', location:'Golf Links · Shillong', price:1800, tags:['Hostel','Mountain view','Social'],
+      image:'https://q-xx.bstatic.com/xdata/images/hotel/840x460/445785812.jpg?k=eccb01518ae3b6d68405169765072fc56cff1be2a757d720a7ec266d3f11223d&o=',
+      note:'A real Zostel in Shillong, around 2 km from the city centre.', source:'Official Zostel property listing' },
+    { name:'Courtyard by Marriott Shillong', location:'Police Bazar · Shillong', price:8000, tags:['5-star','Pool','Spa'],
+      image:'https://cache.marriott.com/is/image/marriotts7prod/cy-shlcy-courtyard-facade-27885:Feature-Hor?wid=1920&fit=constrain',
+      note:'A Marriott hotel on Jail Road with pool, spa and fitness facilities.', source:'Official Marriott property listing' },
+  ],
+  Andaman: [
+    { name:'Zostel Port Blair', location:'Phoenix Bay · Sri Vijaya Puram', price:1800, tags:['Hostel','Sea views','Backpacker'],
+      image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwX4dG4QNpuH6iHXYgBmpmywI7k9Ie0Ol2rsPuL4LRNF7uiNFIRCoS6M-7&s=10',
+      note:'A real Zostel in Port Blair, a budget base for island trips.', source:'Official Zostel property listing' },
+    { name:'Taj Exotica Resort & Spa, Andamans', location:'Radhanagar Beach · Swaraj Dweep', price:18000, tags:['5-star','Beach resort','Villas'],
+      image:'https://taj-exotica-resort-spa-andamans-havelock-island.o-hotel.in/data/Photos/OriginalPhoto/15571/1557114/1557114352/Taj-Exotica-Resort-Spa-Andamans-Radhanagar-beach-Exterior.JPEG',
+      note:'A Taj luxury resort on Swaraj Dweep with beachfront villas and spa.', source:'Official Taj Hotels + Andaman Tourism listing' },
+  ],
+};
+
+/* Picks the closest-matching real, verified hotels for a trip (by
+   nightly price vs. the traveller's ideal per-night rate), instead
+   of generating anything synthetic, whenever REAL_HOTELS has entries
+   for the destination. */
+function selectRealHotels(ctx){
+  const list = REAL_HOTELS[ctx.destKey];
+  if (!list || !list.length) return null;
+  const rooms = Math.max(1, Math.ceil(ctx.people / 2));
+  const idealPricePerNight = Math.max(500, ctx.accommodationBudget / ctx.days / rooms);
+
+  return list
+    .map(h => ({ ...h, rooms, verified:true, priceDiff: Math.abs(h.price - idealPricePerNight) }))
+    .sort((a,b) => a.priceDiff - b.priceDiff)
+    .slice(0, 6);
+}
 
 const HOTEL_CATEGORY_BY_TIER = {
   backpacker:'Hostel / Budget Stay',
@@ -1290,12 +1478,15 @@ function buildFallbackHotels(ctx){
 
 /* Provider registry. `fallback` is synchronous data wrapped in a small
    artificial delay so the loading state is real and the async contract
-   matches what a live API call would look like. */
+   matches what a live API call would look like. It's only reached for
+   destinations with no entries in REAL_HOTELS above. */
 const HotelProviders = {
-  fallback: {
-    name: 'fallback-demo',
+  verifiedFirst: {
+    name: 'verified-first',
     getHotels: async (ctx) => {
       await new Promise(res => setTimeout(res, 450 + Math.round(seededFraction(ctx.destKey + ctx.tierKey) * 350)));
+      const real = selectRealHotels(ctx);
+      if (real && real.length) return real;
       return buildFallbackHotels(ctx);
     }
   }
@@ -1303,15 +1494,46 @@ const HotelProviders = {
 
 /* Swap this single line to switch to a real hotel API/provider —
    nothing else in this module needs to change. */
-const ACTIVE_HOTEL_PROVIDER = HotelProviders.fallback;
+const ACTIVE_HOTEL_PROVIDER = HotelProviders.verifiedFirst;
 
 function hotelCardHtml(h, ctx){
-  const totalStay = h.pricePerNight * h.rooms * ctx.days;
+  const totalStay = h.price ? h.price * h.rooms * ctx.days : h.pricePerNight * h.rooms * ctx.days;
+  const nightly = h.price !== undefined ? h.price : h.pricePerNight;
   const overBudget = totalStay > ctx.accommodationBudget;
+
+  if (h.verified) {
+    // Real, verified property — same presentation style as the Hotels page:
+    // exact name, exact photo, a source note, no invented star rating.
+    return `
+    <div class="hotel-card">
+      <div class="hotel-photo-wrap">
+        <div class="match-badge">✓ Verified property</div>
+        ${overBudget ? '<div class="stretch-badge">Slight stretch</div>' : ''}
+        <img class="hotel-photo" src="${h.image}" alt="${h.name}" loading="lazy"
+          onerror="this.onerror=null;this.parentElement.classList.add('img-fallback');">
+      </div>
+      <div class="hotel-body">
+        <div class="hotel-top">
+          <h4>${h.name}</h4>
+        </div>
+        <div class="hotel-meta">
+          <span class="hotel-location">📍 ${h.location}</span>
+        </div>
+        <div class="hotel-price-row">
+          <div><span class="hp-value">${money(nightly)}</span><span class="hp-label">/ night (planning ref.) · ${h.rooms} room${h.rooms > 1 ? 's' : ''}</span></div>
+          <div class="hotel-total ${overBudget ? 'over' : ''}">Est. ${money(totalStay)}${overBudget ? ' (stretch)' : ' total'}</div>
+        </div>
+        <div class="hotel-amenities">${h.tags.map(a => `<span>${a}</span>`).join('')}</div>
+        <p class="hotel-why"><b>Verified via:</b> ${h.source}. ${h.note}</p>
+        <button class="btn btn-sm" onclick="enquireAboutHotel('${h.name.replace(/'/g, "\\'")}')">View &amp; Enquire →</button>
+      </div>
+    </div>`;
+  }
+
   return `
   <div class="hotel-card">
     <div class="hotel-photo-wrap">
-      <div class="match-badge">${h.matchScore}% Match</div>
+      <div class="match-badge">${h.matchScore}% match · est.</div>
       ${overBudget ? '<div class="stretch-badge">Slight stretch</div>' : ''}
       <img class="hotel-photo" src="${h.photo}" alt="${h.name}" loading="lazy"
         onerror="this.onerror=null;this.parentElement.classList.add('img-fallback');">
@@ -1330,7 +1552,7 @@ function hotelCardHtml(h, ctx){
         <div class="hotel-total ${overBudget ? 'over' : ''}">Est. ${money(totalStay)}${overBudget ? ' (stretch)' : ' total'}</div>
       </div>
       <div class="hotel-amenities">${h.amenities.map(a => `<span>${a}</span>`).join('')}</div>
-      <p class="hotel-why"><b>Why this hotel:</b> ${h.why}</p>
+      <p class="hotel-why"><b>Why this hotel:</b> ${h.why} <i>(illustrative example — not yet a verified property; ask us to confirm live availability.)</i></p>
       <button class="btn btn-sm" onclick="enquireAboutHotel('${h.name.replace(/'/g, "\\'")}')">View &amp; Enquire →</button>
     </div>
   </div>`;

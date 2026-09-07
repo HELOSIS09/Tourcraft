@@ -493,12 +493,14 @@ font-family: Arial, sans-serif;
     <div class="builder-grid">
       <div>
         <div class="form">
-          <div class="field"><label>Destination</label><select id="destination"></select></div>
+           <div class="field"><label>Destination</label><select id="destination"></select></div>
           <div class="field"><label>Travellers</label><input id="people" type="number" value="2" min="1"></div>
           <div class="field"><label>Days</label><input id="days" type="number" value="5" min="1" max="21"></div>
           <div class="field"><label>Budget ₹ (total)</label><input id="budget" type="number" value="35000" min="1" step="500"></div>
           <div class="field"><label>Style</label><select id="style"><option>Smart Budget</option><option>Comfort</option><option>Backpacker</option><option>Premium</option></select></div>
-          <div class="field"><label>Transport</label><select id="transport"><option>Comfortable</option><option>Budget</option><option>Private Cab</option></select></div>
+          <div class="field"><label>Transport</label><select id="transport"><option>SIC (Shared vehicle)</option>
+            <!-- <option>Budget</option> -->
+            <option>Private Cab</option></select></div>
           <div class="field wide"><label>Interests</label><input id="interests" placeholder="food, mountains, culture, adventure..."></div>
         </div>
 
@@ -597,7 +599,8 @@ const TIER_SPLIT = {
 
 /* Transport choice only scales the transport slice of the day cost,
    not the whole trip — closer to how the money actually moves. */
-const TRANSPORT_MULT = { 'Budget':0.75, 'Comfortable':1.0, 'Private Cab':1.6 };
+// const TRANSPORT_MULT = { 'Budget':0.75, 'Comfortable':1.0, 'Private Cab':1.6 };
+const TRANSPORT_MULT = { 'Budget':0.75, 'SIC (Shared vehicle)':1.0, 'Private Cab':1.6 };
 
 /* ------------------------------------------------------------------
    REAL-WORLD ITINERARY CONTENT — ADDED
@@ -1191,10 +1194,10 @@ const AMENITIES_BY_TIER = {
    a CSS fallback (.img-fallback) so a broken/slow image never breaks
    the layout — see the onerror handler in hotelCardHtml(). */
 const HOTEL_PHOTO_POOL = [
-  'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80',
+  'http://pix8.agoda.net/hotelImages/44463124/0/b98c65cde1d3743013878741a98f33d0.png?ce=3',
   'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=800&q=80',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlMy9pa2yPQgyyIfhYPioSTJVScthvJxlO_DeQaKl0FtbtodNTtgK4XWGc&s=10',
+  'https://q-xx.bstatic.com/xdata/images/hotel/max500/628716789.jpg?k=cf67f7803c18b21ef8968b64eaf81cf4ca67a390e28a8310267ab07c39451ba0&o=',
   'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=800&q=80',
   'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=800&q=80'
 ];
