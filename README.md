@@ -2,7 +2,7 @@
 
 # ✈️ TourCraft
 
-**A simple travel-planning platform to discover destinations and plan trips based on your budget, interests, and preferences.**
+**A travel-planning platform designed to make discovering destinations and planning personalised trips simpler.**
 
 ![Project](https://img.shields.io/badge/project-Travel%20Tech-a8d600?style=flat-square)
 ![Frontend](https://img.shields.io/badge/frontend-React-61dafb?style=flat-square)
@@ -14,17 +14,15 @@
 
 ## 🌱 Why I built this
 
-I wanted to explore how technology can make travel planning easier and more accessible. Planning a trip often involves searching across multiple websites for destinations, activities, hotels, and travel costs.
+TourCraft started as a business idea for **BHU Literary Fest 2026 – Business Pitch**, an event where students were encouraged to propose innovative business ideas from their respective academic departments.
 
-TourCraft is my attempt to bring these things together in one simple platform, where users can discover places and plan trips according to their own needs.
+Coming from a Hospitality and Tourism Management background, I wanted to explore how technology could make travel planning easier, more personalised, and accessible.
 
-The main goals are:
+I developed TourCraft as a travel-tech concept and individually presented it to investors and the **Atal Incubation Centre, BHU**.
 
-1. **Personalised Planning:** Help users explore trips based on their budget, interests, and preferences.
-2. **Destination Discovery:** Make it easier to discover places and learn about them.
-3. **Travel Information:** Provide useful details about destinations and things to do.
-4. **Hotel Suggestions:** Help users explore suitable accommodation options.
-5. **Simple Experience:** Keep the interface clean and easy to understand.
+The idea focuses on solving a common problem: travellers often have to visit multiple platforms to discover destinations, compare accommodation, understand travel options, and plan within their budget.
+
+My vision was to bring these activities together through one simple platform.
 
 ---
 
@@ -32,22 +30,22 @@ The main goals are:
 
 ### 🗺️ Destination Discovery
 - Explore different travel destinations.
-- Find useful information about places worth visiting.
-- Discover attractions and activities at each destination.
+- Discover popular attractions and places worth visiting.
+- Access useful destination-related information.
 
-### 💰 Budget-Based Planning
-- Plan trips according to the user's budget.
-- Consider personal interests and travel requirements.
-- Explore suitable travel options.
+### 💰 Budget-Based Trip Planning
+- Plan trips according to individual budgets.
+- Consider travel interests, preferences, and requirements.
+- Explore suitable travel options based on user needs.
 
 ### 🏨 Hotel Recommendations
-- Discover accommodation options.
-- Explore hotel suggestions based on travel requirements.
-- Provide direct booking links where available.
+- Explore accommodation options based on travel requirements.
+- Discover suitable hotel suggestions.
+- Access direct booking links where available.
 
-### 🎯 Personalised Experience
-- Focus on individual travel preferences.
-- Bring destination information and trip planning into one place.
+### 🎯 Personalised Travel Experience
+- Focus on individual traveller preferences.
+- Bring destination discovery and trip planning together.
 - Make travel research simpler and more organised.
 
 ---
@@ -55,10 +53,10 @@ The main goals are:
 ## 🚀 How to use
 
 1. Open the TourCraft application.
-2. Enter your budget and travel preferences.
-3. Explore destinations and available travel options.
-4. Check suggested places and accommodation.
-5. Use the available booking links to continue with your travel arrangements.
+2. Enter your budget, interests, and travel requirements.
+3. Explore destinations and relevant travel information.
+4. Check suggested attractions and accommodation options.
+5. Use available booking links to continue with your travel arrangements.
 
 ---
 
@@ -79,13 +77,13 @@ These are ideas for future improvements:
 - Better destination and hotel information.
 - Improved budget estimation.
 - More travel-related integrations.
-- A smoother trip-planning experience.
+- A smoother end-to-end trip-planning experience.
 
 ---
 
 ## 👤 Author
 
-Made by **Apurva Swarnkaar**, a hospitality and tourism student interested in travel technology, operations, and building practical digital solutions.
+Developed by **Apurva Swarnkaar**, a Hospitality and Tourism Management student at Banaras Hindu University, interested in travel technology, business ideas, operations, and building practical digital solutions.
 
 ## 📄 License
 
